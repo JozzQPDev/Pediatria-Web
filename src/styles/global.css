@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+/* Asegura que los iconos inyectados por Lucide hereden el tamaño de las clases w- y h- */
+i svg {
+  width: 100%;
+  height: 100%;
+}

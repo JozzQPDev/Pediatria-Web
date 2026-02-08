@@ -1,0 +1,243 @@
+---
+// Tu código de importaciones permanece igual
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import { siteConfig } from '../data/siteConfig';
+---
+
+<Layout title={`Contacto | ${siteConfig.name}`}>
+  <!-- Hero con imagen de fondo, elementos decorativos y CTA mejorado -->
+  <Hero 
+    title="Estamos para ayudarte" 
+    subtitle={`¿Tienes alguna duda sobre la salud de tu pequeño? Contáctanos por cualquier medio o visítanos en nuestra sede en ${siteConfig.location.district}.`} 
+    backgroundImage="/img/hero-contacto.jpg"
+    sideImage="/img/hero-contacto.jpg"
+  >
+    <!-- Añadido CTA en el Hero para mayor visibilidad, con animación -->
+    <div class="mt-8 flex flex-col sm:flex-row gap-4 items-center">
+      <a href="#contact-section" class="inline-flex items-center gap-2 bg-linear-to-r from-green-500 to-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:from-green-600 hover:to-blue-700 transition-all duration-300 hover:scale-105 shadow-lg focus:ring-2 focus:ring-green-500 animate-pulse-soft" aria-label="Ir a la sección de contacto">
+        <i data-lucide="phone" class="w-5 h-5"></i>
+        ¡Contáctanos Ahora!
+      </a>
+      <!-- Elemento decorativo: ícono animado -->
+      <div class="animate-bounce-soft">
+        <i data-lucide="heart" class="w-8 h-8 text-pink-400"></i>
+      </div>
+    </div>
+  </Hero>
+
+  <!-- Sección de contacto: Cards con imágenes y overlays mejorados, animaciones de entrada -->
+  <section id="contact-section" class="py-24 bg-linear-to-b from-white to-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      
+      <div class="mb-16 text-center">
+        <span class="inline-block text-green-600 font-bold uppercase tracking-[0.3em] text-[11px] bg-green-50 px-4 py-2 rounded-lg mb-6 animate-fade-in">Central de Atención</span>
+        <h2 class="text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 italic leading-tight animate-slide-up">
+          Canales Oficiales <br/><span class="text-green-600 not-italic">en {siteConfig.location.city}</span>
+        </h2>
+      </div>
+
+      <div class="grid lg:grid-cols-12 gap-8 items-start">
+        
+        <div class="lg:col-span-4 space-y-8">
+          <!-- Sede Principal con imagen mejorada y animación -->
+          <div class="group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-green-500 animate-slide-in-left" role="article" aria-label="Información de sede principal">
+            <img src="/images/contact-building.jpg" alt="Vista exterior de la sede principal de la clínica pediátrica" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+            <div class="absolute inset-0 bg-linear-to-t from-green-600/90 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+              <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-green-600 mb-4 group-hover:animate-bounce">
+                <i data-lucide="building-2" class="w-7 h-7" aria-hidden="true"></i>
+              </div>
+              <h3 class="text-xl font-bold text-white mb-2">Sede Principal</h3>
+              <p class="text-green-100 text-sm">{siteConfig.location.fullAddress}</p>
+            </div>
+          </div>
+ 
+          <!-- Información de contacto con íconos animados -->
+          <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 animate-slide-in-left animation-delay-200">
+            <div class="space-y-6">
+              <div class="flex gap-4 group hover:bg-green-50 p-4 rounded-2xl transition-all duration-300">
+                <div class="text-blue-400 group-hover:scale-110 transition-transform shrink-0">
+                  <i data-lucide="phone-call" class="w-5 h-5" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <p class="text-gray-900 font-black text-sm uppercase tracking-tight">Central Telefónica</p>
+                  <p class="text-gray-600 text-sm">{siteConfig.contact.phone}</p>
+                </div>
+              </div>
+
+              <div class="flex gap-4 border-t border-gray-50 pt-6 group hover:bg-blue-50 p-4 rounded-2xl transition-all duration-300">
+                <div class="text-blue-400 group-hover:scale-110 transition-transform shrink-0">
+                  <i data-lucide="mail" class="w-5 h-5" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <p class="text-gray-900 font-black text-sm uppercase tracking-tight">Consultas</p>
+                  <p class="text-gray-600 text-sm break-all font-medium italic underline underline-offset-4 decoration-blue-200">
+                    {siteConfig.contact.email}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Horario de Atención mejorado -->
+          <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 animate-slide-in-left animation-delay-400">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="bg-amber-50 text-amber-600 w-12 h-12 rounded-xl flex items-center justify-center animate-pulse-soft">
+                <i data-lucide="clock" class="w-6 h-6"></i>
+              </div>
+              <h4 class="text-xl font-black text-slate-900">Horario de Atención</h4>
+            </div>
+            <div class="space-y-3 text-slate-600 font-medium">
+              <div class="flex justify-between border-b border-slate-50 pb-2">
+                <span>Lun - Vie</span>
+                <span class="text-slate-900 font-bold">08:00 - 20:00</span>
+              </div>
+              <div class="flex justify-between border-b border-slate-50 pb-2">
+                <span>Sábados</span>
+                <span class="text-slate-900 font-bold">09:00 - 14:00</span>
+              </div>
+              <p class="text-xs text-emerald-600 font-bold italic mt-4">
+                * {siteConfig.schedule.emergencies}
+              </p>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="lg:col-span-8 space-y-8">
+          <!-- Mapa con overlay mejorado y botón flotante -->
+          <div class="relative overflow-hidden rounded-3xl shadow-lg group focus-within:ring-2 focus-within:ring-green-500 animate-slide-in-right">
+            <iframe 
+              src={siteConfig.location.iframeUrl} 
+              class="w-full h-112.5 rounded-3xl grayscale group-hover:grayscale-0 transition-all duration-1000"
+              style="border:0;" 
+              allowfullscreen="" 
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Mapa interactivo de la ubicación de la clínica pediátrica en Huamanga">
+            </iframe>
+            <div class="absolute inset-0 bg-linear-to-t from-green-600/20 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center pb-8">
+              <a href={siteConfig.location.googleMapsLink} target="_blank" rel="noopener noreferrer" class="bg-white text-green-600 px-6 py-3 rounded-2xl font-bold hover:bg-green-50 hover:scale-105 transition-all shadow-lg focus:ring-2 focus:ring-green-500 animate-bounce-soft" aria-label="Abrir ubicación en Google Maps">
+                <i data-lucide="map-pin" class="w-5 h-5 mr-2" aria-hidden="true"></i> Ver en Maps
+              </a>
+            </div>
+            <!-- Indicador de carga -->
+            <div class="absolute inset-0 bg-white flex items-center justify-center rounded-3xl map-loader">
+              <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Emergencias con imagen mejorada y animación -->
+            <div class="relative overflow-hidden rounded-3xl shadow-2xl group focus-within:ring-2 focus-within:ring-red-500 animate-slide-in-right animation-delay-200" role="article" aria-label="Emergencias 24h">
+              <img src="/images/contact-emergency.jpg" alt="Imagen representativa de servicios de emergencias pediátricas" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-linear-to-br from-red-600/90 to-red-700/90 rounded-3xl"></div>
+              <div class="absolute inset-0 flex flex-col justify-end p-6 text-white">
+                <div class="flex items-center gap-3 mb-4">
+                  <div class="bg-white/20 p-2 rounded-lg backdrop-blur-sm animate-pulse">
+                    <i data-lucide="ambulance" class="w-6 h-6" aria-hidden="true"></i>
+                  </div>
+                  <span class="font-bold tracking-tight text-xl italic">Emergencias 24h</span>
+                </div>
+                <p class="text-red-100 text-sm mb-6 leading-relaxed">Atención inmediata sin previa cita para casos críticos pediátricos en Huamanga.</p>
+                <a href={`tel:${siteConfig.contact.phone}`} class="block w-full text-center bg-white text-red-600 py-4 rounded-xl font-bold text-sm hover:bg-red-50 hover:scale-105 transition-all active:scale-95 shadow-lg focus:ring-2 focus:ring-white" aria-label="Llamar a emergencias ahora">
+                  LLAMAR AHORA
+                </a>
+              </div>
+              <!-- Elementos decorativos -->
+              <div class="absolute top-10 right-10 animate-bounce">
+                <i data-lucide="heart" class="w-8 h-8 text-yellow-300" aria-hidden="true"></i>
+              </div>
+            </div>
+
+            <!-- Servicios al visitante con imagen mejorada -->
+            <div class="group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-green-500 animate-slide-in-right animation-delay-400" role="article" aria-label="Servicios disponibles para visitantes">
+              <img src="/images/contact-services.jpg" alt="Instalaciones y servicios para visitantes" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-linear-to-t from-green-600/90 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-green-600 mb-4 group-hover:animate-bounce">
+                  <i data-lucide="check-circle" class="w-7 h-7" aria-hidden="true"></i>
+                </div>
+                <h4 class="text-xl font-bold text-white mb-2">Servicios al Visitante</h4>
+                <ul class="text-sm text-green-100 space-y-1">
+                  <li>• Estacionamiento gratuito</li>
+                  <li>• Acceso para coches y sillas</li>
+                  <li>• Zona de lactancia</li>
+                  <li>• Wi-Fi alta velocidad</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Animaciones personalizadas para entrada escalonada */
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in { animation: fade-in 0.6s ease-out; }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-slide-up { animation: slide-up 0.8s ease-out; }
+
+  @keyframes slide-in-left {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .animate-slide-in-left { animation: slide-in-left 0.8s ease-out; }
+
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .animate-slide-in-right { animation: slide-in-right 0.8s ease-out; }
+
+  .animation-delay-200 { animation-delay: 0.2s; }
+  .animation-delay-400 { animation-delay: 0.4s; }
+
+  /* Animaciones de Tailwind ya incluidas: animate-bounce, animate-pulse, etc. */
+  @keyframes bounce-soft {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-5px); }
+    60% { transform: translateY(-2px); }
+  }
+  .animate-bounce-soft { animation: bounce-soft 2s infinite; }
+
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  .animate-pulse-soft { animation: pulse-soft 3s infinite; }
+
+  /* Indicador de carga para el mapa */
+  .map-loader { display: flex; } /* Mostrar por defecto */
+</style>
+
+<script>
+  // Inicializar íconos de Lucide (usando el global cargado desde CDN, con cast para evitar errores de TypeScript)
+  if ((window as any).lucide) {
+    (window as any).lucide.createIcons();
+  }
+
+  // Ocultar el indicador de carga del mapa cuando el iframe se cargue
+  const iframe = document.querySelector('iframe');
+  if (iframe) {
+    iframe.addEventListener('load', () => {
+      const loader = iframe.nextElementSibling as HTMLElement;
+      if (loader && loader.classList.contains('map-loader')) {
+        loader.style.display = 'none';
+      }
+    });
+  }
+
+  // Lazy loading de imágenes (usando el atributo nativo loading="lazy" del navegador, no necesitamos JS adicional)
+  // El navegador maneja esto automáticamente
+</script>

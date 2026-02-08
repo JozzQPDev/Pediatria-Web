@@ -1,0 +1,163 @@
+---
+// Tu código de importaciones permanece igual
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import { siteConfig } from "../data/siteConfig";
+
+const servicios = [
+  {
+    title: "Control de Crecimiento",
+    desc: "Evaluación integral del desarrollo psicomotor para asegurar un crecimiento saludable desde el primer mes.",
+    icon: "baby",
+    image: "/images/service-growth.jpg"
+  },
+  {
+    title: "Vacunación Integral",
+    desc: "Disponemos de todos los esquemas de vacunación nacionales e internacionales en un ambiente seguro.",
+    icon: "syringe",
+    image: "/images/service-vaccine.jpg"
+  },
+  {
+    title: "Nutrición Infantil",
+    desc: "Asesoría especializada en lactancia y alimentación complementaria para un desarrollo óptimo.",
+    icon: "apple",
+    image: "/images/service-nutrition.jpg"
+  },
+  {
+    title: "Atención de Recién Nacidos",
+    desc: "Cuidado experto y preventivo diseñado para los primeros y más importantes días de vida de tu bebé.",
+    icon: "heart-pulse",
+    image: "/images/service-newborn.jpg"
+  },
+  {
+    title: "Psicología Infantil",
+    desc: "Apoyo profesional enfocado en el bienestar emocional y el desarrollo conductual saludable.",
+    icon: "brain",
+    image: "/images/service-psychology.jpg"
+  },
+  {
+    title: "Nebulizaciones",
+    desc: "Equipamiento de última generación para el tratamiento inmediato de cuadros respiratorios y asma.",
+    icon: "wind",
+    image: "/images/service-nebulization.jpg"
+  },
+];
+---
+
+<Layout
+  title="Nuestros Servicios Médicos | Especialidades"
+  description="Conoce nuestras especialidades pediátricas. Ya estamos atendiendo en nuestra nueva sede."
+>
+  <Hero
+    title="Atención Médica Integral"
+    subtitle="Expertos en pediatría listos para acompañar el crecimiento de tus hijos con tecnología de vanguardia y calidez humana."
+    backgroundImage="/img/hero-servicios.jpg"
+    sideImage="/img/hero-servicios.jpg"
+    />
+
+  <!-- Sección de servicios: Grid con imágenes y overlays -->
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <span class="inline-block text-green-600 font-bold uppercase tracking-[0.3em] text-[11px] bg-green-50 px-4 py-2 rounded-lg mb-6">Nuestras Especialidades</span>
+        <h2 class="text-4xl md:text-6xl font-bold text-gray-900 italic leading-tight">Cuidado Especializado <br/><span class="text-green-600 not-italic">para Cada Etapa</span></h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {
+          servicios.map((s) => (
+            <div class="group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-green-500" role="article" aria-label={`Servicio: ${s.title}`}>
+              <img src={s.image} alt={`Imagen de ${s.title}`} class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-linear-to-t from-green-600/90 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-green-600 mb-4 group-hover:animate-bounce">
+                  <i data-lucide={s.icon} class="w-8 h-8" aria-hidden="true" />
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">{s.title}</h3>
+                <p class="text-green-100 text-sm leading-relaxed">{s.desc}</p>
+                <div class="mt-4 px-3 py-1 rounded-full bg-white/20 border border-white/30 inline-block">
+                  <span class="text-[10px] font-bold text-white uppercase tracking-widest">Especialidad Médica</span>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- CTA con imagen de fondo y elementos decorativos -->
+      <div class="mt-32 relative overflow-hidden rounded-3xl bg-cover bg-center p-8 lg:p-20 text-center text-white shadow-2xl" style="background-image: url('/img/hero-servicios.jpg');">
+        <div class="absolute inset-0 bg-linear-to-br from-green-500/90 to-blue-700/90 rounded-3xl"></div>
+        <div class="relative z-10 max-w-3xl mx-auto">
+          <span class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-8 inline-flex items-center gap-2 animate-pulse-soft">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-300 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+            </span>
+            Agenda tu visita hoy
+          </span>
+
+          <h2 class="text-4xl lg:text-6xl font-bold mb-8 leading-[1.1] tracking-tight italic">
+            Tu tranquilidad comienza <br />
+            <span class="not-italic text-yellow-200 font-bold">con una cita médica</span>
+          </h2>
+
+          <p class="text-green-100 mb-12 text-lg lg:text-xl opacity-90 leading-relaxed font-medium">
+            Nuestros especialistas están listos para recibirte. Agenda ahora por WhatsApp y recibe atención prioritaria en nuestra sede central.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
+            <a
+              href={siteConfig.contact.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-3 bg-white text-green-600 px-10 py-5 rounded-2xl font-bold hover:bg-green-50 hover:scale-105 transition-all shadow-xl active:scale-95 text-lg group/btn focus:ring-2 focus:ring-white" aria-label="Reservar cita por WhatsApp"
+            >
+              <i class="bi bi-whatsapp text-2xl group-hover/btn:scale-110 transition-transform" aria-hidden="true"></i>
+              RESERVAR POR WHATSAPP
+            </a>
+
+            <a
+              href="/contacto"
+              class="inline-flex items-center justify-center gap-3 bg-green-700/40 backdrop-blur-md text-white px-10 py-5 rounded-2xl font-bold hover:bg-green-700 hover:scale-105 transition-all border border-white/20 text-lg focus:ring-2 focus:ring-white" aria-label="Ver ubicación"
+            >
+              <i data-lucide="map-pin" class="w-5 h-5" aria-hidden="true"></i>
+              VER UBICACIÓN
+            </a>
+          </div>
+        </div>
+
+        <!-- Elementos decorativos infantiles -->
+        <div class="absolute top-10 right-10 animate-bounce-soft">
+          <i data-lucide="heart" class="w-10 h-10 text-yellow-300" aria-hidden="true"></i>
+        </div>
+        <div class="absolute bottom-10 left-10 animate-bounce-soft animation-delay-500">
+          <i data-lucide="star" class="w-8 h-8 text-yellow-300" aria-hidden="true"></i>
+        </div>
+
+        <div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl opacity-60"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-black/10 rounded-full -ml-20 -mb-20 blur-2xl opacity-40"></div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Animaciones para tema infantil */
+  @keyframes bounce-soft {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-5px); }
+    60% { transform: translateY(-2px); }
+  }
+  .animate-bounce-soft {
+    animation: bounce-soft 2s infinite;
+  }
+
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  .animate-pulse-soft {
+    animation: pulse-soft 3s infinite;
+  }
+
+  .animation-delay-500 { animation-delay: 0.5s; }
+</style>

@@ -1,0 +1,222 @@
+---
+// Tu código de importaciones permanece igual
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+
+const doctores = [
+  {
+    name: "Dra. Elena Martínez",
+    role: "Pediatra Neonatóloga",
+    specialty: "Líder de Cuidado del Recién Nacido",
+    image: "/images/medic-1.jpg",
+    tags: ["Lactancia", "Prematuros"],
+    linkedin: "https://linkedin.com/in/elena-martinez",
+    email: "emartinez@clinica.com",
+  },
+  {
+    name: "Dr. Ricardo Santos",
+    role: "Pediatra Especialista",
+    specialty: "Crecimiento y Desarrollo",
+    image: "/images/medic-2.jpg",
+    tags: ["Nutrición", "Adolescentes"],
+    linkedin: "https://linkedin.com/in/ricardo-santos",
+    email: "rsantos@clinica.com",
+  },
+  {
+    name: "Dra. Sofía Alva",
+    role: "Odontopediatra",
+    specialty: "Salud Bucal Infantil",
+    image: "/images/medic-3.jpg",
+    tags: ["Ortodoncia", "Prevención"],
+    linkedin: "https://linkedin.com/in/sofia-alva",
+    email: "salva@clinica.com",
+  },
+  {
+    name: "Dr. Carlos Ruiz",
+    role: "Psicólogo Infantil",
+    specialty: "Desarrollo Emocional",
+    image: "/images/medic-4.jpg",
+    tags: ["Conducta", "Terapia"],
+    linkedin: "https://linkedin.com/in/carlos-ruiz",
+    email: "cruiz@clinica.com",
+  },
+];
+
+const beneficios = [
+  {
+    title: "Staff Colegiado",
+    desc: "Especialistas certificados con años de experiencia en las instituciones de salud más importantes.",
+    icon: "award",
+    image: "/images/benefit-certified.jpg",
+  },
+  {
+    title: "Atención Moderna",
+    desc: "Equipamiento tecnológico de última generación para diagnósticos certeros y tratamientos mínimamente invasivos.",
+    icon: "sparkles",
+    image: "/images/benefit-modern.jpg",
+  },
+  {
+    title: "Enfoque Familiar",
+    desc: "Entendemos que la salud de un niño involucra a toda la familia. Brindamos asesoría y calma en cada paso.",
+    icon: "users",
+    image: "/images/benefit-family.jpg",
+  },
+];
+---
+
+<Layout title="Nuestro Equipo Médico | Especialistas">
+  <Hero
+    title="Especialistas de Corazón"
+    subtitle="Profesionales certificados con un solo objetivo: el bienestar y la salud integral de tus hijos."
+    backgroundImage="/img/hero-equipo.jpg"
+    sideImage="/img/hero-equipo.jpg"
+  />
+
+  <!-- Sección de doctores: Grid con overlays mejorados y animaciones -->
+  <section class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16">
+        <span
+          class="inline-block text-green-600 font-bold uppercase tracking-[0.3em] text-[11px] bg-green-50 px-4 py-2 rounded-lg mb-6"
+          >Nuestro Equipo</span
+        >
+        <h2
+          class="text-4xl md:text-6xl font-bold text-gray-900 italic leading-tight"
+        >
+          Profesionales Dedicados <br /><span class="text-green-600 not-italic"
+            >al Cuidado Infantil</span
+          >
+        </h2>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        {
+          doctores.map((doc) => (
+            <div
+              class="group focus-within:ring-2 focus-within:ring-green-500"
+              role="article"
+              aria-label={`Perfil de ${doc.name}`}
+            >
+              <div class="relative overflow-hidden rounded-3xl mb-6 shadow-xl border border-gray-100 bg-gray-200 aspect-4/5">
+                <img
+                  src={doc.image}
+                  alt={`Foto de ${doc.name}`}
+                  class="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 grayscale-20 group-hover:grayscale-0"
+                  loading="lazy"
+                />
+
+                <div class="absolute inset-0 bg-linear-to-t from-green-600/80 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-8">
+                  <div class="flex gap-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <a
+                      href={doc.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="w-11 h-11 bg-white text-green-600 rounded-full flex items-center justify-center shadow-lg hover:bg-green-50 hover:scale-110 transition-all focus:ring-2 focus:ring-green-500"
+                      aria-label={`LinkedIn de ${doc.name}`}
+                    >
+                      <i data-lucide="linkedin" class="w-5 h-5" aria-hidden="true" />
+                    </a>
+                    <a
+                      href={`mailto:${doc.email}`}
+                      class="w-11 h-11 bg-white text-green-600 rounded-full flex items-center justify-center shadow-lg hover:bg-green-50 hover:scale-110 transition-all focus:ring-2 focus:ring-green-500"
+                      aria-label={`Email de ${doc.name}`}
+                    >
+                      <i data-lucide="mail" class="w-5 h-5" aria-hidden="true" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center lg:text-left">
+                <h3 class="text-2xl font-bold text-gray-900 mb-1">
+                  {doc.name}
+                </h3>
+                <p class="text-green-600 font-bold text-sm mb-4 uppercase tracking-wide">
+                  {doc.role}
+                </p>
+
+                <div class="bg-green-50/50 p-4 rounded-2xl mb-5">
+                  <p class="text-gray-600 text-sm leading-relaxed italic border-l-2 border-green-400 pl-3">
+                    "{doc.specialty}"
+                  </p>
+                </div>
+
+                <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
+                  {doc.tags.map((tag) => (
+                    <span class="px-3 py-1 bg-gray-100 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-widest border border-gray-200 hover:bg-green-50 hover:text-green-600 transition-colors">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Sección de beneficios: Cards con imágenes y overlays -->
+      <div
+        class="mt-32 grid md:grid-cols-3 gap-12 border-t border-gray-100 pt-20"
+      >
+        {
+          beneficios.map((ben) => (
+            <div
+              class="group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-green-500"
+              role="article"
+              aria-label={`Beneficio: ${ben.title}`}
+            >
+              <img
+                src={ben.image}
+                alt={`Imagen de ${ben.title}`}
+                class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-linear-to-t from-green-600/90 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-green-600 mb-4 group-hover:animate-bounce">
+                  <i data-lucide={ben.icon} class="w-8 h-8" aria-hidden="true" />
+                </div>
+                <h4 class="text-xl font-bold text-white mb-2">{ben.title}</h4>
+                <p class="text-green-100 text-sm leading-relaxed">{ben.desc}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Animaciones para tema infantil */
+  @keyframes bounce-soft {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-5px);
+    }
+    60% {
+      transform: translateY(-2px);
+    }
+  }
+  .animate-bounce-soft {
+    animation: bounce-soft 2s infinite;
+  }
+
+  @keyframes pulse-soft {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+  .animate-pulse-soft {
+    animation: pulse-soft 3s infinite;
+  }
+</style>

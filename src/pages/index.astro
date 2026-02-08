@@ -1,11 +1,195 @@
 ---
-import Welcome from '../components/Welcome.astro';
+// Tu código de importaciones permanece igual
 import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const quickServices = [
+  { title: "Control de Crecimiento", icon: "baby", desc: "Seguimiento especializado del desarrollo físico y motor de tu pequeño.", image: "/images/service-growth.jpg" },
+  { title: "Vacunación Integral", icon: "syringe", desc: "Esquema completo de vacunas en un ambiente seguro y tranquilo.", image: "/images/service-vaccine.jpg" },
+  { title: "Nutrición Infantil", icon: "apple", desc: "Especialistas en crear hábitos saludables desde la primera infancia.", image: "/images/service-nutrition.jpg" },
+  { title: "Urgencias 24h", icon: "ambulance", desc: "Atención médica inmediata con protocolos de respuesta rápida.", image: "/images/service-emergency.jpg" }
+];
+
+const benefits = [
+  { title: "Infraestructura Moderna", desc: "Ambientes diseñados bajo estándares internacionales de bioseguridad y confort.", icon: "building-2", image: "/images/clinic-1.jpg" },
+  { title: "Especialistas Certificados", desc: "Staff médico con alta formación académica y profunda vocación de servicio.", icon: "award", image: "/images/benefit-certified.jpg" },
+  { title: "Gestión Digital", desc: "Consultas eficientes y acceso a resultados desde tu celular para tu comodidad.", icon: "smartphone", image: "/images/value-innovation.jpg" }
+];
+
+const testimonials = [
+  { name: "María López", role: "Madre de Sofía (3 años)", quote: "La atención en la clínica es increíble. Mi hija se siente segura y los doctores son muy cariñosos.", image: "/images/testimonial-1.jpg" },
+  { name: "Carlos Ramírez", role: "Padre de Mateo (1 año)", quote: "Recomiendo esta clínica por su tecnología y calidez. Siempre nos sentimos en familia.", image: "/images/testimonial-2.jpg" },
+  { name: "Ana Torres", role: "Madre de Lucas (5 años)", quote: "El control de crecimiento de mi hijo ha sido perfecto. Profesionales de primera.", image: "/images/testimonial-3.jpg" }
+];
+
+const galleryImages = [
+  "/images/clinic-1.jpg", "/images/clinic-2.jpg", "/images/clinic-3.jpg", "/images/clinic-4.jpg"
+];
 ---
 
-<Layout>
-	<Welcome />
+<Layout title={`Inicio | ${siteConfig.name}`}>
+  <main class="overflow-hidden bg-white">
+    <!-- Hero con imagen de fondo: Cambié a un diseño más visual con overlay y CTA prominente -->
+    <section class="relative h-screen flex items-center justify-center bg-cover bg-center" style="background-image: url('/images/hero-pediatric.jpg');">
+      <div class="absolute inset-0 bg-linear-to-r from-green-500/80 to-blue-600/80"></div>
+      <div class="relative z-10 text-center text-white px-4 max-w-4xl">
+        <h1 class="text-5xl md:text-7xl font-bold italic tracking-tighter leading-none mb-6 animate-fade-in">
+          Atención pediátrica <br/> <span class="text-yellow-300 not-italic">con corazón</span>
+        </h1>
+        <p class="text-xl md:text-2xl font-medium mb-10 text-green-100 animate-fade-in animation-delay-200">
+          Brindamos soluciones médicas integrales para la salud de tus hijos en un entorno moderno y seguro. Tu tranquilidad es nuestro compromiso diario.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in animation-delay-400">
+          <a href={siteConfig.contact.whatsappUrl} target="_blank" rel="noopener noreferrer" class="bg-white text-green-600 px-10 py-5 rounded-2xl font-bold text-lg hover:shadow-xl hover:-translate-y-1 hover:scale-105 transition-all flex items-center justify-center gap-3 focus:ring-2 focus:ring-white" aria-label="Reservar cita por WhatsApp">
+            <i class="bi bi-whatsapp text-xl" aria-hidden="true"></i> Reservar Cita
+          </a>
+          <a href="/nosotros" class="px-10 py-5 rounded-2xl font-bold text-lg border-2 border-white/30 hover:bg-white/10 hover:scale-105 transition-all flex items-center justify-center gap-3 focus:ring-2 focus:ring-white" aria-label="Conoce más sobre nosotros">
+            <i data-lucide="info" class="w-5 h-5" aria-hidden="true"></i> Conócenos
+          </a>
+        </div>
+      </div>
+      <!-- Elementos decorativos infantiles -->
+      <div class="absolute bottom-10 left-10 animate-bounce-soft">
+        <i data-lucide="heart" class="w-12 h-12 text-yellow-300" aria-hidden="true"></i>
+      </div>
+      <div class="absolute top-20 right-20 animate-bounce-soft animation-delay-500">
+        <i data-lucide="star" class="w-10 h-10 text-yellow-300" aria-hidden="true"></i>
+      </div>
+    </section>
+
+    <!-- Sección de servicios: Grid con imágenes y overlays -->
+    <section class="py-32 px-4">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-20">
+          <span class="inline-block text-green-600 font-bold uppercase tracking-[0.3em] text-[11px] bg-green-50 px-4 py-2 rounded-lg mb-6">Nuestros Servicios</span>
+          <h2 class="text-4xl md:text-6xl font-bold text-gray-900 italic leading-tight">Cuidado Integral <br/><span class="text-green-600 not-italic">Pedriático</span></h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {quickServices.map(service => (
+            <div class="group relative overflow-hidden rounded-4xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-green-500" role="article" aria-label={`Servicio: ${service.title}`}>
+              <img src={service.image} alt={`Imagen de ${service.title}`} class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div class="absolute inset-0 bg-linear-to-t from-green-600/90 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
+                <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-green-600 mb-4 group-hover:animate-bounce">
+                  <i data-lucide={service.icon} class="w-7 h-7" aria-hidden="true"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white mb-2">{service.title}</h3>
+                <p class="text-green-100 text-sm">{service.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de beneficios: Cards con imágenes y texto -->
+    <section class="py-24 px-4 bg-gray-50">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 italic leading-tight mb-12">
+              Infraestructura diseñada <br/> <span class="text-green-600 not-italic">para su bienestar</span>
+            </h2>
+            <div class="space-y-8">
+              {benefits.map(benefit => (
+                <div class="flex gap-6 items-center group" role="article" aria-label={`Beneficio: ${benefit.title}`}>
+                  <img src={benefit.image} alt={`Imagen de ${benefit.title}`} class="w-20 h-20 rounded-2xl object-cover shadow-lg group-hover:scale-105 transition-transform" loading="lazy" />
+                  <div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-2">{benefit.title}</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">{benefit.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div class="relative">
+            <img src="/images/contact-building.jpg" alt="Infraestructura moderna de la clínica" class="rounded-4xl shadow-2xl w-full" loading="lazy" />
+            <div class="absolute -bottom-6 -right-6 bg-yellow-300 p-4 rounded-2xl shadow-lg animate-pulse-soft">
+              <i data-lucide="stethoscope" class="w-8 h-8 text-green-600" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de testimonios: Slider simple con fotos -->
+    <section class="py-32 px-4">
+      <div class="max-w-6xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 italic mb-12">Lo que dicen <br/><span class="text-green-600 not-italic">nuestras familias</span></h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          {testimonials.map(testimonial => (
+            <div class="bg-white p-8 rounded-4xl shadow-lg hover:shadow-xl transition-shadow group" role="article" aria-label={`Testimonio de ${testimonial.name}`}>
+              <img src={testimonial.image} alt={`Foto de ${testimonial.name}`} class="w-16 h-16 rounded-full mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform" loading="lazy" />
+              <p class="text-gray-600 italic mb-6">"{testimonial.quote}"</p>
+              <h4 class="font-bold text-gray-900">{testimonial.name}</h4>
+              <p class="text-sm text-green-600">{testimonial.role}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Galería de la clínica: Grid de imágenes -->
+    <section class="py-24 px-4 bg-gray-900">
+      <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-bold text-white italic mb-12">Nuestra <span class="text-green-400 not-italic">clínica</span></h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {galleryImages.map((image, index) => (
+            <img src={image} alt={`Imagen de la clínica ${index + 1}`} class="rounded-2xl shadow-lg hover:scale-105 transition-transform cursor-pointer" loading="lazy" />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de CTA: Imagen de fondo con overlay -->
+    <section class="py-32 px-4">
+      <div class="max-w-6xl mx-auto bg-cover bg-center rounded-4xl p-12 lg:p-24 text-center text-white relative overflow-hidden shadow-2xl" style="background-image: url('/images/value-family.jpg');">
+        <div class="absolute inset-0 bg-linear-to-br from-green-500/90 to-blue-700/90 rounded-4xl"></div>
+        <div class="relative z-10">
+          <h2 class="text-4xl md:text-6xl font-bold mb-10 italic tracking-tighter">Tu tranquilidad <br/> <span class="text-yellow-200 not-italic">empieza aquí</span></h2>
+          <p class="text-green-100 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium">
+            Agenda una consulta hoy mismo en {siteConfig.location.city} y brinda a tus hijos la atención médica que se merecen.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-6 justify-center">
+            <a href={siteConfig.contact.whatsappUrl} target="_blank" rel="noopener noreferrer" class="bg-white text-green-600 px-10 py-5 rounded-2xl font-bold text-lg hover:shadow-xl hover:-translate-y-1 hover:scale-105 transition-all flex items-center justify-center gap-3 focus:ring-2 focus:ring-white" aria-label="Reservar cita por WhatsApp">
+              <i class="bi bi-whatsapp text-xl" aria-hidden="true"></i> Reservar Cita
+            </a>
+            <a href={`tel:${siteConfig.contact.phone}`} class="px-10 py-5 rounded-2xl font-bold text-lg border-2 border-white/30 hover:bg-white/10 hover:scale-105 transition-all flex items-center justify-center gap-3 focus:ring-2 focus:ring-white" aria-label="Llamar a central telefónica">
+              <i data-lucide="phone" class="w-5 h-5" aria-hidden="true"></i> Llamar Ahora
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>
+
+<style>
+  /* Animaciones para tema infantil */
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-in {
+    animation: fade-in 1s ease-out forwards;
+  }
+  .animation-delay-200 { animation-delay: 0.2s; }
+  .animation-delay-400 { animation-delay: 0.4s; }
+  .animation-delay-500 { animation-delay: 0.5s; }
+
+  @keyframes bounce-soft {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-5px); }
+    60% { transform: translateY(-2px); }
+  }
+  .animate-bounce-soft {
+    animation: bounce-soft 2s infinite;
+  }
+
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  .animate-pulse-soft {
+    animation: pulse-soft 3s infinite;
+  }
+</style>
