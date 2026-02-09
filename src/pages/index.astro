@@ -102,7 +102,7 @@ const galleryImages = [
             </div>
           </div>
           <div class="relative">
-            <img src="/images/contact-building.jpg" alt="Infraestructura moderna de la clínica" class="rounded-4xl shadow-2xl w-full" loading="lazy" />
+            <img src="/images/clinica-home1.jpg" alt="Infraestructura moderna de la clínica" class="rounded-4xl shadow-2xl w-full" loading="lazy" />
             <div class="absolute -bottom-6 -right-6 bg-yellow-300 p-4 rounded-2xl shadow-lg animate-pulse-soft">
               <i data-lucide="stethoscope" class="w-8 h-8 text-green-600" aria-hidden="true"></i>
             </div>
@@ -111,19 +111,24 @@ const galleryImages = [
       </div>
     </section>
 
-    <!-- Sección de testimonios: Slider simple con fotos -->
-    <section class="py-32 px-4">
-      <div class="max-w-6xl mx-auto text-center">
+   <!-- Sección de testimonios: Carrusel automático constante en bucle -->
+    <section class="py-22 px-4">
+      <div class="max-w-7xl mx-auto text-center">
         <h2 class="text-4xl md:text-5xl font-bold text-gray-900 italic mb-12">Lo que dicen <br/><span class="text-green-600 not-italic">nuestras familias</span></h2>
-        <div class="grid md:grid-cols-3 gap-8">
-          {testimonials.map(testimonial => (
-            <div class="bg-white p-8 rounded-4xl shadow-lg hover:shadow-xl transition-shadow group" role="article" aria-label={`Testimonio de ${testimonial.name}`}>
-              <img src={testimonial.image} alt={`Foto de ${testimonial.name}`} class="w-16 h-16 rounded-full mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform" loading="lazy" />
-              <p class="text-gray-600 italic mb-6">"{testimonial.quote}"</p>
-              <h4 class="font-bold text-gray-900">{testimonial.name}</h4>
-              <p class="text-sm text-green-600">{testimonial.role}</p>
-            </div>
-          ))}
+        <div class="relative overflow-hidden">
+          <div id="testimonials-container" class="flex animate-scroll h-95">
+            <!-- Duplicamos los testimonios para el bucle infinito -->
+            {[...testimonials, ...testimonials].map((testimonial, index) => (
+              <div class="shrink-0 px-4 w-80">
+                <div class="bg-white p-8 rounded-4xl shadow-lg hover:shadow-xl transition-shadow group" role="article" aria-label={`Testimonio de ${testimonial.name}`}>
+                  <img src={testimonial.image} alt={`Foto de ${testimonial.name}`} class="w-16 h-16 rounded-full mx-auto mb-6 shadow-lg group-hover:scale-110 transition-transform" loading="lazy" />
+                  <p class="text-gray-600 italic mb-6">"{testimonial.quote}"</p>
+                  <h4 class="font-bold text-gray-900">{testimonial.name}</h4>
+                  <p class="text-sm text-green-600">{testimonial.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -191,5 +196,14 @@ const galleryImages = [
   }
   .animate-pulse-soft {
     animation: pulse-soft 3s infinite;
+  }
+
+  /* Animación para el carrusel constante */
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-scroll {
+    animation: scroll 20s linear infinite;
   }
 </style>

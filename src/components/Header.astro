@@ -130,7 +130,7 @@ const currentPath = pathname.slice(1);
 <style>
   @reference "../styles/global.css";
 
-  .nav-link { @apply hover:text-green-600 transition-all duration-300 relative py-2; }
+  .nav-link { @apply hover:text-green-600 transition-all duration-300 relative py-2 focus:outline-none; }
   .nav-link::after { content: ""; @apply absolute bottom-0 left-0 w-0 h-0.5 bg-green-600 transition-all duration-300; }
   .nav-link:hover::after, .nav-link.active::after { @apply w-full; }
   .nav-link.active { @apply text-green-600 font-bold; }

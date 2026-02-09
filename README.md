@@ -1,14 +1,17 @@
-# Astro Starter Kit: Basics
+# 🏥 Clínica Pediátrica - Sitio Web Oficial
 
-```sh
-npm create astro@latest -- --template basics
-```
+Sistema web para la **Clínica Pediátrica** especializada en la salud y bienestar de niños en Ayacucho, Perú.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## � Descripción del Sistema
 
-## 🚀 Project Structure
+Sitio web profesional construido con **Astro** y **Tailwind CSS**.
 
-Inside of your Astro project, you'll see the following folders and files:
+Características:
+- Información sobre servicios de la clínica
+- Presentación del equipo médico
+- Datos de contacto y ubicación
+- Sistema de agendamiento vía WhatsApp
+- Información corporativa
 
 ```text
 /
@@ -26,21 +29,47 @@ Inside of your Astro project, you'll see the following folders and files:
 └── package.json
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## � Tecnologías
 
-## 🧞 Commands
+- **Astro 5.17.1** - Framework web moderno
+- **Tailwind CSS 4.1.18** - Estilos responsivos
+- **@astrojs/sitemap** - Generación de sitemap
 
-All commands are run from the root of the project, from a terminal:
+## 📱 Funcionalidades
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+✅ Sitio completamente responsivo  
+✅ Integración con WhatsApp para citas  
+✅ Mapa de ubicación (Google Maps)  
+✅ SEO optimizado  
+✅ Emergencias disponibles 24/7
 
-## 👀 Want to learn more?
+## �🚀 Comandos Principales
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Comando          | Acción                                  |
+|:-----------------|:----------------------------------------|
+| `npm install`    | Instala dependencias                    |
+| `npm run dev`    | Inicia desarrollo en localhost:4321     |
+| `npm run build`  | Compila para producción                 |
+| `npm run preview`| Vista previa del build                  |
+
+## 📞 Información de Contacto
+
+- **WhatsApp**: +51 900 000 000
+- **Teléfono**: (066) 234 567
+- **Email**: informes@clinicapediatrica.com
+- **Dirección**: Av. Arenales 123, San Juan Bautista, Huamanga, Ayacucho
+
+## ⏰ Horarios
+
+- **L-V**: 08:00 AM - 08:00 PM
+- **Sábados**: 09:00 AM - 02:00 PM
+- **Emergencias**: 24 Horas
+
+## 🌐 Redes Sociales
+
+- Facebook
+- Instagram
+- TikTok
+- LinkedIn
+
+**Última actualización**: 8 de febrero de 2026
