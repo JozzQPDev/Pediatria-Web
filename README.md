@@ -1,33 +1,17 @@
 # 🏥 Clínica Pediátrica - Sitio Web Oficial
 
-Sistema web para la **Clínica Pediátrica** especializada en la salud y bienestar de niños en Ayacucho, Perú.
+Sitio web de la **Clínica Pediátrica** especializada en la salud y bienestar de niños en Ayacucho, Perú.
 
-## � Descripción del Sistema
+## 📋 Descripción
 
-Sitio web profesional construido con **Astro** y **Tailwind CSS**.
+Página web moderna construida con **Astro** y **Tailwind CSS**.
 
 Características:
 - Información sobre servicios de la clínica
 - Presentación del equipo médico
 - Datos de contacto y ubicación
-- Sistema de agendamiento vía WhatsApp
+- Agendamiento de citas vía WhatsApp
 - Información corporativa
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
 
 ## � Tecnologías
 
