@@ -94,16 +94,18 @@ const mainTitle = words.join(' ');
             />
             <!-- Overlay on hover para mejor interacción -->
             <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            
+            <!-- Iconos decorativos movidos dentro del contenedor de la imagen para asegurar que estén encima -->
+            <div class="absolute top-10 right-10 z-20 animate-bounce-soft">
+              <i data-lucide="heart" class="w-8 h-8 text-yellow-400 drop-shadow-lg"></i>
+            </div>
+            <div class="absolute bottom-10 left-10 z-20 animate-bounce-soft delay-500">
+              <i data-lucide="star" class="w-6 h-6 text-blue-400 drop-shadow-lg"></i>
+            </div>
           </div>
 
           <!-- Elementos decorativos mejorados -->
           <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-green-600 rounded-3xl -z-10 opacity-25 blur-xl animate-pulse-soft"></div>
-          <div class="absolute top-10 right-10 animate-bounce-soft">
-            <i data-lucide="heart" class="w-8 h-8 text-yellow-400 drop-shadow-lg"></i>
-          </div>
-          <div class="absolute bottom-10 left-10 animate-bounce-soft delay-500">
-            <i data-lucide="star" class="w-6 h-6 text-blue-400 drop-shadow-lg"></i>
-          </div>
         </div>
       )}
     </div>
