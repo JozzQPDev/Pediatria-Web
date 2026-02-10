@@ -1,0 +1,42 @@
+---
+// Tu código de importaciones permanece igual
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/siteConfig';
+import Welcome from '../components/Welcome.astro';  // Corregido: 'Modal' a 'Welcome'
+
+const quickServices = [
+  { title: "Control de Crecimiento", icon: "baby", desc: "Seguimiento especializado del desarrollo físico y motor de tu pequeño.", image: "/images/service-growth.jpg" },
+  { title: "Vacunación Integral", icon: "syringe", desc: "Esquema completo de vacunas en un ambiente seguro y tranquilo.", image: "/images/service-vaccine.jpg" },
+  { title: "Nutrición Infantil", icon: "apple", desc: "Especialistas en crear hábitos saludables desde la primera infancia.", image: "/images/service-nutrition.jpg" },
+  { title: "Urgencias 24h", icon: "ambulance", desc: "Atención médica inmediata con protocolos de respuesta rápida.", image: "/images/service-emergency.jpg" }
+];
+
+
+const benefcomplet = [
+  {
+    desc: [
+      "Nuestra clínica ofrece un entorno seguro, cálido y acogedor, especialmente diseñado para el desarrollo integral de los niños.",
+      "Contamos con instalaciones modernas equipadas con tecnología de vanguardia, áreas pensadas para el confort de pacientes y familias.",
+      "Aplicamos estrictos protocolos de bioseguridad que garantizan una atención confiable, humana y de alta calidad en cada visita."
+    ]
+  }
+];
+
+
+const benefits = [
+  { title: "Atención Personalizada", desc: "Cada niño es único, por eso ofrecemos planes de cuidado adaptados a sus necesidades específicas.", icon: "users", image: "/images/benefit-personalized.jpg" },
+  { title: "Infraestructura Moderna", desc: "Ambientes diseñados bajo estándares internacionales de bioseguridad y confort.", icon: "building-2", image: "/images/clinic-1.jpg" },
+  { title: "Especialistas Certificados", desc: "Staff médico con alta formación académica y profunda vocación de servicio.", icon: "award", image: "/images/benefit-certified.jpg" },
+  { title: "Gestión Digital", desc: "Consultas eficientes y acceso a resultados desde tu celular para tu comodidad.", icon: "smartphone", image: "/images/value-innovation.jpg" }
+];
+
+const testimonials = [
+  { name: "María López", role: "Madre de Sofía (3 años)", quote: "La atención en la clínica es increíble. Mi hija se siente segura y los doctores son muy cariñosos.", image: "/images/testimonial-1.jpg" },
+  { name: "Carlos Ramírez", role: "Padre de Mateo (1 año)", quote: "Recomiendo esta clínica por su tecnología y calidez. Siempre nos sentimos en familia.", image: "/images/testimonial-2.jpg" },
+  { name: "Ana Torres", role: "Madre de Lucas (5 años)", quote: "El control de crecimiento de mi hijo ha sido perfecto. Profesionales de primera.", image: "/images/testimonial-3.jpg" }
+];
+
+const galleryImages = [
+  "/images/clinic-1.jpg", "/images/clinic-2.jpg", "/images/clinic-3.jpg", "/images/clinic-4.jpg"
+];
+---

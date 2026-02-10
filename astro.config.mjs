@@ -5,11 +5,9 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'http://localhost:4321', // luego se cambia por el dominio real
-
+  site: 'http://localhost:4321', // Cambia a tu dominio real en producción
   integrations: [sitemap()],
-
   vite: {
-    plugins: [tailwindcss()]
-  }
+    plugins: [tailwindcss()],
+  },
 });

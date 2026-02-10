@@ -1,45 +1,52 @@
 ---
+// Header.astro
+// Componente de header con barra superior, navegación y menú móvil
 import { siteConfig } from "../data/siteConfig";
 const pathname = new URL(Astro.request.url).pathname;
 const currentPath = pathname.slice(1);
 ---
 
+<!-- Skip Link para accesibilidad (oculto por defecto, visible al navegar con tab) -->
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg z-50">Saltar a contenido principal</a>
+
+<!-- Barra Superior -->
 <div class="bg-linear-to-r from-blue-500 to-green-400 text-white py-3 text-[11px] md:text-sm font-semibold uppercase tracking-widest relative z-50 border-b border-white/20 shadow-lg">
   <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
     <div class="flex gap-4 md:gap-8">
-      <a href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`} class="flex items-center gap-2 hover:text-yellow-200 transition-all duration-300 group" aria-label="Llamar al teléfono">
+      <a href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`} class="flex items-center gap-2 hover:text-yellow-200 transition-all duration-300 group focus:ring-2 focus:ring-yellow-300" aria-label="Llamar al teléfono">
         <i data-lucide="phone" class="w-4 h-4 group-hover:scale-110 transition-transform duration-300"></i>
         <span class="font-bold">{siteConfig.contact.phone}</span>
       </a>
-      <a href={siteConfig.location.googleMapsLink} target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-2 hover:text-yellow-200 transition-all duration-300 group" aria-label="Ver ubicación en mapa">
+      <a href={siteConfig.location.googleMapsLink} target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-2 hover:text-yellow-200 transition-all duration-300 group focus:ring-2 focus:ring-yellow-300" aria-label="Ver ubicación en mapa">
         <i data-lucide="map-pin" class="w-4 h-4 group-hover:scale-105 transition-transform duration-300"></i>
         <span>{siteConfig.location.city}, {siteConfig.location.district}</span>
       </a>
     </div>
     <div class="flex items-center gap-4 border-l border-white/30 pl-4">
-      <a href={siteConfig.socials.facebook} target="_blank" class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform" aria-label="Facebook">
+      <a href={siteConfig.socials.facebook} target="_blank" rel="noopener noreferrer" class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300" aria-label="Facebook">
         <i data-lucide="facebook" class="w-4 h-4"></i>
       </a>
-      <a href={siteConfig.socials.instagram} target="_blank" class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform" aria-label="Instagram">
+      <a href={siteConfig.socials.instagram} target="_blank" rel="noopener noreferrer" class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300" aria-label="Instagram">
         <i data-lucide="instagram" class="w-4 h-4"></i>
       </a>
-      <a href={`mailto:${siteConfig.contact.email}`} class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform" aria-label="Enviar email">
+      <a href={`mailto:${siteConfig.contact.email}`} class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300" aria-label="Enviar email">
         <i data-lucide="mail" class="w-4 h-4"></i>
       </a>
     </div>
   </div>
 </div>
 
+<!-- Header Principal -->
 <header class="bg-white/95 backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b border-gray-200">
-  <div class="max-w-7xl mx-auto px-4 py-6 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-3 group relative z-60" aria-label="Ir a inicio">
+  <div class="max-w-7xl mx-auto px-4 py-4 md:py-6 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group relative z-60 rounded-lg" aria-label="Ir a inicio">
       <div class="bg-linear-to-br from-blue-500 to-green-400 p-3 rounded-2xl text-white group-hover:rotate-12 group-hover:shadow-2xl group-hover:animate-bounce transition-all duration-500 shadow-lg shadow-blue-200">
         <i data-lucide="baby" class="w-7 h-7"></i>
       </div>
       <div class="flex flex-col">
         <span class="text-xl md:text-2xl font-black tracking-tighter text-gray-900 italic leading-none flex items-center gap-1.5">
           {siteConfig.name.split(" ")[0]}
-          <span class="text-green-600 not-italic tracking-tight">{siteConfig.name.split(" ").slice(1).join(" ")}</span>
+          <span class="text-transparent bg-clip-text bg-linear-to-r from-green-600 to-blue-500 italic">{siteConfig.name.split(" ").slice(1).join(" ")}</span>
         </span>
         <span class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-1 leading-none">
           {siteConfig.location.city} · {siteConfig.location.district}
@@ -47,19 +54,24 @@ const currentPath = pathname.slice(1);
       </div>
     </a>
 
-    <nav class="hidden lg:flex items-center gap-10 text-[13px] font-medium uppercase tracking-wide text-gray-600">
+    <nav class="hidden lg:flex items-center gap-10 text-[13px] font-medium uppercase tracking-wide text-gray-600" role="navigation" aria-label="Navegación principal">
       <a href="/" class={`nav-link ${pathname === "/" ? "active" : ""}`}>Inicio</a>
       <a href="/nosotros" class={`nav-link ${currentPath.includes("nosotros") ? "active" : ""}`}>Nosotros</a>
       <a href="/servicios" class={`nav-link ${currentPath.includes("servicios") ? "active" : ""}`}>Servicios</a>
       <a href="/equipo" class={`nav-link ${currentPath.includes("equipo") ? "active" : ""}`}>Equipo</a>
       <a href="/contacto" class={`nav-link ${currentPath.includes("contacto") ? "active" : ""}`}>Contacto</a>
     </nav>
-
-    <div class="flex items-center gap-4">
-      <a href={siteConfig.contact.whatsappUrl} target="_blank" class="hidden md:flex items-center gap-2 bg-linear-to-r from-green-500 to-blue-600 text-white px-8 py-3.5 rounded-2xl text-[12px] font-bold uppercase tracking-wide shadow-xl shadow-green-200 hover:shadow-2xl hover:scale-105 transition-all duration-300" aria-label="Pedir cita por WhatsApp">
-        <i data-lucide="calendar-check" class="w-4 h-4"></i> Pedir Cita
+    
+    <div>
+      <a href={siteConfig.contact.whatsappUrl} target="_blank" rel="noopener noreferrer" class="hidden lg:inline-flex items-center gap-3 px-5 py-3 bg-linear-to-r from-green-500 to-blue-600 text-white font-bold rounded-2xl hover:from-green-600 hover:to-blue-700 hover:-translate-y-1 hover:scale-105 hover:shadow-xl transition-all duration-300 shadow-lg shadow-green-200 active:scale-95 text-sm group focus:outline-none focus:ring-4 focus:ring-green-300" aria-label="Reservar cita por WhatsApp">
+        <i class="bi bi-whatsapp text-lg"></i>
+        Pedir Cita
+        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200"></i>
       </a>
-      <button id="menu-btn" class="lg:hidden p-3 text-green-600 relative z-60 transition-all duration-300 hover:bg-green-50 rounded-2xl group focus:outline-none" aria-label="Abrir menú móvil">
+    </div>
+    
+    <div class="flex items-center gap-4">
+      <button id="menu-btn" class="lg:hidden p-3 text-green-600 relative z-60 transition-all duration-300 hover:bg-green-50 rounded-2xl group focus:outline-none focus:ring-2 focus:ring-green-300" aria-label="Abrir menú móvil" aria-expanded="false">
         <div class="w-8 h-8 relative flex flex-col justify-center items-center">
           <span class="w-6 h-0.5 bg-current transition-all duration-300 transform origin-center"></span>
           <span class="w-6 h-0.5 bg-current transition-all duration-300 transform origin-center mt-1"></span>
@@ -70,57 +82,60 @@ const currentPath = pathname.slice(1);
   </div>
 </header>
 
-<div id="mobile-overlay" class="fixed inset-0 bg-black/40 z-998 opacity-0 pointer-events-none transition-all duration-400 ease-in-out lg:hidden backdrop-blur-sm hidden"></div>
+<!-- Overlay Móvil -->
+<div id="mobile-overlay" class="fixed inset-0 bg-black/40 z-998 opacity-0 pointer-events-none transition-all duration-400 ease-in-out lg:hidden backdrop-blur-sm hidden" aria-hidden="true"></div>
 
-<div id="mobile-menu" class="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-slate-50 z-999 translate-x-full transition-transform duration-500 ease-in-out lg:hidden flex flex-col shadow-2xl overflow-hidden">
+<!-- Menú Móvil -->
+<div id="mobile-menu" class="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-slate-50 z-999 translate-x-full transition-transform duration-500 ease-in-out lg:hidden flex flex-col shadow-2xl overflow-hidden" role="dialog" aria-modal="true" aria-hidden="true">
   
   <div class="p-6 bg-white border-b border-gray-100 flex items-center justify-between">
     <div class="flex items-center gap-3">
-          <div class="bg-linear-to-br from-blue-500 to-green-400 p-3 rounded-2xl text-white  shadow-lg animate-bounce-soft">
-           <i data-lucide="baby" class="w-7 h-7"></i>
-          </div>
-          <div class="flex flex-col">
-            <span class="text-xl font-black tracking-tighter text-gray-900 italic leading-none flex items-center gap-1.5">
-              {siteConfig.name.split(" ")[0]}
-              <span class="text-green-600 not-italic tracking-tight">{siteConfig.name.split(" ").slice(1).join(" ")}</span>
-            </span>
-            <span class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-1 leading-none">
-              {siteConfig.location.city} · {siteConfig.location.district}
-            </span>
-          </div>
-        </div>
-    <button id="close-menu" class="p-2 bg-gray-100 text-gray-500 rounded-full hover:bg-red-50 hover:text-red-500 transition-all active:scale-90">
+      <div class="bg-linear-to-br from-blue-500 to-green-400 p-3 rounded-2xl text-white shadow-lg animate-bounce-soft">
+        <i data-lucide="baby" class="w-7 h-7"></i>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-xl font-black tracking-tighter text-gray-900 italic leading-none flex items-center gap-1.5">
+          {siteConfig.name.split(" ")[0]}
+          <span class="text-transparent bg-clip-text bg-linear-to-r from-green-600 to-blue-500 italic">{siteConfig.name.split(" ").slice(1).join(" ")}</span>
+        </span>
+        <span class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-1 leading-none">
+          {siteConfig.location.city} · {siteConfig.location.district}
+        </span>
+      </div>
+    </div>
+    <button id="close-menu" class="p-2 bg-gray-100 text-gray-500 rounded-full hover:bg-red-50 hover:text-red-500 transition-all active:scale-90 focus:ring-2 focus:ring-red-300" aria-label="Cerrar menú móvil">
       <i data-lucide="x" class="w-6 h-6"></i>
     </button>
   </div>
 
-  <nav class="flex flex-col p-6 gap-3 overflow-y-auto">
-    {[
-      { name: 'Inicio', href: '/', icon: 'home' },
-      { name: 'Nosotros', href: '/nosotros', icon: 'users' },
-      { name: 'Servicios', href: '/servicios', icon: 'stethoscope' },
-      { name: 'Equipo', href: '/equipo', icon: 'user-round-check' },
-      { name: 'Contacto', href: '/contacto', icon: 'mail' }
-    ].map((item, index) => (
-      <a 
-        href={item.href} 
-        class={`mobile-link flex items-center gap-4 p-4 rounded-2xl border border-transparent transition-all duration-300 group
-          ${(pathname === item.href || (item.href !== '/' && currentPath.includes(item.href.slice(1)))) 
-            ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100 font-bold' 
-            : 'bg-white text-gray-600 hover:bg-emerald-50 hover:border-emerald-100 shadow-sm'}`}
-        style={`transition-delay: ${index * 70}ms;`}
-      >
-        <div class={`p-2 rounded-lg ${(pathname === item.href) ? 'bg-white/20' : 'group-hover:bg-emerald-100 transition-colors'}`}>
-          <i data-lucide={item.icon} class="w-5 h-5"></i>
-        </div>
-        <span class="text-lg flex-1">{item.name}</span>
-        <i data-lucide="chevron-right" class="w-5 h-5 opacity-30 group-hover:opacity-100 transition-opacity"></i>
-      </a>
-    ))}
-  </nav>
+  <nav class="flex flex-col p-6 gap-3 overflow-y-auto" role="navigation" aria-label="Navegación móvil">
+  {[
+    { name: 'Inicio', href: '/', icon: 'home' },
+    { name: 'Nosotros', href: '/nosotros', icon: 'users' },
+    { name: 'Servicios', href: '/servicios', icon: 'stethoscope' },
+    { name: 'Equipo', href: '/equipo', icon: 'user-round-check' },
+    { name: 'Contacto', href: '/contacto', icon: 'mail' }
+  ].map((item, index) => (
+    <a 
+      href={item.href} 
+      class={`mobile-link flex items-center gap-4 p-4 rounded-2xl border border-transparent transition-all duration-300 group focus:ring-2 focus:ring-emerald-300
+        ${(pathname === item.href || (item.href !== '/' && currentPath.includes(item.href.slice(1)))) 
+          ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100 font-bold' 
+          : 'bg-white text-gray-600 hover:bg-emerald-50 hover:border-emerald-100 shadow-sm'}`}
+      style={`transition-delay: ${index * 70}ms;`}
+      aria-current={(pathname === item.href || (item.href !== '/' && currentPath.includes(item.href.slice(1)))) ? "page" : undefined}
+    >
+      <div class={`p-2 rounded-lg ${(pathname === item.href) ? 'bg-white/20' : 'group-hover:bg-emerald-100 transition-colors'}`}>
+        <i data-lucide={item.icon} class="w-5 h-5"></i>
+      </div>
+      <span class="text-lg flex-1">{item.name}</span>
+      <i data-lucide="chevron-right" class="w-5 h-5 opacity-30 group-hover:opacity-100 transition-opacity"></i>
+    </a>
+  ))}
+</nav>
 
   <div class="mt-auto p-6 bg-white border-t border-gray-100">
-    <a href={siteConfig.contact.whatsappUrl} target="_blank" class="flex items-center justify-center gap-3 bg-linear-to-r from-green-400 to-blue-500 text-white py-4 rounded-2xl shadow-xl shadow-green-100 font-bold text-lg active:scale-95 transition-all uppercase tracking-wide">
+    <a href={siteConfig.contact.whatsappUrl} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-3 bg-linear-to-r from-green-400 to-blue-500 text-white py-4 rounded-2xl shadow-xl shadow-green-100 font-bold text-lg active:scale-95 transition-all uppercase tracking-wide focus:ring-2 focus:ring-green-300" aria-label="Pedir cita por WhatsApp">
       <i data-lucide="calendar-check" class="w-6 h-6"></i>
       <span>Pedir Cita</span>
     </a>
@@ -149,34 +164,50 @@ const currentPath = pathname.slice(1);
     opacity: 1;
     transform: translateX(0);
   }
+
+  /* Skip Link */
+  .sr-only { @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0; }
+  .sr-only.focus:not-sr-only { @apply static w-auto h-auto p-0 m-0 overflow-visible; }
 </style>
 
-<script>
-  declare const lucide: any;
-
+<script is:inline>
   const initHeader = () => {
     const menuBtn = document.getElementById("menu-btn");
     const closeBtn = document.getElementById("close-menu");
     const mobileMenu = document.getElementById("mobile-menu");
     const mobileOverlay = document.getElementById("mobile-overlay");
 
-    if (typeof lucide !== 'undefined') lucide.createIcons();
+    // Verificar si Lucide está disponible
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
 
     if (!menuBtn || !mobileMenu || !closeBtn || !mobileOverlay) return;
 
-    const toggle = (open: boolean) => {
+    let isOpen = false; // Estado para evitar toggles múltiples
+
+    const toggle = (open) => {
+      if (isOpen === open) return; // Evitar repeticiones
+      isOpen = open;
+
       if (open) {
         mobileMenu.classList.remove("translate-x-full");
         mobileOverlay.classList.remove("hidden");
+        mobileOverlay.setAttribute("aria-hidden", "false");
+        mobileMenu.setAttribute("aria-hidden", "false");
         setTimeout(() => mobileOverlay.classList.add("opacity-100"), 10);
         document.body.style.overflow = "hidden";
         menuBtn.classList.add("open");
+        menuBtn.setAttribute("aria-expanded", "true");
       } else {
         mobileMenu.classList.add("translate-x-full");
         mobileOverlay.classList.remove("opacity-100");
+        mobileOverlay.setAttribute("aria-hidden", "true");
+        mobileMenu.setAttribute("aria-hidden", "true");
         setTimeout(() => mobileOverlay.classList.add("hidden"), 500);
         document.body.style.overflow = "";
         menuBtn.classList.remove("open");
+        menuBtn.setAttribute("aria-expanded", "false");
       }
     };
 

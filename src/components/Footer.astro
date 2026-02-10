@@ -24,7 +24,7 @@ const currentYear = new Date().getFullYear();
           <div class="flex flex-col  md:items-start">
             <span class="text-xl md:text-2xl font-black tracking-tighter text-white italic leading-none flex items-center gap-1.5">
               {siteConfig.name.split(" ")[0]}
-              <span class="text-green-400 not-italic tracking-tight">{siteConfig.name.split(" ").slice(1).join(" ")}</span>
+              <span class="text-transparent bg-clip-text bg-linear-to-r from-green-600 to-blue-500 italic">{siteConfig.name.split(" ").slice(1).join(" ")}</span>
             </span>
             <span class="text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase mt-1 leading-none">
               {siteConfig.location.city} · {siteConfig.location.district}

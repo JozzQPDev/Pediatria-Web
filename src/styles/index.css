@@ -1,0 +1,96 @@
+/* === ESTILOS GENERALES === */
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#big-desc-container,
+#big-title,
+#big-image {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* === ESTILOS PARA SERVICIOS === */
+.group::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-25deg);
+  transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group:hover::after {
+  left: 125%;
+}
+
+.group:hover [data-lucide] {
+  animation: floating-icon 2s ease-in-out infinite;
+}
+
+@keyframes floating-icon {
+  0%, 100% {
+    transform: translateY(0) scale(1.1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.1);
+  }
+}
+
+/* === ESTILOS PARA TESTIMONIOS === */
+#testimonials-container:hover {
+  animation-play-state: paused;
+}
+
+/* === ANIMACIONES DE HERO === */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in-up 1s ease-out forwards;
+}
+
+/* === ESTILOS PARA PARALLAX Y MOUSE === */
+#hero-parallax {
+  perspective: 1000px;
+}
+
+.mouse-float {
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+  will-change: transform;
+  z-index: 5;
+}
+
+@keyframes bounce-soft {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-bounce-soft {
+  animation: bounce-soft 3s ease-in-out infinite;
+}
