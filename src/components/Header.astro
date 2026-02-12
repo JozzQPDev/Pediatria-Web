@@ -10,8 +10,8 @@ const currentPath = pathname.slice(1);
 <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg z-50">Saltar a contenido principal</a>
 
 <!-- Barra Superior -->
-<div class="bg-linear-to-r from-blue-500 to-green-400 text-white py-3 text-[11px] md:text-sm font-semibold uppercase tracking-widest relative z-50 border-b border-white/20 shadow-lg">
-  <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+<div class="bg-[linear-gradient(to_right,#FF1493,#FFFF00,#44B5E6)] text-white py-2 text-[11px] md:text-sm font-semibold uppercase tracking-widest relative z-50 border-b border-white/20 shadow-lg">
+   <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
     <div class="flex gap-4 md:gap-8">
       <a href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`} class="flex items-center gap-2 hover:text-yellow-200 transition-all duration-300 group focus:ring-2 focus:ring-yellow-300" aria-label="Llamar al teléfono">
         <i data-lucide="phone" class="w-4 h-4 group-hover:scale-110 transition-transform duration-300"></i>
@@ -37,48 +37,38 @@ const currentPath = pathname.slice(1);
 </div>
 
 <!-- Header Principal -->
-<header class="bg-white/95 backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b border-gray-200">
-  <div class="max-w-7xl mx-auto px-4 py-4 md:py-6 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-3 group relative z-60 rounded-lg" aria-label="Ir a inicio">
-      <div class="bg-linear-to-br from-blue-500 to-green-400 p-3 rounded-2xl text-white group-hover:rotate-12 group-hover:shadow-2xl group-hover:animate-bounce transition-all duration-500 shadow-lg shadow-blue-200">
-        <i data-lucide="baby" class="w-7 h-7"></i>
-      </div>
-      <div class="flex flex-col">
-        <span class="text-xl md:text-2xl font-black tracking-tighter text-gray-900 italic leading-none flex items-center gap-1.5">
-          {siteConfig.name.split(" ")[0]}
-          <span class="text-transparent bg-clip-text bg-linear-to-r from-green-600 to-blue-500 italic">{siteConfig.name.split(" ").slice(1).join(" ")}</span>
-        </span>
-        <span class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-1 leading-none">
-          {siteConfig.location.city} · {siteConfig.location.district}
-        </span>
-      </div>
+<header class="bg-white/95 backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b shadow-amber-440 border-gray-200">
+  <div class="max-w-7xl h-20 mx-auto px-4 py-4 md:py-6 flex items-center justify-center">
+    <!-- Logo visible solo en móvil, centrado -->
+    <a href="/" class="lg:hidden flex flex-col items-center" aria-label="Ir a inicio">
+      <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-8 w-auto object-contain">
+      <span class="text-center text-[8px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-1 leading-none">
+        {siteConfig.location.city} · {siteConfig.location.district}
+      </span>
     </a>
-
+    <!-- Navegación desktop con logo incluido -->
     <nav class="hidden lg:flex items-center gap-10 text-[13px] font-medium uppercase tracking-wide text-gray-600" role="navigation" aria-label="Navegación principal">
       <a href="/" class={`nav-link ${pathname === "/" ? "active" : ""}`}>Inicio</a>
       <a href="/nosotros" class={`nav-link ${currentPath.includes("nosotros") ? "active" : ""}`}>Nosotros</a>
       <a href="/servicios" class={`nav-link ${currentPath.includes("servicios") ? "active" : ""}`}>Servicios</a>
+      <a href="/" class="flex items-center gap-3 group relative z-60 rounded-lg" aria-label="Ir a inicio">
+        <div class="flex flex-col">
+          <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-10 w-auto object-contain">
+
+        </div>
+      </a>
       <a href="/equipo" class={`nav-link ${currentPath.includes("equipo") ? "active" : ""}`}>Equipo</a>
       <a href="/contacto" class={`nav-link ${currentPath.includes("contacto") ? "active" : ""}`}>Contacto</a>
+      <a href="/prueba" class={`nav-link ${currentPath.includes("prueba") ? "active" : ""}`}>Blogs</a>
     </nav>
-    
-    <div>
-      <a href={siteConfig.contact.whatsappUrl} target="_blank" rel="noopener noreferrer" class="hidden lg:inline-flex items-center gap-3 px-5 py-3 bg-linear-to-r from-green-500 to-blue-600 text-white font-bold rounded-2xl hover:from-green-600 hover:to-blue-700 hover:-translate-y-1 hover:scale-105 hover:shadow-xl transition-all duration-300 shadow-lg shadow-green-200 active:scale-95 text-sm group focus:outline-none focus:ring-4 focus:ring-green-300" aria-label="Reservar cita por WhatsApp">
-        <i class="bi bi-whatsapp text-lg"></i>
-        Pedir Cita
-        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200"></i>
-      </a>
-    </div>
-    
-    <div class="flex items-center gap-4">
-      <button id="menu-btn" class="lg:hidden p-3 text-green-600 relative z-60 transition-all duration-300 hover:bg-green-50 rounded-2xl group focus:outline-none focus:ring-2 focus:ring-green-300" aria-label="Abrir menú móvil" aria-expanded="false">
-        <div class="w-8 h-8 relative flex flex-col justify-center items-center">
-          <span class="w-6 h-0.5 bg-current transition-all duration-300 transform origin-center"></span>
-          <span class="w-6 h-0.5 bg-current transition-all duration-300 transform origin-center mt-1"></span>
-          <span class="w-6 h-0.5 bg-current transition-all duration-300 transform origin-center mt-1"></span>
-        </div>
-      </button>
-    </div>
+    <!-- Botón menú móvil, posicionado a la derecha en móvil -->
+    <button id="menu-btn" class="lg:hidden p-3 text-pink-600 transition-all duration-300 hover:bg-green-50 rounded-2xl group focus:outline-none focus:ring-2 focus:ring-green-300 ml-auto" aria-label="Abrir menú móvil" aria-expanded="false">
+      <div class="w-8 h-8 relative flex flex-col justify-center items-center">
+        <span class="w-6 h-0.5 bg-current transition-all duration-300 transform origin-center"></span>
+        <span class="w-6 h-0.5 bg-current transition-all duration-300 transform origin-center mt-1"></span>
+        <span class="w-6 h-0.5 bg-current transition-all duration-300 transform origin-center mt-1"></span>
+      </div>
+    </button>
   </div>
 </header>
 
@@ -87,18 +77,11 @@ const currentPath = pathname.slice(1);
 
 <!-- Menú Móvil -->
 <div id="mobile-menu" class="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-slate-50 z-999 translate-x-full transition-transform duration-500 ease-in-out lg:hidden flex flex-col shadow-2xl overflow-hidden" role="dialog" aria-modal="true" aria-hidden="true">
-  
   <div class="p-6 bg-white border-b border-gray-100 flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div class="bg-linear-to-br from-blue-500 to-green-400 p-3 rounded-2xl text-white shadow-lg animate-bounce-soft">
-        <i data-lucide="baby" class="w-7 h-7"></i>
-      </div>
       <div class="flex flex-col">
-        <span class="text-xl font-black tracking-tighter text-gray-900 italic leading-none flex items-center gap-1.5">
-          {siteConfig.name.split(" ")[0]}
-          <span class="text-transparent bg-clip-text bg-linear-to-r from-green-600 to-blue-500 italic">{siteConfig.name.split(" ").slice(1).join(" ")}</span>
-        </span>
-        <span class="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-1 leading-none">
+      <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-10 w-auto object-contain">
+        <span class="text-center text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-1 leading-none">
           {siteConfig.location.city} · {siteConfig.location.district}
         </span>
       </div>
@@ -118,10 +101,10 @@ const currentPath = pathname.slice(1);
   ].map((item, index) => (
     <a 
       href={item.href} 
-      class={`mobile-link flex items-center gap-4 p-4 rounded-2xl border border-transparent transition-all duration-300 group focus:ring-2 focus:ring-emerald-300
+      class={`mobile-link flex items-center gap-4 p-4 rounded-2xl border border-transparent transition-all duration-300 group focus:ring-2 focus:ring-pink-300
         ${(pathname === item.href || (item.href !== '/' && currentPath.includes(item.href.slice(1)))) 
-          ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-100 font-bold' 
-          : 'bg-white text-gray-600 hover:bg-emerald-50 hover:border-emerald-100 shadow-sm'}`}
+          ? 'bg-pink-500 text-white shadow-lg shadow-pink-100 font-bold' 
+          : 'bg-white text-gray-600 hover:bg-pink-50 hover:border-pink-100 shadow-sm'}`}
       style={`transition-delay: ${index * 70}ms;`}
       aria-current={(pathname === item.href || (item.href !== '/' && currentPath.includes(item.href.slice(1)))) ? "page" : undefined}
     >
@@ -135,7 +118,7 @@ const currentPath = pathname.slice(1);
 </nav>
 
   <div class="mt-auto p-6 bg-white border-t border-gray-100">
-    <a href={siteConfig.contact.whatsappUrl} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-3 bg-linear-to-r from-green-400 to-blue-500 text-white py-4 rounded-2xl shadow-xl shadow-green-100 font-bold text-lg active:scale-95 transition-all uppercase tracking-wide focus:ring-2 focus:ring-green-300" aria-label="Pedir cita por WhatsApp">
+    <a href={siteConfig.contact.whatsappUrl} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-3 bg-linear-to-r from-pink-400 to-blue-500 text-white py-4 rounded-2xl shadow-xl shadow-pink-100 font-bold text-lg active:scale-95 transition-all uppercase tracking-wide focus:ring-2 focus:ring-pink-300" aria-label="Pedir cita por WhatsApp">
       <i data-lucide="calendar-check" class="w-6 h-6"></i>
       <span>Pedir Cita</span>
     </a>
@@ -145,10 +128,10 @@ const currentPath = pathname.slice(1);
 <style>
   @reference "../styles/global.css";
 
-  .nav-link { @apply hover:text-green-600 transition-all duration-300 relative py-2 focus:outline-none; }
-  .nav-link::after { content: ""; @apply absolute bottom-0 left-0 w-0 h-0.5 bg-green-600 transition-all duration-300; }
+  .nav-link { @apply hover:text-pink-600 transition-all duration-300 relative py-2 focus:outline-none; }
+  .nav-link::after { content: ""; @apply absolute bottom-0 left-0 w-0 h-0.5 bg-pink-600 transition-all duration-300; }
   .nav-link:hover::after, .nav-link.active::after { @apply w-full; }
-  .nav-link.active { @apply text-green-600 font-bold; }
+  .nav-link.active { @apply text-pink-600 font-bold; }
   
   /* Burger Animation */
   #menu-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }

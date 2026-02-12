@@ -1,5 +1,4 @@
 ---
-// Tu código de importaciones permanece igual
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
 
@@ -12,6 +11,14 @@ const doctores = [
     tags: ["Lactancia", "Prematuros"],
     linkedin: "https://linkedin.com/in/elena-martinez",
     email: "emartinez@clinica.com",
+    // Colores:
+    overlayFrom: "from-green-600/80",
+    accentText: "text-green-600",
+    accentRing: "focus-within:ring-green-500",
+    accentHoverBg: "hover:bg-green-50",
+    tagHoverText: "hover:text-green-600",
+    borderAccent: "border-green-400",
+    softBg: "bg-green-50/50",
   },
   {
     name: "Dr. Ricardo Santos",
@@ -21,6 +28,13 @@ const doctores = [
     tags: ["Nutrición", "Adolescentes"],
     linkedin: "https://linkedin.com/in/ricardo-santos",
     email: "rsantos@clinica.com",
+    overlayFrom: "from-blue-600/80",
+    accentText: "text-blue-600",
+    accentRing: "focus-within:ring-blue-500",
+    accentHoverBg: "hover:bg-blue-50",
+    tagHoverText: "hover:text-blue-600",
+    borderAccent: "border-blue-400",
+    softBg: "bg-blue-50/50",
   },
   {
     name: "Dra. Sofía Alva",
@@ -30,6 +44,13 @@ const doctores = [
     tags: ["Ortodoncia", "Prevención"],
     linkedin: "https://linkedin.com/in/sofia-alva",
     email: "salva@clinica.com",
+    overlayFrom: "from-yellow-600/80",
+    accentText: "text-yellow-600",
+    accentRing: "focus-within:ring-yellow-500",
+    accentHoverBg: "hover:bg-yellow-50",
+    tagHoverText: "hover:text-yellow-600",
+    borderAccent: "border-yellow-400",
+    softBg: "bg-yellow-50/50",
   },
   {
     name: "Dr. Carlos Ruiz",
@@ -39,27 +60,46 @@ const doctores = [
     tags: ["Conducta", "Terapia"],
     linkedin: "https://linkedin.com/in/carlos-ruiz",
     email: "cruiz@clinica.com",
+    overlayFrom: "from-purple-600/80",
+    accentText: "text-purple-600",
+    accentRing: "focus-within:ring-purple-500",
+    accentHoverBg: "hover:bg-purple-50",
+    tagHoverText: "hover:text-purple-600",
+    borderAccent: "border-purple-400",
+    softBg: "bg-purple-50/50",
   },
 ];
 
 const beneficios = [
   {
     title: "Staff Colegiado",
-    desc: "Especialistas certificados con años de experiencia en las instituciones de salud más importantes.",
+    desc: "Especialistas certificados con años de experiencia...",
     icon: "award",
     image: "/images/benefit-certified.jpg",
+    overlayFrom: "from-green-600/90",
+    iconColor: "text-green-600",
+    ring: "focus-within:ring-green-500",
+    descText: "text-green-100",
   },
   {
     title: "Atención Moderna",
-    desc: "Equipamiento tecnológico de última generación para diagnósticos certeros y tratamientos mínimamente invasivos.",
+    desc: "Equipamiento tecnológico de última generación...",
     icon: "sparkles",
     image: "/images/benefit-modern.jpg",
+    overlayFrom: "from-blue-600/90",
+    iconColor: "text-blue-600",
+    ring: "focus-within:ring-blue-500",
+    descText: "text-blue-100",
   },
   {
     title: "Enfoque Familiar",
-    desc: "Entendemos que la salud de un niño involucra a toda la familia. Brindamos asesoría y calma en cada paso.",
+    desc: "Entendemos que la salud de un niño involucra...",
     icon: "users",
     image: "/images/benefit-family.jpg",
+    overlayFrom: "from-purple-600/90",
+    iconColor: "text-purple-600",
+    ring: "focus-within:ring-purple-500",
+    descText: "text-purple-100",
   },
 ];
 ---
@@ -72,20 +112,18 @@ const beneficios = [
     sideImage="/img/hero-equipo.jpg"
   />
 
-  <!-- Sección de doctores: Grid con overlays mejorados y animaciones -->
+  <!-- Sección de doctores -->
   <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4">
       <div class="text-center mb-16">
-        <span
-          class="inline-block text-green-600 font-bold uppercase tracking-[0.3em] text-[11px] bg-green-50 px-4 py-2 rounded-lg mb-6"
-          >Nuestro Equipo</span
-        >
-        <h2
-          class="text-4xl md:text-6xl font-bold text-gray-900 italic leading-tight"
-        >
-          Profesionales Dedicados <br /><span class="text-green-600 not-italic"
-            >al Cuidado Infantil</span
-          >
+        <!-- (Esto queda verde porque es título general, no por doctor) -->
+        <span class="inline-block text-green-600 font-bold uppercase tracking-[0.3em] text-[11px] bg-green-50 px-4 py-2 rounded-lg mb-6">
+          Nuestro Equipo
+        </span>
+
+        <h2 class="text-4xl md:text-6xl font-bold text-gray-900 italic leading-tight">
+          Profesionales Dedicados <br />
+          <span class="text-green-600 not-italic">al Cuidado Infantil</span>
         </h2>
       </div>
 
@@ -93,7 +131,10 @@ const beneficios = [
         {
           doctores.map((doc) => (
             <div
-              class="group focus-within:ring-2 focus-within:ring-green-500"
+              class:list={[
+                "group focus-within:ring-2 rounded-3xl", // rounded para que el ring se vea bonito
+                doc.accentRing,
+              ]}
               role="article"
               aria-label={`Perfil de ${doc.name}`}
             >
@@ -105,45 +146,67 @@ const beneficios = [
                   loading="lazy"
                 />
 
-                <div class="absolute inset-0 bg-linear-to-t from-green-600/80 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-8">
+                <!-- IMPORTANTE: para Tailwind v3 usa bg-gradient-to-t -->
+                <div
+                  class:list={[
+                    "absolute inset-0 bg-gradient-to-t via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-8",
+                    doc.overlayFrom,
+                  ]}
+                >
                   <div class="flex gap-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                     <a
                       href={doc.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
-                      class="w-11 h-11 bg-white text-green-600 rounded-full flex items-center justify-center shadow-lg hover:bg-green-50 hover:scale-110 transition-all focus:ring-2 focus:ring-green-500"
+                      class:list={[
+                        "w-11 h-11 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all focus:ring-2",
+                        doc.accentText,
+                        doc.accentHoverBg,
+                      ]}
                       aria-label={`LinkedIn de ${doc.name}`}
                     >
-                      <i data-lucide="linkedin" class="w-5 h-5" aria-hidden="true" />
+                      <i data-lucide="linkedin" class="w-5 h-5" aria-hidden="true"></i>
                     </a>
+
                     <a
                       href={`mailto:${doc.email}`}
-                      class="w-11 h-11 bg-white text-green-600 rounded-full flex items-center justify-center shadow-lg hover:bg-green-50 hover:scale-110 transition-all focus:ring-2 focus:ring-green-500"
+                      class:list={[
+                        "w-11 h-11 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all focus:ring-2",
+                        doc.accentText,
+                        doc.accentHoverBg,
+                      ]}
                       aria-label={`Email de ${doc.name}`}
                     >
-                      <i data-lucide="mail" class="w-5 h-5" aria-hidden="true" />
+                      <i data-lucide="mail" class="w-5 h-5" aria-hidden="true"></i>
                     </a>
                   </div>
                 </div>
               </div>
 
               <div class="text-center lg:text-left">
-                <h3 class="text-2xl font-bold text-gray-900 mb-1">
-                  {doc.name}
-                </h3>
-                <p class="text-green-600 font-bold text-sm mb-4 uppercase tracking-wide">
+                <h3 class="text-2xl font-bold text-gray-900 mb-1">{doc.name}</h3>
+
+                <p class:list={["font-bold text-sm mb-4 uppercase tracking-wide", doc.accentText]}>
                   {doc.role}
                 </p>
 
-                <div class="bg-green-50/50 p-4 rounded-2xl mb-5">
-                  <p class="text-gray-600 text-sm leading-relaxed italic border-l-2 border-green-400 pl-3">
+                <!-- Aquí estaba fijo en verde: ahora es dinámico -->
+                <div class:list={["p-4 rounded-2xl mb-5", doc.softBg]}>
+                  <p class:list={["text-gray-600 text-sm leading-relaxed italic border-l-2 pl-3", doc.borderAccent]}>
                     "{doc.specialty}"
                   </p>
                 </div>
 
+                <!-- Tags: también estaban fijos en verde: ahora es dinámico -->
                 <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
                   {doc.tags.map((tag) => (
-                    <span class="px-3 py-1 bg-gray-100 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-widest border border-gray-200 hover:bg-green-50 hover:text-green-600 transition-colors">
+                    <span
+                      class:list={[
+                        "px-3 py-1 bg-gray-100 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-widest border border-gray-200 transition-colors",
+                        doc.accentHoverBg,
+                        doc.tagHoverText,
+                      ]}
+                    >
                       {tag}
                     </span>
                   ))}
@@ -154,14 +217,15 @@ const beneficios = [
         }
       </div>
 
-      <!-- Sección de beneficios: Cards con imágenes y overlays -->
-      <div
-        class="mt-32 grid md:grid-cols-3 gap-12 border-t border-gray-100 pt-20"
-      >
+      <!-- Sección de beneficios -->
+      <div class="mt-32 grid md:grid-cols-3 gap-12 border-t border-gray-100 pt-20">
         {
           beneficios.map((ben) => (
             <div
-              class="group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-green-500"
+              class:list={[
+                "group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2",
+                ben.ring,
+              ]}
               role="article"
               aria-label={`Beneficio: ${ben.title}`}
             >
@@ -171,12 +235,20 @@ const beneficios = [
                 class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
-              <div class="absolute inset-0 bg-linear-to-t from-green-600/90 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
-                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-green-600 mb-4 group-hover:animate-bounce">
-                  <i data-lucide={ben.icon} class="w-8 h-8" aria-hidden="true" />
+
+              <!-- IMPORTANTE: para Tailwind v3 usa bg-gradient-to-t -->
+              <div
+                class:list={[
+                  "absolute inset-0 bg-gradient-to-t to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6",
+                  ben.overlayFrom,
+                ]}
+              >
+                <div class:list={["w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 group-hover:animate-bounce", ben.iconColor]}>
+                  <i data-lucide={ben.icon} class="w-8 h-8" aria-hidden="true"></i>
                 </div>
+
                 <h4 class="text-xl font-bold text-white mb-2">{ben.title}</h4>
-                <p class="text-green-100 text-sm leading-relaxed">{ben.desc}</p>
+                <p class:list={["text-sm leading-relaxed", ben.descText]}>{ben.desc}</p>
               </div>
             </div>
           ))

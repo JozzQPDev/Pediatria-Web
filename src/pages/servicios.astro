@@ -9,37 +9,55 @@ const servicios = [
     title: "Control de Crecimiento",
     desc: "Evaluación integral del desarrollo psicomotor para asegurar un crecimiento saludable desde el primer mes.",
     icon: "baby",
-    image: "/images/service-growth.jpg"
+    image: "/images/service-growth.jpg",
+    bgColorFrom: "from-green-600/90",
+    bgColorTo: "to-transparent",
+    iconColor: "text-green-600"
   },
   {
     title: "Vacunación Integral",
     desc: "Disponemos de todos los esquemas de vacunación nacionales e internacionales en un ambiente seguro.",
     icon: "syringe",
-    image: "/images/service-vaccine.jpg"
+    image: "/images/service-vaccine.jpg",
+    bgColorFrom: "from-blue-600/90",
+    bgColorTo: "to-transparent",
+    iconColor: "text-blue-600"
   },
   {
     title: "Nutrición Infantil",
     desc: "Asesoría especializada en lactancia y alimentación complementaria para un desarrollo óptimo.",
     icon: "apple",
-    image: "/images/service-nutrition.jpg"
+    image: "/images/service-nutrition.jpg",
+    bgColorFrom: "from-yellow-600/90",
+    bgColorTo: "to-transparent",
+    iconColor: "text-yellow-600"
   },
   {
     title: "Atención de Recién Nacidos",
     desc: "Cuidado experto y preventivo diseñado para los primeros y más importantes días de vida de tu bebé.",
     icon: "heart-pulse",
-    image: "/images/service-newborn.jpg"
+    image: "/images/service-newborn.jpg",
+    bgColorFrom: "from-pink-600/90",
+    bgColorTo: "to-transparent",
+    iconColor: "text-pink-600"
   },
   {
     title: "Psicología Infantil",
     desc: "Apoyo profesional enfocado en el bienestar emocional y el desarrollo conductual saludable.",
     icon: "brain",
-    image: "/images/service-psychology.jpg"
+    image: "/images/service-psychology.jpg",
+    bgColorFrom: "from-purple-600/90",
+    bgColorTo: "to-transparent",
+    iconColor: "text-purple-600"
   },
   {
     title: "Nebulizaciones",
     desc: "Equipamiento de última generación para el tratamiento inmediato de cuadros respiratorios y asma.",
     icon: "wind",
-    image: "/images/service-nebulization.jpg"
+    image: "/images/service-nebulization.jpg",
+    bgColorFrom: "from-teal-600/90",
+    bgColorTo: "to-transparent",
+    iconColor: "text-teal-600"
   },
 ];
 ---
@@ -59,29 +77,39 @@ const servicios = [
   <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4">
       <div class="text-center mb-16">
-        <span class="inline-block text-green-600 font-bold uppercase tracking-[0.3em] text-[11px] bg-green-50 px-4 py-2 rounded-lg mb-6">Nuestras Especialidades</span>
-        <h2 class="text-4xl md:text-6xl font-bold text-gray-900 italic leading-tight">Cuidado Especializado <br/><span class="text-green-600 not-italic">para Cada Etapa</span></h2>
+        <span class="inline-block text-purple-400 font-bold uppercase tracking-[0.3em] text-[11px] bg-purple-50 px-4 py-2 rounded-lg mb-6">Nuestras Especialidades</span>
+        <h2 class="text-4xl md:text-6xl font-bold text-gray-900 italic leading-tight">Cuidado Especializado <br/><span class="text-purple-500 not-italic">para Cada Etapa</span></h2>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {
-          servicios.map((s) => (
-            <div class="group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-green-500" role="article" aria-label={`Servicio: ${s.title}`}>
-              <img src={s.image} alt={`Imagen de ${s.title}`} class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-              <div class="absolute inset-0 bg-linear-to-t from-green-600/90 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
-                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-green-600 mb-4 group-hover:animate-bounce">
-                  <i data-lucide={s.icon} class="w-8 h-8" aria-hidden="true" />
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {
+              servicios.map((s) => (
+                <div
+                  class="group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-green-500"
+                  role="article"
+                  aria-label={`Servicio: ${s.title}`}
+                >
+                  <img
+                    src={s.image}
+                    alt={`Imagen de ${s.title}`}
+                    class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+
+                  <div class={`absolute inset-0 bg-linear-to-t ${s.bgColorFrom} ${s.bgColorTo} opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6`}>
+                    <div class={`w-16 h-16 bg-white rounded-2xl flex items-center justify-center ${s.iconColor} mb-4 group-hover:animate-bounce`}>
+                      <i data-lucide={s.icon} class="w-8 h-8" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">{s.title}</h3>
+                    <p class="text-green-100 text-sm leading-relaxed">{s.desc}</p>
+                    <div class="mt-4 px-3 py-1 rounded-full bg-white/20 border border-white/30 inline-block">
+                      <span class="text-[10px] font-bold text-white uppercase tracking-widest">Especialidad Médica</span>
+                    </div>
+                  </div>
                 </div>
-                <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">{s.title}</h3>
-                <p class="text-green-100 text-sm leading-relaxed">{s.desc}</p>
-                <div class="mt-4 px-3 py-1 rounded-full bg-white/20 border border-white/30 inline-block">
-                  <span class="text-[10px] font-bold text-white uppercase tracking-widest">Especialidad Médica</span>
-                </div>
-              </div>
-            </div>
-          ))
-        }
-      </div>
+              ))
+            }
+          </div>
 
       <!-- CTA con imagen de fondo y elementos decorativos -->
       <div class="mt-32 relative overflow-hidden rounded-3xl bg-cover bg-center p-8 lg:p-20 text-center text-white shadow-2xl" style="background-image: url('/img/hero-servicios.jpg');">

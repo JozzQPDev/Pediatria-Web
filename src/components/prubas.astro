@@ -1,0 +1,70 @@
+    <div>
+          <h4 class="text-lg font-bold mb-6 border-l-4 border-[#e5ff00] pl-3">Navegación</h4>
+          <ul class="space-y-4 text-gray-400 text-sm">
+            <li class="flex items-center gap-2">
+              <!-- Icono de casa -->
+              <svg class="w-4 h-4 text-[#e5ff00]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 9.75L12 3l9 6.75V21a.75.75 0 01-.75.75H3.75A.75.75 0 013 21V9.75z"/>
+              </svg>
+              <a href="/" class="hover:text-white transition-colors">Inicio</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <!-- Icono de información -->
+              <svg class="w-4 h-4 text-[#e5ff00]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9z"/>
+              </svg>
+              <a href="/nosotros" class="hover:text-white transition-colors">Sobre Nosotros</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <!-- Icono de corazón/servicios -->
+              <svg class="w-4 h-4 text-[#e5ff00]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+              </svg>
+              <a href="/servicios" class="hover:text-white transition-colors">Servicios Médicos</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <!-- Icono de usuarios/equipo -->
+              <svg class="w-4 h-4 text-[#e5ff00]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-3-3.87M9 20h5v-1a4 4 0 00-3-3.87M12 12a4 4 0 100-8 4 4 0 000 8z"/>
+              </svg>
+              <a href="/equipo" class="hover:text-white transition-colors">Nuestro Equipo</a>
+            </li>
+          </ul>
+        </div>
+
+
+        <div>
+          <h4 class="text-lg font-bold mb-6 border-l-4 border-[#44B5E6] pl-3">Contacto</h4>
+          <ul class="space-y-4 text-gray-400 text-sm">
+            <li class="flex items-start gap-3">
+              <i data-lucide="map-pin" class="w-5 h-5 text-[#44B5E6] shrink-0"></i>
+              <span>{siteConfig.location.address}, {siteConfig.location.district}</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <i data-lucide="phone" class="w-5 h-5 text-[#44B5E6] shrink-0"></i>
+              <span>{siteConfig.contact.phone}</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <i data-lucide="mail" class="w-5 h-5 text-[#44B5E6] shrink-0"></i>
+              <span>{siteConfig.contact.email}</span>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-bold mb-6 border-l-4 border-[#fc11e8] pl-3">Horario</h4>
+          <div class="bg-gray-800/50 p-4 rounded-2xl border border-gray-700">
+            <div class="flex justify-between text-sm mb-2">
+              <span class="text-gray-300">Lun - Vie:</span>
+              <span class="text-white font-medium">8:00 - 20:00</span>
+            </div>
+            <div class="flex justify-between text-sm mb-2">
+              <span class="text-gray-300">Sábados:</span>
+              <span class="text-white font-medium">9:00 - 14:00</span>
+            </div>
+            <div class="flex justify-between text-sm text-pink-400 font-bold">
+              <span>Domingos:</span>
+              <span>Cerrado</span>
+            </div>
+          </div>
+        </div>
