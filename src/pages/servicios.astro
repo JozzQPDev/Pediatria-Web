@@ -1,65 +1,44 @@
 ---
-// Tu código de importaciones permanece igual
+// Importar datos centralizados de servicios
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
 import { siteConfig } from "../data/siteConfig";
+import { services } from "../data/services";
 
-const servicios = [
-  {
-    title: "Control de Crecimiento",
-    desc: "Evaluación integral del desarrollo psicomotor para asegurar un crecimiento saludable desde el primer mes.",
-    icon: "baby",
-    image: "/images/service-growth.jpg",
+// Mapeo de colores para las clases de Tailwind
+const colorMap = {
+  green: {
     bgColorFrom: "from-green-600/90",
     bgColorTo: "to-transparent",
     iconColor: "text-green-600"
   },
-  {
-    title: "Vacunación Integral",
-    desc: "Disponemos de todos los esquemas de vacunación nacionales e internacionales en un ambiente seguro.",
-    icon: "syringe",
-    image: "/images/service-vaccine.jpg",
+  blue: {
     bgColorFrom: "from-blue-600/90",
     bgColorTo: "to-transparent",
     iconColor: "text-blue-600"
   },
-  {
-    title: "Nutrición Infantil",
-    desc: "Asesoría especializada en lactancia y alimentación complementaria para un desarrollo óptimo.",
-    icon: "apple",
-    image: "/images/service-nutrition.jpg",
+  yellow: {
     bgColorFrom: "from-yellow-600/90",
     bgColorTo: "to-transparent",
     iconColor: "text-yellow-600"
   },
-  {
-    title: "Atención de Recién Nacidos",
-    desc: "Cuidado experto y preventivo diseñado para los primeros y más importantes días de vida de tu bebé.",
-    icon: "heart-pulse",
-    image: "/images/service-newborn.jpg",
+  pink: {
     bgColorFrom: "from-pink-600/90",
     bgColorTo: "to-transparent",
     iconColor: "text-pink-600"
   },
-  {
-    title: "Psicología Infantil",
-    desc: "Apoyo profesional enfocado en el bienestar emocional y el desarrollo conductual saludable.",
-    icon: "brain",
-    image: "/images/service-psychology.jpg",
+  purple: {
     bgColorFrom: "from-purple-600/90",
     bgColorTo: "to-transparent",
     iconColor: "text-purple-600"
   },
-  {
-    title: "Nebulizaciones",
-    desc: "Equipamiento de última generación para el tratamiento inmediato de cuadros respiratorios y asma.",
-    icon: "wind",
-    image: "/images/service-nebulization.jpg",
+  teal: {
     bgColorFrom: "from-teal-600/90",
     bgColorTo: "to-transparent",
     iconColor: "text-teal-600"
-  },
-];
+  }
+};
+
 ---
 
 <Layout
@@ -69,26 +48,31 @@ const servicios = [
   <Hero
     title="Atención Médica Integral"
     subtitle="Expertos en pediatría listos para acompañar el crecimiento de tus hijos con tecnología de vanguardia y calidez humana."
-    backgroundImage="/img/hero-servicios.jpg"
     sideImage="/img/hero-servicios.jpg"
     />
 
   <!-- Sección de servicios: Grid con imágenes y overlays -->
   <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-4">
-      <div class="text-center mb-16">
-        <span class="inline-block text-purple-400 font-bold uppercase tracking-[0.3em] text-[11px] bg-purple-50 px-4 py-2 rounded-lg mb-6">Nuestras Especialidades</span>
+      <div class="text-center mb-16 reveal">
+        <span class="inline-block text-purple-400 font-bold uppercase tracking-[0.3em] text-[11px] bg-purple-50 px-4 py-2 rounded-lg mb-6 animate-bounce-soft">Nuestras Especialidades</span>
         <h2 class="text-4xl md:text-6xl font-bold text-gray-900 italic leading-tight">Cuidado Especializado <br/><span class="text-purple-500 not-italic">para Cada Etapa</span></h2>
       </div>
 
+
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {
-              servicios.map((s) => (
+              services.map((s, index) => {
+                const colors = colorMap[s.color as keyof typeof colorMap] || colorMap.blue;
+
+                return (
                 <div
-                  class="group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-green-500"
+                  class={`group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-green-500 reveal hover-lift card-shine stagger-${index + 1}`}
+
                   role="article"
                   aria-label={`Servicio: ${s.title}`}
                 >
+
                   <img
                     src={s.image}
                     alt={`Imagen de ${s.title}`}
@@ -96,23 +80,31 @@ const servicios = [
                     loading="lazy"
                   />
 
-                  <div class={`absolute inset-0 bg-linear-to-t ${s.bgColorFrom} ${s.bgColorTo} opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6`}>
-                    <div class={`w-16 h-16 bg-white rounded-2xl flex items-center justify-center ${s.iconColor} mb-4 group-hover:animate-bounce`}>
+                  <div class={`absolute inset-0 bg-linear-to-t ${colors.bgColorFrom} ${colors.bgColorTo} opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6`}>
+                    <div class={`w-16 h-16 bg-white rounded-2xl flex items-center justify-center ${colors.iconColor} mb-4 group-hover:animate-bounce`}>
                       <i data-lucide={s.icon} class="w-8 h-8" aria-hidden="true"></i>
                     </div>
                     <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">{s.title}</h3>
-                    <p class="text-green-100 text-sm leading-relaxed">{s.desc}</p>
-                    <div class="mt-4 px-3 py-1 rounded-full bg-white/20 border border-white/30 inline-block">
-                      <span class="text-[10px] font-bold text-white uppercase tracking-widest">Especialidad Médica</span>
-                    </div>
+                    <p class="text-green-100 text-sm leading-relaxed">{s.shortDesc}</p>
+                    <a 
+                      href={`/servicios/${s.slug}`}
+                      class="mt-4 inline-flex items-center gap-2 text-white font-bold text-sm hover:gap-3 transition-all"
+                    >
+                      Ver detalles
+                      <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+
                   </div>
+
                 </div>
-              ))
+              )})
             }
           </div>
 
+
       <!-- CTA con imagen de fondo y elementos decorativos -->
-      <div class="mt-32 relative overflow-hidden rounded-3xl bg-cover bg-center p-8 lg:p-20 text-center text-white shadow-2xl" style="background-image: url('/img/hero-servicios.jpg');">
+      <div class="mt-32 relative overflow-hidden rounded-3xl bg-cover bg-center p-8 lg:p-20 text-center text-white shadow-2xl reveal" style="background-image: url('/img/hero-servicios.jpg');">
+
         <div class="absolute inset-0 bg-linear-to-br from-green-500/90 to-blue-700/90 rounded-3xl"></div>
         <div class="relative z-10 max-w-3xl mx-auto">
           <span class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-8 inline-flex items-center gap-2 animate-pulse-soft">
@@ -189,3 +181,27 @@ const servicios = [
 
   .animation-delay-500 { animation-delay: 0.5s; }
 </style>
+
+<script>
+  // Intersection Observer for scroll-triggered animations
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe all elements with reveal classes
+  document.addEventListener('DOMContentLoaded', () => {
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+    revealElements.forEach(el => observer.observe(el));
+  });
+</script>

@@ -54,12 +54,11 @@ const currentPath = pathname.slice(1);
       <a href="/" class="flex items-center gap-3 group relative z-60 rounded-lg" aria-label="Ir a inicio">
         <div class="flex flex-col">
           <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-10 w-auto object-contain">
-
         </div>
       </a>
       <a href="/equipo" class={`nav-link ${currentPath.includes("equipo") ? "active" : ""}`}>Equipo</a>
+      <a href="/blogs" class={`nav-link ${currentPath.includes("blog") ? "active" : ""}`}>Blogs</a>
       <a href="/contacto" class={`nav-link ${currentPath.includes("contacto") ? "active" : ""}`}>Contacto</a>
-      <a href="/prueba" class={`nav-link ${currentPath.includes("prueba") ? "active" : ""}`}>Blogs</a>
     </nav>
     <!-- Botón menú móvil, posicionado a la derecha en móvil -->
     <button id="menu-btn" class="lg:hidden p-3 text-pink-600 transition-all duration-300 hover:bg-green-50 rounded-2xl group focus:outline-none focus:ring-2 focus:ring-green-300 ml-auto" aria-label="Abrir menú móvil" aria-expanded="false">
@@ -97,6 +96,7 @@ const currentPath = pathname.slice(1);
     { name: 'Nosotros', href: '/nosotros', icon: 'users' },
     { name: 'Servicios', href: '/servicios', icon: 'stethoscope' },
     { name: 'Equipo', href: '/equipo', icon: 'user-round-check' },
+    { name: 'Blogs', href: '/blogs', icon: 'book-open' },
     { name: 'Contacto', href: '/contacto', icon: 'mail' }
   ].map((item, index) => (
     <a 

@@ -123,7 +123,12 @@ const galleryImages = [
 ---
 
 <Layout title={`Inicio | ${siteConfig.name}`}>
-  <main class="overflow-hidden bg-white" >
+ <main class="main-section overflow-hidden bg-white">
+  <span class="cloud cloud--1" aria-hidden="true"></span>
+  <span class="cloud cloud--2" aria-hidden="true"></span>
+  <span class="cloud cloud--3" aria-hidden="true"></span>
+  <span class="cloud cloud--4" aria-hidden="true"></span>
+  <span class="cloud cloud--5" aria-hidden="true"></span>
     <!-- <Welcome />  --><!-- Removido client:load para evitar problemas de hidratación -->
     <!-- Hero con imagen de fondo: Cambié a un diseño más visual con overlay y CTA prominente -->
   <section id="hero-parallax" class="relative h-screen flex items-center justify-center overflow-hidden">
@@ -133,7 +138,7 @@ const galleryImages = [
         <h1 class="text-5xl md:text-7xl font-bold italic tracking-tighter leading-none mb-6 animate-fade-in">
           Atención pediátrica <br/> <span class="text-yellow-300 not-italic">con corazón</span>
         </h1>
-        <p class="text-xl md:text-2xl font-medium mb-10 text-green-100 animate-fade-in animation-delay-200">
+        <p class="text-xl md:text-2xl font-medium mb-10 text-white/80 animate-fade-in animation-delay-200">
           Brindamos soluciones médicas integrales para la salud de tus hijos en un entorno moderno y seguro. Tu tranquilidad es nuestro compromiso diario.
         </p>
         <div class="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in animation-delay-400">
@@ -220,7 +225,7 @@ const galleryImages = [
   </div>
 </section>
 
-    <section class="py-24 px-4 bg-gray-50 overflow-hidden">
+    <section class="benefist-section relative py-16 md:py-32 px-4 bg-gray-50 overflow-hidden">
       <div class="max-w-7xl mx-auto relative z-10">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
           
@@ -275,7 +280,7 @@ const galleryImages = [
     <!-- Título -->
     <h2 class="text-4xl md:text-5xl font-bold text-gray-900 italic mb-12">
       Lo que dicen <br/>
-      <span class="bg-[linear-gradient(to_right,#FF1493,#FFFF00,#44B5E6)] bg-clip-text text-transparent italic">
+      <span class="text-orange-400 bg-clip-text italic">
         nuestras familias
       </span>
     </h2>
