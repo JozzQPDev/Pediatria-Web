@@ -422,3 +422,4 @@ export function getRelatedServices(currentSlug, count = 3) {
 export function getServicesByColor(color) {
   return services.filter(service => service.color === color);
 }
+
