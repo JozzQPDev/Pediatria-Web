@@ -1,0 +1,329 @@
+---
+// Search.astro - Search component with expandable input and suggestions
+import SearchSuggestions from './SearchSuggestions.astro';
+---
+
+<div class="search-container relative flex items-center" id="search-wrapper">
+
+  <form 
+    id="search-form" 
+    class="search-form flex items-center overflow-hidden transition-all duration-300 ease-in-out relative z-10"
+    action="/busqueda"
+    method="GET"
+  >
+    <input 
+      type="text" 
+      id="search-input"
+      name="q"
+      class="search-input w-0 opacity-0 bg-transparent outline-none placeholder:text-gray-400 text-gray-800 text-sm transition-all duration-300 ease-in-out"
+      placeholder="Buscar servicios, artículos..."
+      autocomplete="off"
+      aria-label="Buscar en el sitio"
+      aria-autocomplete="list"
+      aria-controls="search-suggestions"
+    >
+    
+    <button 
+      type="button"
+      id="search-btn" 
+      class="search-btn relative z-20 p-2.5 text-gray-500 hover:text-pink-600 hover:bg-pink-50 lg:hover:bg-pink-100 lg:bg-white lg:border lg:border-gray-200 lg:shadow-sm rounded-xl lg:rounded-full transition-all duration-300 shrink-0 cursor-pointer"
+      aria-label="Buscar"
+    >
+      <i data-lucide="search" class="w-5 h-5 pointer-events-none"></i>
+    </button>
+
+  </form>
+  
+  <!-- Search Suggestions Dropdown - Moved outside form -->
+  <div class="absolute top-full left-0 right-0 mt-2 z-30">
+    <SearchSuggestions client:load />
+  </div>
+
+  
+  <!-- Keyboard shortcut hint -->
+  <div class="hidden lg:block absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 transition-opacity duration-300" id="search-hint">
+    <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">Ctrl + K</span>
+  </div>
+</div>
+
+
+<style>
+  .search-form {
+    position: relative;
+    border: none;
+    background: transparent;
+  }
+
+  .search-form.expanded {
+    background-color: white;
+    border-radius: 9999px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    border: 1px solid #e5e7eb;
+    padding: 0.25rem;
+    padding-left: 1rem;
+  }
+
+  .search-form.expanded .search-input {
+    width: 200px;
+    opacity: 1;
+    padding-right: 0.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .search-form.expanded .search-input {
+      width: 280px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .search-form.expanded .search-input {
+      width: 150px;
+    }
+  }
+
+  .search-input:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .search-btn:focus {
+    outline: none;
+    box-shadow: none;
+    ring: none;
+  }
+
+  .search-btn:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  /* Bounce animation for nav and logo */
+  @keyframes bounce-effect {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-2px); }
+  }
+
+  .bounce-animation {
+    animation: bounce-effect 0.5s ease-in-out;
+  }
+
+  /* Reduce mobile logo text when search is expanded */
+  .mobile-logo-text.search-expanded {
+    font-size: 6px;
+    transform: scale(0.85);
+    transition: all 0.3s ease;
+  }
+</style>
+
+<script is:inline>
+  // Search button click handler
+  document.getElementById('search-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    var form = document.getElementById('search-form');
+    var input = document.getElementById('search-input');
+    var mobileLogoText = document.querySelector('.mobile-logo-text');
+    var searchHint = document.getElementById('search-hint');
+    
+    if (!form.classList.contains('expanded')) {
+      // Expand and focus
+      form.classList.add('expanded');
+      input.focus();
+      
+      // Show keyboard hint
+      if (searchHint) {
+        searchHint.classList.remove('opacity-0');
+      }
+      
+      // Reduce mobile logo text size
+      if (mobileLogoText) {
+        mobileLogoText.classList.add('search-expanded');
+      }
+      
+      // Trigger bounce animation on nav
+      var nav = document.querySelector('nav');
+      var mobileLogo = document.querySelector('header a.lg\\:hidden');
+      
+      if (nav) {
+        nav.classList.remove('bounce-animation');
+        void nav.offsetWidth;
+        nav.classList.add('bounce-animation');
+        setTimeout(function() {
+          nav.classList.remove('bounce-animation');
+        }, 500);
+      }
+      
+      if (mobileLogo) {
+        mobileLogo.classList.remove('bounce-animation');
+        void mobileLogo.offsetWidth;
+        mobileLogo.classList.add('bounce-animation');
+        setTimeout(function() {
+          mobileLogo.classList.remove('bounce-animation');
+        }, 500);
+      }
+    } else {
+      // Search or collapse
+      var q = input.value.trim();
+      if (q) {
+        window.location.href = '/busqueda?q=' + encodeURIComponent(q);
+      } else {
+        form.classList.remove('expanded');
+        input.value = '';
+        // Restore mobile logo text size
+        if (mobileLogoText) {
+          mobileLogoText.classList.remove('search-expanded');
+        }
+        // Hide keyboard hint
+        if (searchHint) {
+          searchHint.classList.add('opacity-0');
+        }
+        // Hide suggestions
+        if (window.searchSuggestions) {
+          window.searchSuggestions.hide();
+        }
+      }
+    }
+  });
+
+
+  // Enter key handler
+  document.getElementById('search-input').addEventListener('keydown', function(e) {
+    // Don't intercept if suggestions are being navigated
+    if (e.key === 'Enter') {
+      // Only submit if not navigating suggestions
+      if (!window.searchSuggestions || !document.getElementById('search-suggestions')?.classList.contains('hidden')) {
+        // Let the suggestions component handle it
+        return;
+      }
+      e.preventDefault();
+      var q = this.value.trim();
+      if (q) {
+        window.location.href = '/busqueda?q=' + encodeURIComponent(q);
+      }
+    }
+    if (e.key === 'Escape') {
+      var form = document.getElementById('search-form');
+      var mobileLogoText = document.querySelector('.mobile-logo-text');
+      var searchHint = document.getElementById('search-hint');
+      form.classList.remove('expanded');
+      this.value = '';
+      // Restore mobile logo text size
+      if (mobileLogoText) {
+        mobileLogoText.classList.remove('search-expanded');
+      }
+      // Hide keyboard hint
+      if (searchHint) {
+        searchHint.classList.add('opacity-0');
+      }
+      // Hide suggestions
+      if (window.searchSuggestions) {
+        window.searchSuggestions.hide();
+      }
+    }
+  });
+
+
+  // Close when clicking outside
+  document.addEventListener('click', function(e) {
+    var form = document.getElementById('search-form');
+    var wrapper = document.getElementById('search-wrapper');
+    var mobileLogoText = document.querySelector('.mobile-logo-text');
+    var searchHint = document.getElementById('search-hint');
+    if (form && wrapper && !wrapper.contains(e.target) && form.classList.contains('expanded')) {
+      form.classList.remove('expanded');
+      var input = document.getElementById('search-input');
+      if (input) input.value = '';
+      // Restore mobile logo text size
+      if (mobileLogoText) {
+        mobileLogoText.classList.remove('search-expanded');
+      }
+      // Hide keyboard hint
+      if (searchHint) {
+        searchHint.classList.add('opacity-0');
+      }
+      // Hide suggestions
+      if (window.searchSuggestions) {
+        window.searchSuggestions.hide();
+      }
+    }
+  });
+
+  
+  // Ctrl+K shortcut
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+      e.preventDefault();
+      var form = document.getElementById('search-form');
+      var input = document.getElementById('search-input');
+      var mobileLogoText = document.querySelector('.mobile-logo-text');
+      var searchHint = document.getElementById('search-hint');
+      
+      if (form && input) {
+        form.classList.add('expanded');
+        input.focus();
+        
+        // Show keyboard hint
+        if (searchHint) {
+          searchHint.classList.remove('opacity-0');
+        }
+        
+        // Reduce mobile logo text size
+        if (mobileLogoText) {
+          mobileLogoText.classList.add('search-expanded');
+        }
+        
+        // Trigger bounce on nav and mobile logo
+        var nav = document.querySelector('nav');
+        var mobileLogo = document.querySelector('header a.lg\\:hidden');
+        
+        if (nav) {
+          nav.classList.remove('bounce-animation');
+          void nav.offsetWidth;
+          nav.classList.add('bounce-animation');
+          setTimeout(function() { 
+            nav.classList.remove('bounce-animation'); 
+          }, 500);
+        }
+        
+        if (mobileLogo) {
+          mobileLogo.classList.remove('bounce-animation');
+          void mobileLogo.offsetWidth;
+          mobileLogo.classList.add('bounce-animation');
+          setTimeout(function() { 
+            mobileLogo.classList.remove('bounce-animation'); 
+          }, 500);
+        }
+      }
+    }
+  });
+  
+  // Load search data for suggestions
+  (function loadSearchData() {
+    // Make search data available globally for suggestions
+    window.searchData = [
+      { title: "Inicio", type: "page", url: "/", category: "General" },
+      { title: "Nosotros", type: "page", url: "/nosotros", category: "General" },
+      { title: "Servicios", type: "page", url: "/servicios", category: "General" },
+      { title: "Equipo", type: "page", url: "/equipo", category: "General" },
+      { title: "Blogs", type: "page", url: "/blogs", category: "General" },
+      { title: "Contacto", type: "page", url: "/contacto", category: "General" },
+      { title: "Control de Crecimiento", type: "service", url: "/servicios/control-crecimiento", category: "Crecimiento" },
+      { title: "Vacunación Integral", type: "service", url: "/servicios/vacunacion-integral", category: "Vacunación" },
+      { title: "Nutrición Infantil", type: "service", url: "/servicios/nutricion-infantil", category: "Nutrición" },
+      { title: "Atención de Recién Nacidos", type: "service", url: "/servicios/atencion-recien-nacidos", category: "Recién Nacidos" },
+      { title: "Psicología Infantil", type: "service", url: "/servicios/psicologia-infantil", category: "Psicología" },
+      { title: "Nebulizaciones", type: "service", url: "/servicios/nebulizaciones", category: "Respiratorio" },
+      { title: "La Importancia de la Vacunación Infantil", type: "blog", url: "/blog/importancia-vacunacion-infantil", category: "Vacunación" },
+      { title: "Guía de Alimentación Complementaria", type: "blog", url: "/blog/alimentacion-complementaria", category: "Nutrición" },
+      { title: "Hitos del Desarrollo Psicomotor", type: "blog", url: "/blog/desarrollo-psicomotor", category: "Desarrollo" },
+      { title: "Cuidados Esenciales del Recién Nacido", type: "blog", url: "/blog/cuidado-recien-nacido", category: "Recién Nacidos" },
+      { title: "Salud Emocional en la Infancia", type: "blog", url: "/blog/salud-emocional-infantil", category: "Psicología" },
+      { title: "Prevención de Infecciones Respiratorias", type: "blog", url: "/blog/prevencion-respiratoria", category: "Respiratorio" },
+      { title: "Guía Completa sobre Alergias en Niños", type: "blog", url: "/blog/alergias-infantiles", category: "Alergias" }
+    ];
+  })();
+
+</script>

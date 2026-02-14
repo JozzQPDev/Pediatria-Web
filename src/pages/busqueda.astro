@@ -1,0 +1,495 @@
+---
+// Página de búsqueda mejorada - Muestra resultados de búsqueda del sitio
+export const prerender = false;
+
+import Layout from "../layouts/Layout.astro";
+import SearchFilters from "../components/SearchFilters.astro";
+import { searchContent, getSearchCategories, searchData } from "../data/searchData.js";
+
+// Obtener parámetros de la URL
+const url = new URL(Astro.request.url);
+const query = url.searchParams.get('q') || '';
+const typeFilter = url.searchParams.get('type') || '';
+const categoryFilter = url.searchParams.get('category') || '';
+const sortBy = url.searchParams.get('sort') || 'relevance';
+
+// Realizar búsqueda con filtros
+const searchOptions = {
+  limit: 20,
+  fuzzy: true,
+  sortBy: sortBy,
+  filters: {
+    ...(typeFilter && { type: typeFilter }),
+    ...(categoryFilter && { category: categoryFilter })
+  }
+};
+
+const results = query ? searchContent(query, searchOptions) : [];
+const totalResults = results.length;
+
+// Obtener categorías disponibles para filtros
+const allCategories = getSearchCategories().filter(cat => 
+  !['page', 'service', 'blog'].includes(cat)
+);
+
+// Iconos para cada tipo
+const typeIcons: Record<string, string> = {
+  page: 'file-text',
+  service: 'stethoscope',
+  blog: 'book-open'
+};
+
+// Etiquetas para cada tipo
+const typeLabels: Record<string, string> = {
+  page: 'Página',
+  service: 'Servicio',
+  blog: 'Artículo'
+};
+
+// Colores para cada tipo
+const typeColors: Record<string, { bg: string; text: string; border: string; badge: string; gradient: string }> = {
+  page: { 
+    bg: 'bg-blue-50', 
+    text: 'text-blue-600', 
+    border: 'border-blue-200', 
+    badge: 'bg-blue-100 text-blue-700',
+    gradient: 'from-blue-500 to-blue-600'
+  },
+  service: { 
+    bg: 'bg-green-50', 
+    text: 'text-green-600', 
+    border: 'border-green-200', 
+    badge: 'bg-green-100 text-green-700',
+    gradient: 'from-green-500 to-green-600'
+  },
+  blog: { 
+    bg: 'bg-purple-50', 
+    text: 'text-purple-600', 
+    border: 'border-purple-200', 
+    badge: 'bg-purple-100 text-purple-700',
+    gradient: 'from-purple-500 to-purple-600'
+  }
+};
+
+// Función para obtener imagen según el tipo y slug
+function getResultImage(result: any): string {
+  if (result.type === 'service') {
+    const serviceImages: Record<string, string> = {
+      'control-crecimiento': '/images/service-growth.jpg',
+      'vacunacion-integral': '/images/service-vaccine.jpg',
+      'nutricion-infantil': '/images/service-nutrition.jpg',
+      'atencion-recien-nacidos': '/images/service-newborn.jpg',
+      'psicologia-infantil': '/images/service-psychology.jpg',
+      'nebulizaciones': '/images/service-nebulization.jpg'
+    };
+    return serviceImages[result.slug] || '/images/clinic-1.jpg';
+  }
+  
+  if (result.type === 'blog') {
+    const blogImages: Record<string, string> = {
+      'importancia-vacunacion-infantil': '/images/service-vaccine.jpg',
+      'alimentacion-complementaria': '/images/service-nutrition.jpg',
+      'desarrollo-psicomotor': '/images/service-growth.jpg',
+      'cuidado-recien-nacido': '/images/service-newborn.jpg',
+      'salud-emocional-infantil': '/images/service-psychology.jpg',
+      'prevencion-respiratoria': '/images/service-nebulization.jpg',
+      'alergias-infantiles': '/images/service-vaccine.jpg'
+    };
+    return blogImages[result.slug] || '/images/clinic-1.jpg';
+  }
+  
+  return '/images/clinica-home.jpg';
+}
+
+// Sugerencias de búsqueda populares
+const popularSearches = ['vacunación', 'nutrición', 'desarrollo', 'recién nacido', 'control', 'psicología'];
+---
+
+<Layout title={query ? `Resultados para "${query}" | Clínica Pediátrica` : "Búsqueda | Clínica Pediátrica"}>
+  <main class="main-section min-h-screen  from-gray-50 via-white to-pink-50/30 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- Decorative elements -->
+  <span class="cloud cloud--1" aria-hidden="true"></span>
+  <span class="cloud cloud--2" aria-hidden="true"></span>
+  <span class="cloud cloud--3" aria-hidden="true"></span>
+  <span class="cloud cloud--4" aria-hidden="true"></span>
+  <span class="cloud cloud--5" aria-hidden="true"></span>
+  <span class="cloud cloud--6" aria-hidden="true"></span>
+  <span class="cloud cloud--7" aria-hidden="true"></span>
+  <span class="cloud cloud--8" aria-hidden="true"></span>
+  <span class="cloud cloud--9" aria-hidden="true"></span>
+  <span class="cloud cloud--10" aria-hidden="true"></span>
+  <span class="cloud cloud--11" aria-hidden="true"></span>
+  <span class="cloud cloud--12" aria-hidden="true"></span>
+
+    <div class="max-w-5xl mx-auto relative z-10">
+      <!-- Header de Búsqueda -->
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm border border-gray-100 mb-6">
+          <i data-lucide="sparkles" class="w-4 h-4 text-pink-500"></i>
+          <span class="text-sm text-gray-600">Búsqueda inteligente</span>
+        </div>
+        
+        <h1 class="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-linear-to-r from-gray-900 via-pink-600 to-gray-900">
+
+          {query ? 'Resultados de búsqueda' : '¿Qué estás buscando?'}
+        </h1>
+        
+        <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+          {query 
+            ? `Encontramos ${totalResults} resultado${totalResults !== 1 ? 's' : ''} para tu búsqueda` 
+            : 'Encuentra servicios, artículos y información sobre la salud de tus hijos'}
+        </p>
+        
+        <!-- Formulario de Búsqueda Mejorado -->
+        <form action="/busqueda" method="GET" class="max-w-2xl mx-auto relative group">
+          <div class="relative flex items-center">
+            <div class="absolute left-4 text-gray-400 group-focus-within:text-pink-500 transition-colors">
+              <i data-lucide="search" class="w-5 h-5"></i>
+            </div>
+            <input 
+              type="text" 
+              name="q" 
+              value={query}
+              placeholder="Buscar servicios, artículos, información..."
+              class="w-full pl-12 pr-32 py-4 rounded-2xl border border-gray-200 shadow-lg shadow-gray-200/50 focus:outline-none text-lg transition-all"
+              autocomplete="off"
+              id="main-search-input"
+            />
+
+
+
+            <button 
+              type="submit"
+              class="absolute right-2 bg-linear-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white px-6 py-2.5 rounded-xl font-medium transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+
+              Buscar
+            </button>
+          </div>
+          
+          <!-- Búsquedas populares -->
+          {!query && (
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+              <span class="text-sm text-gray-500">Populares:</span>
+              {popularSearches.map((term) => (
+                <a 
+                  href={`/busqueda?q=${encodeURIComponent(term)}`}
+                  class="text-sm px-3 py-1 bg-white/80 hover:bg-pink-50 text-gray-600 hover:text-pink-600 rounded-full border border-gray-200 hover:border-pink-200 transition-all"
+                >
+                  {term}
+                </a>
+              ))}
+            </div>
+          )}
+        </form>
+      </div>
+
+      <!-- Filtros (solo cuando hay búsqueda) -->
+      {query && (
+        <SearchFilters 
+          currentType={typeFilter}
+          currentCategory={categoryFilter}
+          currentSort={sortBy}
+          availableCategories={allCategories}
+          totalResults={totalResults}
+        />
+      )}
+
+      <!-- Resultados -->
+      {query && totalResults > 0 && (
+        <div class="space-y-4">
+          {results.map((result, index) => {
+            const colors = typeColors[result.type];
+            const image = getResultImage(result);
+            const isEven = index % 2 === 0;
+            
+            return (
+              <a 
+                href={result.url}
+                class="group block bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-pink-200 transition-all duration-300 transform hover:-translate-y-1"
+                style={`animation-delay: ${index * 50}ms`}
+              >
+                <div class={`flex flex-col sm:flex-row gap-4 ${isEven ? '' : 'sm:flex-row-reverse'}`}>
+                  <!-- Imagen -->
+                  <div class="sm:w-48 shrink-0">
+                    <div class="relative aspect-video sm:aspect-square rounded-xl overflow-hidden bg-gray-100">
+                      <img 
+                        src={image} 
+                        alt={result.title}
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                      <div class={`absolute top-2 left-2 px-2 py-1 rounded-lg text-xs font-medium ${colors.badge} backdrop-blur-sm bg-opacity-90`}>
+                        <span class="flex items-center gap-1">
+                          <i data-lucide={typeIcons[result.type]} class="w-3 h-3"></i>
+                          {typeLabels[result.type]}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Contenido -->
+                  <div class="flex-1 min-w-0 flex flex-col">
+                    <div class="flex items-start justify-between gap-3 mb-2">
+                      <h2 class="text-xl font-semibold text-gray-900 group-hover:text-pink-600 transition-colors line-clamp-2">
+                        {(result as any).highlightedTitle ? (
+                          <Fragment set:html={(result as any).highlightedTitle} />
+                        ) : (
+                          result.title
+                        )}
+                      </h2>
+
+                      <div class={`shrink-0 w-10 h-10 rounded-xl ${colors.bg} ${colors.text} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                        <i data-lucide={typeIcons[result.type]} class="w-5 h-5"></i>
+                      </div>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm sm:text-base line-clamp-2 mb-3 grow">
+
+                      {(result as any).highlightedDescription ? (
+                        <Fragment set:html={(result as any).highlightedDescription} />
+                      ) : (
+                        result.description
+                      )}
+                    </p>
+
+                    
+                    <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
+                      <div class="flex items-center gap-3 text-sm text-gray-500">
+                        {(result as any).category && (
+                          <span class="flex items-center gap-1 px-2 py-1 bg-gray-50 rounded-lg">
+                            <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                            {(result as any).category}
+                          </span>
+                        )}
+                        {(result as any).relevanceScore && (
+                          <span class="flex items-center gap-1 text-xs">
+                            <i data-lucide="target" class="w-3.5 h-3.5"></i>
+                            {((result as any).relevanceScore / 10).toFixed(0)}% match
+                          </span>
+                        )}
+                      </div>
+
+                      
+                      <span class="flex items-center gap-1 text-pink-600 font-medium text-sm group-hover:gap-2 transition-all">
+                        Ver más
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      )}
+
+      <!-- Estado vacío - Sin resultados -->
+      {query && totalResults === 0 && (
+        <div class="text-center py-16 px-4">
+          <div class="w-32 h-32 mx-auto mb-8 relative">
+            <div class="absolute inset-0 bg-linear-to-br from-red-100 to-pink-100 rounded-full animate-pulse"></div>
+
+            <div class="relative w-full h-full flex items-center justify-center">
+              <i data-lucide="search-x" class="w-16 h-16 text-red-400"></i>
+            </div>
+          </div>
+          
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">
+            No se encontraron resultados
+          </h2>
+          <p class="text-gray-500 max-w-md mx-auto mb-8 text-lg">
+            No encontramos resultados para "<span class="font-semibold text-gray-700 bg-yellow-100 px-1 rounded">{query}</span>". 
+            Intenta con otras palabras o revisa la ortografía.
+          </p>
+          
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 max-w-lg mx-auto">
+            <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <i data-lucide="lightbulb" class="w-5 h-5 text-yellow-500"></i>
+              Sugerencias:
+            </h3>
+            <div class="flex flex-wrap justify-center gap-2">
+              {popularSearches.map((suggestion) => (
+                <a 
+                  href={`/busqueda?q=${encodeURIComponent(suggestion)}`}
+                  class="px-4 py-2 bg-gray-50 hover:bg-pink-50 text-gray-700 hover:text-pink-700 rounded-xl transition-colors border border-gray-200 hover:border-pink-200"
+                >
+                  {suggestion}
+                </a>
+              ))}
+            </div>
+          </div>
+          
+          <div class="mt-8">
+            <a 
+              href="/busqueda"
+              class="inline-flex items-center gap-2 text-pink-600 hover:text-pink-700 font-medium"
+            >
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Volver a la búsqueda
+            </a>
+          </div>
+        </div>
+      )}
+
+      <!-- Estado inicial - Sin búsqueda -->
+      {!query && (
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+          <!-- Categorías destacadas -->
+          <a 
+            href="/servicios"
+            class="group p-6 bg-white rounded-2xl border border-gray-200 hover:border-green-300 hover:shadow-xl transition-all text-center relative overflow-hidden"
+          >
+            <div class="absolute inset-0 bg-linear-to-br from-green-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+            <div class="relative">
+              <div class="w-16 h-16 mx-auto mb-4 bg-linear-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform shadow-sm">
+
+                <i data-lucide="stethoscope" class="w-8 h-8"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Servicios</h3>
+              <p class="text-sm text-gray-500">Descubre todos nuestros servicios pediátricos especializados</p>
+              <div class="mt-4 flex items-center justify-center gap-1 text-green-600 font-medium text-sm group-hover:gap-2 transition-all">
+                Explorar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+          
+          <a 
+            href="/blogs"
+            class="group p-6 bg-white rounded-2xl border border-gray-200 hover:border-purple-300 hover:shadow-xl transition-all text-center relative overflow-hidden"
+          >
+            <div class="absolute inset-0 bg-linear-to-br from-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+            <div class="relative">
+              <div class="w-16 h-16 mx-auto mb-4 bg-linear-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center text-purple-600 group-hover:scale-110 transition-transform shadow-sm">
+
+                <i data-lucide="book-open" class="w-8 h-8"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Artículos</h3>
+              <p class="text-sm text-gray-500">Lee consejos y artículos sobre salud infantil y desarrollo</p>
+              <div class="mt-4 flex items-center justify-center gap-1 text-purple-600 font-medium text-sm group-hover:gap-2 transition-all">
+                Leer <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+          
+          <a 
+            href="/contacto"
+            class="group p-6 bg-white rounded-2xl border border-gray-200 hover:border-blue-300 hover:shadow-xl transition-all text-center relative overflow-hidden"
+          >
+            <div class="absolute inset-0 bg-linear-to-br from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+            <div class="relative">
+              <div class="w-16 h-16 mx-auto mb-4 bg-linear-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform shadow-sm">
+
+                <i data-lucide="message-circle" class="w-8 h-8"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Contacto</h3>
+              <p class="text-sm text-gray-500">¿Tienes preguntas? Contáctanos y te ayudaremos</p>
+              <div class="mt-4 flex items-center justify-center gap-1 text-blue-600 font-medium text-sm group-hover:gap-2 transition-all">
+                Escribir <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+        </div>
+      )}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+  
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+  
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+  
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #ec4899;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #db2777;
+  }
+  
+
+  
+  /* Remove default focus border from search input */
+  #main-search-input:focus,
+  #main-search-input:focus-visible {
+    outline: none !important;
+    border-color: #e5e7eb !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Result card animation */
+  @keyframes slideInUp {
+
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .space-y-4 > a {
+    animation: slideInUp 0.5s ease-out forwards;
+  }
+</style>
+
+<script is:inline>
+  // Focus search input on page load if there's a query
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('main-search-input');
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    
+    if (query && searchInput) {
+      // Place cursor at the end of the text
+      const length = searchInput.value.length;
+      searchInput.setSelectionRange(length, length);
+      searchInput.focus();
+    }
+  });
+</script>

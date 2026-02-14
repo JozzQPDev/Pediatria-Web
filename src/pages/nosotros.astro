@@ -9,27 +9,38 @@ const valores = [
     title: "Innovación Médica",
     desc: "Equipamiento de última generación para diagnósticos precisos desde el primer día.",
     icon: "microscope",
-    image: "/images/value-innovation.jpg"
+    image: "/images/value-innovation.jpg",
+    color: "blue"
   },
   {
     title: "Trato Humano",
     desc: "Un entorno diseñado para que los niños se sientan en confianza, como en casa.",
     icon: "heart",
-    image: "/images/value-care.jpg"
+    image: "/images/value-care.jpg",
+    color: "pink"
   },
   {
     title: "Seguridad Infantil",
     desc: "Instalaciones bajo estándares internacionales de seguridad pediátrica.",
     icon: "shield-check",
-    image: "/images/value-safety.jpg"
+    image: "/images/value-safety.jpg",
+    color: "green"
   },
   {
     title: "Compromiso Familiar",
     desc: "Acompañamos a los padres en cada etapa del desarrollo de sus hijos.",
     icon: "users",
-    image: "/images/value-family.jpg"
+    image: "/images/value-family.jpg",
+    color: "purple"
   }
 ];
+
+
+const nosotrosvm = {
+  vision: "Ser el hogar de salud donde cada niño crezca sano, pleno y feliz, transformando la experiencia médica en un momento de confianza y bienestar para toda la familia.",
+  mision: `En ${siteConfig.name}, brindamos atención pediátrica integral de excelencia, combinando calidez humana con tecnología avanzada. Nos dedicamos a proteger la salud infantil en un entorno diseñado para que los más pequeños se sientan seguros, comprendidos y cuidados.`
+};
+
 
 const galleryImages = [
   "/images/clinic-1.jpg", "/images/clinic-2.jpg", "/images/clinic-3.jpg"
@@ -59,7 +70,7 @@ const galleryImages = [
       <div class="grid lg:grid-cols-2 gap-16 items-center">
         <div class="relative reveal-left">
 
-          <div class="absolute -top-10 -left-10 w-64 h-64 bg-green-50 rounded-full blur-3xl"></div>
+          <div class="absolute -top-10 -left-10 w-64 h-64 bg-pink-50 rounded-full blur-3xl"></div>
           <div class="relative z-10">
             <img 
               src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800" 
@@ -67,7 +78,7 @@ const galleryImages = [
               class="rounded-3xl shadow-2xl border border-gray-100"
               loading="lazy"
             />
-            <div class="absolute -bottom-6 -right-6 bg-yellow-500 p-8 rounded-3xl text-white z-20 shadow-xl animate-bounce-soft">
+            <div class="absolute -bottom-6 -right-6 bg-pink-500 p-8 rounded-3xl text-white z-20 shadow-xl animate-bounce-soft">
               <p class="text-xs font-bold uppercase tracking-widest opacity-80 mb-1">Estamos listos</p>
               <p class="text-2xl font-bold">¡Te Esperamos!</p>
             </div>
@@ -76,9 +87,9 @@ const galleryImages = [
 
         <div class="space-y-8 reveal-right">
           <div>
-            <span class="text-yellow-500 font-bold uppercase tracking-widest text-sm animate-bounce-soft inline-block">Nuestro Propósito</span>
+            <span class="text-pink-500 font-bold uppercase tracking-widest text-sm animate-bounce-soft inline-block">Nuestro Propósito</span>
             <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mt-4 leading-tight italic">
-              Diseñamos la clínica <br/> <span class="text-yellow-500 not-italic">que tus hijos merecen</span>
+              Diseñamos la clínica <br/> <span class="text-pink-500 not-italic">que tus hijos merecen</span>
             </h2>
           </div>
           <p class="text-lg text-gray-600 leading-relaxed animate-slide-up" style="animation-delay: 0.2s;"> 
@@ -97,33 +108,68 @@ const galleryImages = [
     </div>
   </section>
 
+  <!-- Sección de Visión y Misión -->
+  <section class="py-24 bg-linear-to-br from-pink-50 via-white to-pink-50/30">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="text-center mb-16 reveal">
+        <span class="text-pink-500 font-bold uppercase tracking-widest text-sm animate-bounce-soft inline-block">Nuestra Esencia</span>
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mt-4 tracking-tight italic">Visión y Misión</h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Visión -->
+        <div class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 reveal hover-lift border border-pink-100">
+          <div class="flex flex-row items-center gap-4">
+          <div class="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center text-pink-600 mb-6 group-hover:animate-bounce">
+            <i data-lucide="eye" class="w-8 h-8" aria-hidden="true"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Visión</h3>
+        </div>
+          <p class="text-gray-600 leading-relaxed text-lg">{nosotrosvm.vision}</p>
+        </div>
+
+        <!-- Misión -->
+        <div class="bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 reveal hover-lift border border-pink-100" style="animation-delay: 0.2s;">
+           <div class="flex flex-row items-center gap-4">
+          <div class="w-16 h-16 bg-pink-100 rounded-2xl flex items-center justify-center text-pink-600 mb-6 group-hover:animate-bounce">
+            <i data-lucide="target" class="w-8 h-8" aria-hidden="true"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Misión</h3>
+          </div>
+          <p class="text-gray-600 leading-relaxed text-lg">{nosotrosvm.mision}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Sección de valores: Cards con imágenes y overlays -->
   <section class="py-24 bg-gray-50 rounded-t-3xl lg:rounded-t-5xl">
     <div class="max-w-7xl mx-auto px-4">
       <div class="text-center mb-16 reveal">
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight italic">¿Por qué confiar <br/><span class="text-yellow-500 not-italic">en nosotros?</span></h2>
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight italic">¿Por qué confiar <br/><span class="text-pink-500 not-italic">en nosotros?</span></h2>
         <p class="text-gray-500 max-w-2xl mx-auto text-lg leading-relaxed">Combinamos excelencia médica con un entorno cálido y profesional.</p>
       </div>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         {valores.map((v, index) => (
-          <div class="group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-green-500 reveal stagger-${index + 1} hover-lift card-shine" role="article" aria-label={`Valor: ${v.title}`}>
+          <div class={`group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2 focus-within:ring-${v.color}-500 reveal stagger-${index + 1} hover-lift card-shine`} role="article" aria-label={`Valor: ${v.title}`}>
 
             <img src={v.image} alt={`Imagen de ${v.title}`} class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-            <div class="absolute inset-0 bg-linear-to-t from-green-600/90 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
-              <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-green-600 mb-4 group-hover:animate-bounce">
+            <div class={`absolute inset-0 bg-linear-to-t from-${v.color}-600/90 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6`}>
+              <div class={`w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-${v.color}-600 mb-4 group-hover:animate-bounce`}>
                 <i data-lucide={v.icon} class="w-7 h-7" aria-hidden="true"></i>
               </div>
               <h3 class="text-xl font-bold text-white mb-2">{v.title}</h3>
-              <p class="text-green-100 text-sm">{v.desc}</p>
+              <p class={`text-${v.color}-100 text-sm`}>{v.desc}</p>
             </div>
           </div>
         ))}
       </div>
 
+
       <div class="mt-20 text-center reveal">
         <p class="text-gray-500 mb-6">Conoce cómo podemos cuidar de tus hijos</p>
-        <a href="/servicios" class="inline-flex items-center gap-2 text-yellow-500 font-bold text-lg hover:gap-4 hover:text-yellow-600 transition-all animate-float" aria-label="Explorar especialidades">
+        <a href="/servicios" class="inline-flex items-center gap-2 text-pink-500 font-bold text-lg hover:gap-4 hover:text-pink-600 transition-all animate-float" aria-label="Explorar especialidades">
           Explorar nuestras especialidades
           <i data-lucide="arrow-right" class="w-6 h-6" aria-hidden="true"></i>
         </a>
@@ -156,7 +202,6 @@ const galleryImages = [
     revealElements.forEach(el => observer.observe(el));
   });
 </script>
-
 
 <style>
   /* Animaciones para tema infantil */

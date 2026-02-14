@@ -2,6 +2,7 @@
 // Header.astro
 // Componente de header con barra superior, navegación y menú móvil
 import { siteConfig } from "../data/siteConfig";
+import Search from "./Search.astro";
 const pathname = new URL(Astro.request.url).pathname;
 const currentPath = pathname.slice(1);
 ---
@@ -10,64 +11,94 @@ const currentPath = pathname.slice(1);
 <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg z-50">Saltar a contenido principal</a>
 
 <!-- Barra Superior -->
-<div class="bg-[linear-gradient(to_right,#FF1493,#FFFF00,#44B5E6)] text-white py-2 text-[11px] md:text-sm font-semibold uppercase tracking-widest relative z-50 border-b border-white/20 shadow-lg">
-   <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-    <div class="flex gap-4 md:gap-8">
-      <a href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`} class="flex items-center gap-2 hover:text-yellow-200 transition-all duration-300 group focus:ring-2 focus:ring-yellow-300" aria-label="Llamar al teléfono">
-        <i data-lucide="phone" class="w-4 h-4 group-hover:scale-110 transition-transform duration-300"></i>
-        <span class="font-bold">{siteConfig.contact.phone}</span>
+<div class="bg-[linear-gradient(to_right,#FF1493,#FFFF00,#44B5E6)] text-white py-1 text-[10px] sm:text-[11px] md:text-sm font-semibold uppercase tracking-wider sm:tracking-widest relative z-50 border-b border-white/20 shadow-lg">
+   <div class="max-w-7xl mx-auto px-3 sm:px-4 flex justify-between items-center">
+    <div class="flex gap-2 sm:gap-4 md:gap-8">
+      <a href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`} class="flex items-center gap-1.5 sm:gap-2 hover:text-yellow-200 transition-all duration-300 group focus:ring-2 focus:ring-yellow-300" aria-label="Llamar al teléfono">
+        <i data-lucide="phone" class="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:scale-110 transition-transform duration-300"></i>
+<span class="font-bold truncate max-w-25 sm:max-w-none">{siteConfig.contact.phone}</span>
+
       </a>
+
       <a href={siteConfig.location.googleMapsLink} target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-2 hover:text-yellow-200 transition-all duration-300 group focus:ring-2 focus:ring-yellow-300" aria-label="Ver ubicación en mapa">
         <i data-lucide="map-pin" class="w-4 h-4 group-hover:scale-105 transition-transform duration-300"></i>
         <span>{siteConfig.location.city}, {siteConfig.location.district}</span>
       </a>
     </div>
-    <div class="flex items-center gap-4 border-l border-white/30 pl-4">
-      <a href={siteConfig.socials.facebook} target="_blank" rel="noopener noreferrer" class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300" aria-label="Facebook">
-        <i data-lucide="facebook" class="w-4 h-4"></i>
+    <div class="flex items-center gap-2 sm:gap-4 border-l border-white/30 pl-2 sm:pl-4">
+      <a href={siteConfig.socials.facebook} target="_blank" rel="noopener noreferrer" class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300 p-1" aria-label="Facebook">
+        <i data-lucide="facebook" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
       </a>
-      <a href={siteConfig.socials.instagram} target="_blank" rel="noopener noreferrer" class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300" aria-label="Instagram">
-        <i data-lucide="instagram" class="w-4 h-4"></i>
+      <a href={siteConfig.socials.instagram} target="_blank" rel="noopener noreferrer" class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300 p-1" aria-label="Instagram">
+        <i data-lucide="instagram" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
       </a>
-      <a href={`mailto:${siteConfig.contact.email}`} class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300" aria-label="Enviar email">
-        <i data-lucide="mail" class="w-4 h-4"></i>
+      <a href={`mailto:${siteConfig.contact.email}`} class="hidden sm:flex hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300 p-1" aria-label="Enviar email">
+        <i data-lucide="mail" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
       </a>
     </div>
+
   </div>
 </div>
 
 <!-- Header Principal -->
 <header class="bg-white/95 backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b shadow-amber-440 border-gray-200">
-  <div class="max-w-7xl h-20 mx-auto px-4 py-4 md:py-6 flex items-center justify-center">
-    <!-- Logo visible solo en móvil, centrado -->
-    <a href="/" class="lg:hidden flex flex-col items-center" aria-label="Ir a inicio">
-      <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-8 w-auto object-contain">
-      <span class="text-center text-[8px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-1 leading-none">
-        {siteConfig.location.city} · {siteConfig.location.district}
-      </span>
-    </a>
-    <!-- Navegación desktop con logo incluido -->
-    <nav class="hidden lg:flex items-center gap-10 text-[13px] font-medium uppercase tracking-wide text-gray-600" role="navigation" aria-label="Navegación principal">
-      <a href="/" class={`nav-link ${pathname === "/" ? "active" : ""}`}>Inicio</a>
-      <a href="/nosotros" class={`nav-link ${currentPath.includes("nosotros") ? "active" : ""}`}>Nosotros</a>
-      <a href="/servicios" class={`nav-link ${currentPath.includes("servicios") ? "active" : ""}`}>Servicios</a>
-      <a href="/" class="flex items-center gap-3 group relative z-60 rounded-lg" aria-label="Ir a inicio">
-        <div class="flex flex-col">
-          <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-10 w-auto object-contain">
-        </div>
+  <div class="max-w-8xl h-16 sm:h-20 mx-auto px-3 py-10 sm:px-4 lg:px-6 flex items-center justify-between">
+
+    
+    <div class="hidden lg:flex items-center flex-1 justify-start">
+       <a
+          href={siteConfig.contact.whatsappUrl}
+          target="_blank"
+          class="flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-green-600 transition-colors"
+         >
+        <i class="bi bi-whatsapp text-xl"></i>
+        <span>Reservar Cita</span>
       </a>
-      <a href="/equipo" class={`nav-link ${currentPath.includes("equipo") ? "active" : ""}`}>Equipo</a>
-      <a href="/blogs" class={`nav-link ${currentPath.includes("blog") ? "active" : ""}`}>Blogs</a>
-      <a href="/contacto" class={`nav-link ${currentPath.includes("contacto") ? "active" : ""}`}>Contacto</a>
-    </nav>
-    <!-- Botón menú móvil, posicionado a la derecha en móvil -->
-    <button id="menu-btn" class="lg:hidden p-3 text-pink-600 transition-all duration-300 hover:bg-green-50 rounded-2xl group focus:outline-none focus:ring-2 focus:ring-green-300 ml-auto" aria-label="Abrir menú móvil" aria-expanded="false">
-      <div class="w-8 h-8 relative flex flex-col justify-center items-center">
-        <span class="w-6 h-0.5 bg-current transition-all duration-300 transform origin-center"></span>
-        <span class="w-6 h-0.5 bg-current transition-all duration-300 transform origin-center mt-1"></span>
-        <span class="w-6 h-0.5 bg-current transition-all duration-300 transform origin-center mt-1"></span>
-      </div>
-    </button>
+    </div>
+
+    <div class="flex items-center justify-center lg:flex-none">
+        <a href="/" class="lg:hidden flex flex-col items-center justify-center mobile-logo-link" aria-label="Ir a inicio">
+          <img 
+            src="/images/logo-text.png" 
+            alt={`${siteConfig.name} logo`} 
+            class="h-7 sm:h-8 w-auto object-contain mobile-logo-img"
+          >
+           <span class="text-center text-[8px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-1 leading-none mobile-logo-text">
+          {siteConfig.location.city} · {siteConfig.location.district}
+        </span>
+        </a>
+
+
+        <nav class="hidden lg:flex items-center gap-12 text-[13px] font-medium uppercase tracking-wide text-gray-600" role="navigation">
+          <a href="/" class={`nav-link ${pathname === "/" ? "active" : ""}`}>Inicio</a>
+          <a href="/nosotros" class={`nav-link ${currentPath.includes("nosotros") ? "active" : ""}`}>Nosotros</a>
+          <a href="/servicios" class={`nav-link ${currentPath.includes("servicios") ? "active" : ""}`}>Servicios</a>
+          
+          <a href="/" class="flex items-center px-4" aria-label="Ir a inicio">
+            <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-10 w-auto object-contain">
+          </a>
+
+          <a href="/equipo" class={`nav-link ${currentPath.includes("equipo") ? "active" : ""}`}>Equipo</a>
+          <a href="/blogs" class={`nav-link ${currentPath.includes("blog") ? "active" : ""}`}>Blogs</a>
+          <a href="/contacto" class={`nav-link ${currentPath.includes("contacto") ? "active" : ""}`}>Contacto</a>
+        </nav>
+    </div>
+
+    <div class="flex items-center flex-1 justify-end gap-2">
+        <div class="lg:block">
+            <Search />
+        </div>
+
+        <button id="menu-btn" class="lg:hidden p-2 sm:p-3 text-pink-600 hover:bg-pink-50 rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-pink-300" aria-label="Abrir menú móvil">
+          <div class="w-5 h-5 sm:w-6 sm:h-6 flex flex-col justify-around items-center">
+            <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
+            <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
+            <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
+          </div>
+        </button>
+    </div>
+
+
   </div>
 </header>
 
@@ -128,7 +159,7 @@ const currentPath = pathname.slice(1);
 <style>
   @reference "../styles/global.css";
 
-  .nav-link { @apply hover:text-pink-600 transition-all duration-300 relative py-2 focus:outline-none; }
+  .nav-link { @apply hover:text-pink-600 transition-all duration-300 relative py-1 focus:outline-none; }
   .nav-link::after { content: ""; @apply absolute bottom-0 left-0 w-0 h-0.5 bg-pink-600 transition-all duration-300; }
   .nav-link:hover::after, .nav-link.active::after { @apply w-full; }
   .nav-link.active { @apply text-pink-600 font-bold; }
@@ -151,7 +182,20 @@ const currentPath = pathname.slice(1);
   /* Skip Link */
   .sr-only { @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0; }
   .sr-only.focus:not-sr-only { @apply static w-auto h-auto p-0 m-0 overflow-visible; }
+
+  /* Bounce animation for nav and logo - shared with Search component */
+  @keyframes bounce-effect {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    50% { transform: translateX(4px); }
+    75% { transform: translateX(-2px); }
+  }
+
+  .bounce-animation {
+    animation: bounce-effect 0.5s ease-in-out;
+  }
 </style>
+
 
 <script is:inline>
   const initHeader = () => {
