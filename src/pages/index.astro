@@ -3,6 +3,8 @@
 import Layout from "../layouts/Layout.astro";
 import { siteConfig } from "../data/siteConfig";
 import Welcome from "../components/Welcome.astro"; // Corregido: 'Modal' a 'Welcome'
+import TestimonialsCarousel from "../components/TestimonialsCarousel.jsx";
+
 
 const quickServices = [
   {
@@ -372,41 +374,13 @@ const galleryImages = [
     </section>
 
     <section class="py-28 px-8 bg-white">
-      <div class="max-w-7xl mx-auto text-center">
-        <!-- Título -->
-        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 italic mb-12">
-          Lo que dicen <br />
-          <span class="text-orange-400 bg-clip-text italic">
-            nuestras familias
-          </span>
-        </h2>
-
-        <!-- Carrusel -->
-        <div id="testimonials-container" class="overflow-hidden relative py-10">
-          <div class="flex gap-6 w-max" id="testimonials-track">
-            {
-              testimonials.concat(testimonials).map((testimonial) => (
-                <article
-                  class="shrink-0 w-80 bg-white p-6 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300"
-                  role="group"
-                  aria-label={`Testimonio de ${testimonial.name}`}
-                >
-                  <img
-                    src={testimonial.image}
-                    alt={`Foto de ${testimonial.name}`}
-                    class="w-16 h-16 rounded-full mx-auto mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300"
-                    loading="lazy"
-                  />
-                  <p class="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
-                  <h4 class="font-bold text-gray-900">{testimonial.name}</h4>
-                  <p class="text-sm text-gray-600">{testimonial.role}</p>
-                </article>
-              ))
-            }
-          </div>
-        </div>
-      </div>
+      <TestimonialsCarousel 
+        testimonials={testimonials.map(t => ({...t, rating: 5})) as any} 
+        client:load 
+      />
     </section>
+
+
 
     <!-- Galería de la clínica: Grid de imágenes -->
     <section class="py-24 px-4 bg-gray-900">

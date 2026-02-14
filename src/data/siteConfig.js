@@ -11,7 +11,7 @@ export const siteConfig = {
   contact: {
     whatsapp: whatsappNumber,
     phone: "(066) 234 567", // Prefijo 066 de Ayacucho
-    email: "informes@clinicapediatrica.com",
+    email: "jhonbeck860@gmail.com",
     whatsappUrl: `https://wa.me/${whatsappNumber}?text=Hola%2C%20deseo%20agendar%20una%20cita%20m%C3%A9dica%20en%20Huamanga`,
   },
 

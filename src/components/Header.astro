@@ -4,7 +4,9 @@
 import { siteConfig } from "../data/siteConfig";
 import Search from "./Search.astro";
 const pathname = new URL(Astro.request.url).pathname;
+import ContactForm from '../components/ContactForm.jsx';
 const currentPath = pathname.slice(1);
+
 ---
 
 <!-- Skip Link para accesibilidad (oculto por defecto, visible al navegar con tab) -->
@@ -16,7 +18,7 @@ const currentPath = pathname.slice(1);
     <div class="flex gap-2 sm:gap-4 md:gap-8">
       <a href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`} class="flex items-center gap-1.5 sm:gap-2 hover:text-yellow-200 transition-all duration-300 group focus:ring-2 focus:ring-yellow-300" aria-label="Llamar al teléfono">
         <i data-lucide="phone" class="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:scale-110 transition-transform duration-300"></i>
-<span class="font-bold truncate max-w-25 sm:max-w-none">{siteConfig.contact.phone}</span>
+      <span class="font-bold truncate max-w-25 sm:max-w-none">{siteConfig.contact.phone}</span>
 
       </a>
 
@@ -46,15 +48,18 @@ const currentPath = pathname.slice(1);
 
     
     <div class="hidden lg:flex items-center flex-1 justify-start">
-       <a
-          href={siteConfig.contact.whatsappUrl}
-          target="_blank"
-          class="flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-green-600 transition-colors"
-         >
-        <i class="bi bi-whatsapp text-xl"></i>
-        <span>Reservar Cita</span>
-      </a>
+      <!-- Botón para abrir modal de contacto -->
+      <button 
+        id="contact-modal-btn" 
+        class="group flex items-center gap-0 bg-linear-to-r from-pink-500 to-pink-600 text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-pink-300 overflow-hidden"
+        aria-label="Abrir formulario de contacto"
+       >
+        <i data-lucide="send" class="w-5 h-5 shrink-0"></i>
+        <span class="text-sm font-bold tracking-wide max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-37.5 group-hover:ml-2 transition-all duration-500 ease-out group-hover:animate-bounce-text">Contáctanos</span>
+      </button>
     </div>
+
+
 
     <div class="flex items-center justify-center lg:flex-none">
         <a href="/" class="lg:hidden flex flex-col items-center justify-center mobile-logo-link" aria-label="Ir a inicio">
@@ -104,6 +109,43 @@ const currentPath = pathname.slice(1);
 
 <!-- Overlay Móvil -->
 <div id="mobile-overlay" class="fixed inset-0 bg-black/40 z-998 opacity-0 pointer-events-none transition-all duration-400 ease-in-out lg:hidden backdrop-blur-sm hidden" aria-hidden="true"></div>
+
+<!-- Panel de Contacto (deslizable desde la derecha) -->
+<div id="contact-modal" class="fixed inset-0 z-999 hidden" role="dialog" aria-modal="true" aria-hidden="true">
+  <!-- Backdrop -->
+  <div id="contact-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity opacity-0"></div>
+  
+  <!-- Panel Content (desliza desde la izquierda) -->
+  <div id="contact-modal-content" class="absolute left-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-out overflow-y-auto" style="transform: translateX(-100%);">
+
+
+    <!-- Header del Panel -->
+    <div class="sticky top-0 bg-white border-b border-gray-100 p-6 flex items-center justify-between z-10">
+      <div>
+        <h3 class="text-xl font-bold text-gray-900">Envíanos un mensaje</h3>
+        <p class="text-sm text-gray-500">Te responderemos lo antes posible</p>
+      </div>
+      <button 
+        id="close-contact-modal" 
+        class="p-2 bg-gray-100 text-gray-500 rounded-full hover:bg-red-50 hover:text-red-500 transition-all active:scale-90 focus:ring-2 focus:ring-red-300"
+        aria-label="Cerrar formulario"
+      >
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+    
+    <!-- Formulario -->
+    <div class="p-6">
+      <ContactForm 
+        email={siteConfig.contact.email} 
+        whatsappNumber={siteConfig.contact.whatsapp}
+        client:load 
+      />
+    </div>
+  </div>
+</div>
+
+
 
 <!-- Menú Móvil -->
 <div id="mobile-menu" class="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-slate-50 z-999 translate-x-full transition-transform duration-500 ease-in-out lg:hidden flex flex-col shadow-2xl overflow-hidden" role="dialog" aria-modal="true" aria-hidden="true">
@@ -164,20 +206,7 @@ const currentPath = pathname.slice(1);
   .nav-link:hover::after, .nav-link.active::after { @apply w-full; }
   .nav-link.active { @apply text-pink-600 font-bold; }
   
-  /* Burger Animation */
-  #menu-btn.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-  #menu-btn.open span:nth-child(2) { opacity: 0; }
-  #menu-btn.open span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
 
-  /* Mobile Links Animation */
-  #mobile-menu.translate-x-full .mobile-link {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  #mobile-menu:not(.translate-x-full) .mobile-link {
-    opacity: 1;
-    transform: translateX(0);
-  }
 
   /* Skip Link */
   .sr-only { @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0; }
@@ -194,6 +223,20 @@ const currentPath = pathname.slice(1);
   .bounce-animation {
     animation: bounce-effect 0.5s ease-in-out;
   }
+
+  /* Bounce animation for contact button text */
+  @keyframes bounce-text {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(3px); }
+    60% { transform: translateX(-2px); }
+    80% { transform: translateX(1px); }
+  }
+
+  .group-hover\:animate-bounce-text:hover {
+    animation: bounce-text 0.6s ease-in-out;
+  }
+
 </style>
 
 
@@ -203,6 +246,13 @@ const currentPath = pathname.slice(1);
     const closeBtn = document.getElementById("close-menu");
     const mobileMenu = document.getElementById("mobile-menu");
     const mobileOverlay = document.getElementById("mobile-overlay");
+    
+    // Contact Modal Elements
+    const contactModalBtn = document.getElementById("contact-modal-btn");
+    const contactModal = document.getElementById("contact-modal");
+    const contactModalBackdrop = document.getElementById("contact-modal-backdrop");
+    const contactModalContent = document.getElementById("contact-modal-content");
+    const closeContactModal = document.getElementById("close-contact-modal");
 
     // Verificar si Lucide está disponible
     if (typeof lucide !== 'undefined') {
@@ -242,6 +292,46 @@ const currentPath = pathname.slice(1);
     closeBtn.addEventListener('click', () => toggle(false));
     mobileOverlay.addEventListener('click', () => toggle(false));
     mobileMenu.querySelectorAll("a").forEach(link => link.addEventListener('click', () => toggle(false)));
+    
+    // Contact Modal Logic
+    if (contactModalBtn && contactModal && closeContactModal) {
+      const openContactModal = () => {
+        contactModal.classList.remove("hidden");
+        contactModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        
+        // Animar entrada
+        setTimeout(() => {
+          contactModalBackdrop.classList.remove("opacity-0");
+          contactModalContent.style.transform = "translateX(0)";
+        }, 10);
+      };
+      
+      const closeContactModalFn = () => {
+        contactModalBackdrop.classList.add("opacity-0");
+        contactModalContent.style.transform = "translateX(-100%)";
+
+
+        
+        setTimeout(() => {
+          contactModal.classList.add("hidden");
+          contactModal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+        }, 300);
+      };
+
+      
+      contactModalBtn.addEventListener('click', openContactModal);
+      closeContactModal.addEventListener('click', closeContactModalFn);
+      contactModalBackdrop.addEventListener('click', closeContactModalFn);
+      
+      // Cerrar con tecla Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !contactModal.classList.contains('hidden')) {
+          closeContactModalFn();
+        }
+      });
+    }
   };
 
   document.addEventListener("astro:page-load", initHeader);

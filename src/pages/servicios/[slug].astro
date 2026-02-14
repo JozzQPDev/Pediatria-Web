@@ -14,8 +14,14 @@ export function getStaticPaths() {
 
 const { service } = Astro.props;
 
+// Handle case when service is not found
+if (!service) {
+  return Astro.redirect('/servicios');
+}
+
 // Get related services
 const relatedServices = getRelatedServices(service.slug, 3);
+
 
 // Color mapping for dynamic classes
 const colorClasses = {

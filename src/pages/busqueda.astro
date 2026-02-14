@@ -3,7 +3,8 @@
 export const prerender = false;
 
 import Layout from "../layouts/Layout.astro";
-import SearchFilters from "../components/SearchFilters.astro";
+import SearchFilters from "../components/SearchFilters.jsx";
+
 import { searchContent, getSearchCategories, searchData } from "../data/searchData.js";
 
 // Obtener parámetros de la URL
@@ -28,9 +29,12 @@ const results = query ? searchContent(query, searchOptions) : [];
 const totalResults = results.length;
 
 // Obtener categorías disponibles para filtros
-const allCategories = getSearchCategories().filter(cat => 
+const allCategories: string[] = getSearchCategories().filter((cat: string) => 
   !['page', 'service', 'blog'].includes(cat)
 );
+
+
+
 
 // Iconos para cada tipo
 const typeIcons: Record<string, string> = {
@@ -190,10 +194,13 @@ const popularSearches = ['vacunación', 'nutrición', 'desarrollo', 'recién nac
           currentType={typeFilter}
           currentCategory={categoryFilter}
           currentSort={sortBy}
-          availableCategories={allCategories}
+          availableCategories={allCategories as any}
           totalResults={totalResults}
+          client:load
         />
       )}
+
+
 
       <!-- Resultados -->
       {query && totalResults > 0 && (
