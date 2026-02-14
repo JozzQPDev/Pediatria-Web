@@ -110,13 +110,15 @@ const currentPath = pathname.slice(1);
 <!-- Overlay Móvil -->
 <div id="mobile-overlay" class="fixed inset-0 bg-black/40 z-998 opacity-0 pointer-events-none transition-all duration-400 ease-in-out lg:hidden backdrop-blur-sm hidden" aria-hidden="true"></div>
 
-<!-- Panel de Contacto (deslizable desde la derecha) -->
-<div id="contact-modal" class="fixed inset-0 z-999 hidden" role="dialog" aria-modal="true" aria-hidden="true">
+<!-- Panel de Contacto (deslizable desde la izquierda) -->
+<div id="contact-modal" class="fixed inset-0 z-[999] hidden" role="dialog" aria-modal="true" aria-hidden="true">
   <!-- Backdrop -->
-  <div id="contact-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity opacity-0"></div>
+  <div id="contact-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
   
   <!-- Panel Content (desliza desde la izquierda) -->
-  <div id="contact-modal-content" class="absolute left-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-out overflow-y-auto" style="transform: translateX(-100%);">
+  <div id="contact-modal-content" class="absolute left-0 top-0 h-full w-full max-w-md bg-white shadow-2xl overflow-y-auto -translate-x-full transition-transform duration-300 ease-out">
+
+
 
 
     <!-- Header del Panel -->
@@ -294,44 +296,66 @@ const currentPath = pathname.slice(1);
     mobileMenu.querySelectorAll("a").forEach(link => link.addEventListener('click', () => toggle(false)));
     
     // Contact Modal Logic
-    if (contactModalBtn && contactModal && closeContactModal) {
-      const openContactModal = () => {
+    if (contactModalBtn && contactModal && closeContactModal && contactModalBackdrop && contactModalContent) {
+      
+      function openContactModal() {
+        // Mostrar el modal primero (quitar hidden)
         contactModal.classList.remove("hidden");
         contactModal.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
         
-        // Animar entrada
-        setTimeout(() => {
-          contactModalBackdrop.classList.remove("opacity-0");
-          contactModalContent.style.transform = "translateX(0)";
-        }, 10);
-      };
-      
-      const closeContactModalFn = () => {
-        contactModalBackdrop.classList.add("opacity-0");
-        contactModalContent.style.transform = "translateX(-100%)";
-
-
+        // Forzar reflow para que la transición funcione
+        void contactModalContent.offsetWidth;
         
+        // Mostrar backdrop y deslizar panel
+        contactModalBackdrop.classList.remove("opacity-0");
+        contactModalContent.classList.remove("-translate-x-full");
+        contactModalContent.classList.add("translate-x-0");
+      }
+      
+      function closeContactModalFn() {
+        // Ocultar backdrop y deslizar panel fuera
+        contactModalBackdrop.classList.add("opacity-0");
+        contactModalContent.classList.remove("translate-x-0");
+        contactModalContent.classList.add("-translate-x-full");
+        
+        // Esperar a que termine la animación antes de ocultar el modal
         setTimeout(() => {
           contactModal.classList.add("hidden");
           contactModal.setAttribute("aria-hidden", "true");
           document.body.style.overflow = "";
         }, 300);
-      };
+      }
 
+      // Event listeners
+      contactModalBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openContactModal();
+      });
       
-      contactModalBtn.addEventListener('click', openContactModal);
-      closeContactModal.addEventListener('click', closeContactModalFn);
-      contactModalBackdrop.addEventListener('click', closeContactModalFn);
+      closeContactModal.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeContactModalFn();
+      });
+      
+      contactModalBackdrop.addEventListener('click', function(e) {
+        if (e.target === contactModalBackdrop) {
+          closeContactModalFn();
+        }
+      });
       
       // Cerrar con tecla Escape
-      document.addEventListener('keydown', (e) => {
+      document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && !contactModal.classList.contains('hidden')) {
           closeContactModalFn();
         }
       });
     }
+
+
+
   };
 
   document.addEventListener("astro:page-load", initHeader);
