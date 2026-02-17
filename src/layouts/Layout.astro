@@ -12,7 +12,7 @@ interface Props {
 
 const { title, description = siteConfig.seo.description } = Astro.props;
 
-const fullTitle = `${title} | ${siteConfig.name}`;
+const fullTitle = `${title} - ${siteConfig.name}`;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
 ---
 

@@ -134,13 +134,16 @@ const colors = colorClasses[service.color as keyof typeof colorClasses] || color
             />
             <div class={`absolute inset-0 bg-linear-to-t ${colors.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500`}></div>
 
+
+
           </div>
           
           <!-- Price Badge -->
-          <div class="absolute -bottom-6 -right-6 bg-white rounded-2xl shadow-xl p-6 border border-gray-100 reveal-scale stagger-2">
+          <div class="relative lg:absolute lg:-bottom-6 lg:-right-6 bg-white rounded-2xl shadow-xl p-6 border border-gray-100 reveal-scale stagger-2 mt-4 lg:mt-0 mx-auto lg:mx-0 w-fit">
             <p class="text-sm text-gray-500 mb-1">Inversión desde</p>
             <p class="text-3xl font-bold text-gray-900">{service.price}</p>
           </div>
+
         </div>
       </div>
     </div>
@@ -187,6 +190,8 @@ const colors = colorClasses[service.color as keyof typeof colorClasses] || color
         
         <div class="order-1 lg:order-2 reveal-right">
           <div class={`bg-linear-to-br ${colors.gradient} rounded-3xl p-8 text-white`}>
+
+
 
             <div class="flex items-center gap-4 mb-6">
               <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
@@ -280,6 +285,8 @@ const colors = colorClasses[service.color as keyof typeof colorClasses] || color
   <!-- CTA Section -->
   <section class={`py-16 bg-linear-to-br ${colors.gradient} text-white`}>
 
+
+
     <div class="max-w-4xl mx-auto px-4 text-center reveal">
       <h2 class="text-3xl lg:text-4xl font-bold mb-4">
         ¿Listo para agendar tu cita?
@@ -331,6 +338,8 @@ const colors = colorClasses[service.color as keyof typeof colorClasses] || color
                   class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div class="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+
 
               </div>
               

@@ -1,4 +1,4 @@
-const whatsappNumber = "51900000000";
+const whatsappNumber = "51997307782"; // Número de WhatsApp con código de país (Perú: +51)
 const clinicName = "Clínica Pediátrica";
 
 export const siteConfig = {

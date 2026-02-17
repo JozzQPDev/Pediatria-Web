@@ -87,7 +87,15 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [nextSlide, prevSlide]);
 
+  // Initialize Lucide icons when component mounts
+  useEffect(() => {
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  }, [currentIndex]);
+
   // Touch handlers for swipe
+
   const onTouchStart = (e) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);

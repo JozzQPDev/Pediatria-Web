@@ -2,13 +2,10 @@
 // Tu código de importaciones permanece igual
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
-import ContactForm from '../components/ContactForm.jsx';
 import { siteConfig } from '../data/siteConfig';
-
 // Limpia el teléfono para el href tel:
 const phoneHref = String(siteConfig.contact.phone).replace(/[^\d+]/g, '');
 ---
-
 
 <Layout title={`Contacto | ${siteConfig.name}`}>
   <!-- Hero con imagen de fondo, elementos decorativos y CTA mejorado -->
@@ -150,22 +147,20 @@ const phoneHref = String(siteConfig.contact.phone).replace(/[^\d+]/g, '');
         </div>
 
         <div class="lg:col-span-8 space-y-8">
-          <!-- Formulario de Contacto React -->
           <div
-              class="relative overflow-hidden rounded-3xl shadow-lg group focus-within:ring-2 focus-within:ring-green-500 animate-slide-in-right animation-delay-200"
+              class="relative overflow-hidden rounded-3xl shadow-lg group focus-within:ring-2 focus-within:ring-green-500 animate-slide-in-right"
               id="map-card"
             >
-
                <iframe
-                id="contact-map"
-                src={siteConfig.location.iframeUrl}
-                class="w-full h-80 md:h-96 rounded-3xl"
-                style="border:0;"
-                allowfullscreen
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                title={`Mapa interactivo - ${siteConfig.name}`}
-              ></iframe>
+    id="contact-map"
+    src={siteConfig.location.iframeUrl}
+    class="w-full h-112.5 md:h-130 rounded-3xl"
+    style="border:0;"
+    allowfullscreen
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    title={`Mapa interactivo - ${siteConfig.name}`}
+  ></iframe>
 
               <!-- Botón flotante -->
               <div class="absolute inset-x-0 bottom-0 flex items-end justify-center pb-8">
@@ -183,7 +178,6 @@ const phoneHref = String(siteConfig.contact.phone).replace(/[^\d+]/g, '');
             </div>
 
           <div class="grid md:grid-cols-2 gap-6">
-
             <!-- Emergencias con imagen mejorada y animación -->
             <div class="relative overflow-hidden rounded-3xl shadow-2xl group focus-within:ring-2 focus-within:ring-red-500 animate-slide-in-right animation-delay-200" role="article" aria-label="Emergencias 24h">
               <img src="/images/contact-emergency.jpg" alt="Imagen representativa de servicios de emergencias pediátricas" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />

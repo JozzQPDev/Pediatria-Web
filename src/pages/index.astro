@@ -144,7 +144,7 @@ const galleryImages = [
 ];
 ---
 
-<Layout title={`Inicio | ${siteConfig.name}`}>
+<Layout title={`Inicio`} description={`Bienvenido a nuestra clínica pediátrica en ${siteConfig.location.city}, donde la salud y el bienestar de tus hijos son nuestra prioridad. Descubre un entorno seguro, moderno y acogedor diseñado para brindar atención médica integral a los más pequeños de la casa. Con especialistas certificados, tecnología avanzada y un enfoque humano, ofrecemos servicios que acompañan cada etapa del crecimiento infantil. Tu tranquilidad comienza aquí, en un lugar donde cada sonrisa cuenta.`}>
    <Welcome /> <!-- Removido client:load para evitar problemas de hidratación -->
   <!-- Hero con imagen de fondo: Cambié a un diseño más visual con overlay y CTA prominente -->
   <section
@@ -262,6 +262,8 @@ const galleryImages = [
                 />
 
                 <div class="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
+
+
 
                 <div class="absolute inset-0 p-6 md:p-8 flex flex-col justify-end transform transition-transform duration-500">
                   <div
@@ -395,8 +397,9 @@ const galleryImages = [
         </div>
 
         <div
-          class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-200 md:h-150"
+          class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-150"
         >
+
           {
             galleryImages.map((image, index) => (
               <div
@@ -440,6 +443,8 @@ const galleryImages = [
           class="absolute inset-0 bg-linear-to-br from-pink-600/95 via-yellow-500/15 to-blue-800/95 group-hover:opacity-95 transition-all duration-700"
         >
         </div>
+
+
 
         <div
           class="absolute inset-0 overflow-hidden pointer-events-none opacity-20"
@@ -771,19 +776,23 @@ const galleryImages = [
   const container = document.getElementById("testimonials-container")!;
   const track = document.getElementById("testimonials-track")!;
 
-  let scrollAmount = 0;
-  const speed = 0.5;
+  if (container && track) {
 
-  function autoScroll() {
-    scrollAmount += speed;
-    if (scrollAmount >= track.scrollWidth / 2) {
-      scrollAmount = 0;
+    let scrollAmount = 0;
+    const speed = 0.5;
+
+    function autoScroll() {
+      scrollAmount += speed;
+      if (scrollAmount >= track.scrollWidth / 2) {
+        scrollAmount = 0;
+      }
+      container.scrollLeft = scrollAmount;
+      requestAnimationFrame(autoScroll);
     }
-    container.scrollLeft = scrollAmount;
-    requestAnimationFrame(autoScroll);
+
+    autoScroll();
   }
 
-  autoScroll();
 
   // Lógica simple de visualización (Lightbox)
   const galleryItems = document.querySelectorAll(".gallery-item .view-btn");

@@ -123,6 +123,8 @@ Categorías: Vacunación, Nutrición, Desarrollo, Recién Nacidos, Psicología, 
 | Blogs            | `/blogs`          | Artículos de interés          |
 | Detalle Blog     | `/blog/[slug]`    | Artículo específico           |
 | Contacto         | `/contacto`       | Información de contacto       |
+| Búsqueda         | `/busqueda`       | Búsqueda inteligente del sitio|
+
 
 ## 📞 Información de Contacto
 
@@ -156,6 +158,23 @@ Categorías: Vacunación, Nutrición, Desarrollo, Recién Nacidos, Psicología, 
 
 ## 📝 Notas de Desarrollo
 
+### Actualizaciones Recientes (2025)
+
+Se han realizado las siguientes correcciones y mejoras en el proyecto:
+
+#### Correcciones de Clases Tailwind CSS
+
+Se han corregido las clases de gradiente de fondo en varios archivos para compatibilidad con la configuración de Tailwind del proyecto:
+
+- **index.astro**: Actualizado `bg-gradient-to-t` → `bg-linear-to-t`, `bg-gradient-to-br` → `bg-linear-to-br`
+- **servicios.astro**: Actualizado `bg-gradient-to-r` → `bg-linear-to-r`, `bg-gradient-to-br` → `bg-linear-to-br`
+- **servicios/[slug].astro**: Actualizado `bg-gradient-to-t` → `bg-linear-to-t`, `bg-gradient-to-br` → `bg-linear-to-br`
+- **equipo.astro**: Actualizado `bg-gradient-to-t` → `bg-linear-to-t`
+
+#### Mejoras en Colores
+
+- **nosotros.astro**: Mejora en la configuración de clases de colores para los valores de la clínica, asegurando que los colores (blue, pink, green, purple) se muestren correctamente en los gradientes deoverlay
+
 ### Animaciones de Entrada
 
 El sitio utiliza clases de animación CSS personalizadas que se activan mediante Intersection Observer:
@@ -183,5 +202,216 @@ El sitio incluye:
 - **Lucide Icons**: Iconos vectoriales
 - **Google Maps**: Embed de ubicación
 - **WhatsApp**: Enlaces para agendamiento directo
+
+## 🔍 Sistema de Búsqueda Inteligente
+
+El sitio implementa un sistema de búsqueda avanzado con algoritmos de matching inteligente, filtros dinámicos y experiencia de usuario optimizada.
+
+### 🎯 Características Principales
+
+| Característica | Descripción |
+|:---------------|:------------|
+| **Búsqueda Fuzzy** | Algoritmo de distancia de Levenshtein para tolerancia a errores tipográficos |
+| **Matching Inteligente** | Búsqueda en títulos, descripciones, categorías y etiquetas |
+| **Puntuación de Relevancia** | Sistema de scoring ponderado por tipo y coincidencias |
+| **Filtros Dinámicos** | Filtrado por tipo (servicio/blog/página), categoría y ordenamiento |
+| **Sugerencias en Tiempo Real** | Autocompletado basado en contenido popular |
+| **Resaltado de Términos** | Highlight visual de términos de búsqueda en resultados |
+| **Búsquedas Populares** | Sugerencias predefinidas para descubrimiento de contenido |
+
+### 📊 Algoritmo de Búsqueda
+
+#### 1. **Fuzzy Matching con Distancia de Levenshtein**
+```javascript
+// Tolerancia del 30% para errores tipográficos
+fuzzyMatch(text, query, threshold = 0.3)
+```
+- Calcula distancia de edición entre términos
+- Permite búsquedas con errores de escritura
+- Umbral configurable (default: 30% de diferencia máxima)
+
+#### 2. **Sistema de Puntuación de Relevancia**
+```javascript
+calculateRelevance(item, searchTerms)
+```
+
+**Factores de Puntuación:**
+| Factor | Peso | Descripción |
+|:-------|:-----|:------------|
+| Coincidencia exacta en título | +10 | Término completo en título |
+| Coincidencia parcial en título | +5 | Palabra del término en título |
+| Coincidencia en descripción | +3 | Término en descripción |
+| Coincidencia en categoría | +4 | Match en categoría |
+| Coincidencia en etiquetas | +3 | Match en tags |
+| Prioridad por tipo | +5/+3/+0 | Servicios > Blog > Páginas |
+
+#### 3. **Opciones de Búsqueda**
+```javascript
+searchContent(query, {
+  limit: 20,           // Máximo de resultados
+  fuzzy: true,         // Activar fuzzy matching
+  sortBy: 'relevance', // 'relevance' | 'date' | 'title'
+  filters: {
+    type: 'service',   // 'service' | 'blog' | 'page'
+    category: 'Vacunación'
+  }
+})
+```
+
+### 🧩 Componentes del Sistema de Búsqueda
+
+#### Componentes React
+| Componente | Props | Descripción |
+|:-----------|:------|:------------|
+| `SearchFilters.jsx` | `currentType`, `currentCategory`, `currentSort`, `availableCategories`, `totalResults` | Panel de filtros dinámicos con actualización en tiempo real |
+| `SearchSuggestions.jsx` | - | Dropdown de sugerencias con navegación por teclado |
+
+#### Componentes Astro
+| Componente | Descripción |
+|:-------------|:------------|
+| `SearchSuggestions.astro` | Versión estática para SSR de sugerencias |
+| `SearchFilters.astro` | Wrapper Astro para hidratación selectiva |
+
+### 📁 Estructura de Datos de Búsqueda
+
+El sistema agrega datos de múltiples fuentes:
+
+```javascript
+searchData = [
+  ...pages,      // 6 páginas principales
+  ...services,   // 6 servicios médicos
+  ...blogPosts   // 7 artículos del blog
+]
+// Total: 19 items indexados
+```
+
+#### Campos Indexados por Item
+```javascript
+{
+  title: string,           // Título completo
+  description: string,     // Descripción para SEO
+  category: string,        // Categoría específica
+  tags: string[],          // Array de etiquetas
+  type: 'page'|'service'|'blog',
+  url: string,             // URL relativa
+  slug: string,            // Identificador único
+  relevanceScore: number   // Calculado dinámicamente
+}
+```
+
+### 🎨 Experiencia de Usuario
+
+#### Página de Búsqueda (`/busqueda?q=query`)
+
+**Estados de la Interfaz:**
+
+1. **Estado Inicial** (sin query)
+   - Formulario de búsqueda prominente
+   - Términos populares sugeridos
+   - Accesos directos a secciones principales
+
+2. **Con Resultados**
+   - Lista de resultados con tarjetas enriquecidas
+   - Imágenes representativas por tipo
+   - Badges de categoría con colores
+   - Indicador de relevancia (% match)
+   - Animaciones de entrada escalonadas
+
+3. **Sin Resultados**
+   - Mensaje amigable con término resaltado
+   - Sugerencias alternativas
+   - Búsquedas populares recomendadas
+
+#### Filtros Disponibles
+| Filtro | Opciones | Descripción |
+|:-------|:---------|:------------|
+| **Tipo** | Todos, Servicios, Artículos, Páginas | Filtra por tipo de contenido |
+| **Categoría** | Dinámico según resultados | Filtra por categoría específica |
+| **Ordenar** | Relevancia, Fecha, Título | Ordenamiento de resultados |
+
+### 🔧 Funciones de la API de Búsqueda
+
+| Función | Parámetros | Retorno | Descripción |
+|:--------|:-----------|:--------|:------------|
+| `searchContent(query, options)` | `query: string`, `options: object` | `SearchResult[]` | Búsqueda principal con filtros y ordenamiento |
+| `getSearchSuggestions(query, limit)` | `query: string`, `limit: number` | `string[]` | Sugerencias basadas en coincidencias parciales |
+| `getSearchCategories()` | - | `string[]` | Categorías únicas disponibles |
+| `highlightText(text, query)` | `text: string`, `query: string` | `string` | HTML con términos resaltados (`<mark>`) |
+| `calculateRelevance(item, terms)` | `item: object`, `terms: string[]` | `number` | Score numérico de relevancia |
+| `fuzzyMatch(text, query, threshold)` | `text: string`, `query: string`, `threshold: number` | `boolean` | Verificación de coincidencia aproximada |
+| `levenshteinDistance(str1, str2)` | `str1: string`, `str2: string` | `number` | Distancia de edición entre strings |
+
+### 🚀 Optimizaciones de Rendimiento
+
+- **Indexación en Memoria**: Datos precargados en build time
+- **Búsqueda Cliente**: Filtros dinámicos sin recarga de página
+- **SSR para SEO**: Página de búsqueda renderizada en servidor
+- **Lazy Loading**: Imágenes de resultados con carga diferida
+- **Debounce**: Sugerencias con delay de 150ms para evitar spam
+
+### 📱 Responsive Design
+
+- **Desktop**: Layout de 2 columnas con filtros laterales
+- **Tablet**: Layout adaptativo con tarjetas compactas
+- **Móvil**: Stack vertical con filtros colapsables
+
+
+## ⚛️ Componentes React Interactivos
+
+### ContactForm.jsx
+Formulario de contacto con validación en tiempo real:
+- Validación de campos (nombre, email, teléfono, mensaje)
+- Envío vía WhatsApp y Email
+- Estados de carga y éxito
+- Diseño accesible con labels ARIA
+
+### TestimonialsCarousel.jsx
+Carrusel de testimonios con:
+- Navegación automática y manual
+- Indicadores de posición
+- Animaciones suaves
+- Soporte para gestos táctiles
+
+## 🛠️ Funciones Helper de Datos
+
+### services.js
+| Función | Descripción |
+|:--------|:------------|
+| `getServiceBySlug(slug)` | Obtiene un servicio por su slug |
+| `getAllServiceSlugs()` | Retorna todos los slugs para generación de rutas estáticas |
+| `getRelatedServices(currentSlug, count)` | Obtiene servicios relacionados |
+| `getServicesByColor(color)` | Filtra servicios por categoría de color |
+
+### blogPosts.js
+| Función | Descripción |
+|:--------|:------------|
+| `getPostBySlug(slug)` | Obtiene un artículo por su slug |
+| `getPostsByCategory(category)` | Filtra artículos por categoría |
+| `getRecentPosts(count)` | Obtiene los artículos más recientes |
+| `getRelatedPosts(currentSlug, count)` | Obtiene artículos relacionados |
+| `getAllCategories()` | Retorna todas las categorías únicas |
+| `getAllTags()` | Retorna todas las etiquetas únicas |
+
+## 🎨 Sistema de Colores
+
+El sitio utiliza un sistema de colores consistente:
+
+| Color | Uso |
+|:------|:----|
+| **Pink** (`pink-500`, `pink-600`) | Acentos principales, CTAs, hover states |
+| **Green** (`green-500`, `green-600`) | Servicios, éxito, confirmaciones |
+| **Blue** (`blue-500`, `blue-600`) | Páginas informativas, enlaces |
+| **Purple** (`purple-500`, `purple-600`) | Artículos del blog, contenido educativo |
+| **Red** (`red-500`, `red-600`) | Emergencias, alertas importantes |
+
+## 📱 Características de Accesibilidad
+
+- Skip links para navegación por teclado
+- Labels ARIA en todos los elementos interactivos
+- Contraste de colores WCAG 2.1 AA
+- Navegación completa por teclado
+- Estados focus visibles
+- Textos alternativos en imágenes
+- Semántica HTML5 correcta
 
 **Última actualización**: 8 de febrero de 2026

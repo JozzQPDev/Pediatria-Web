@@ -1,9 +1,23 @@
 import { useState, useEffect } from 'react';
 
+// Icon component to prevent hydration mismatch
+const Icon = ({ name, className = "w-4 h-4" }) => {
+  const icons = {
+    'check-lg': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className={className}><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/></svg>,
+    'exclamation-circle': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className={className}><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/><path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/></svg>,
+    'whatsapp': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className={className}><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>,
+    'telephone': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className={className}><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/></svg>,
+    'envelope': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className={className}><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/></svg>,
+    'send': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className={className}><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
+  };
+  
+  return icons[name] || null;
+};
+
 // ContactForm - React component with real-time validation and WhatsApp/Email submission
 export default function ContactForm({ 
-  email = 'contacto@clinicapediatrica.com',
-  whatsappNumber = '+51999999999'
+  email = 'jhonbeck860@gmail.com',
+  whatsappNumber = '+51997307782'
 }) {
 
 
@@ -192,6 +206,8 @@ export default function ContactForm({
   const messageProgress = Math.min((messageLength / 1000) * 100, 100);
 
   const getSuccessMessage = () => {
+
+
     switch (submitMethod) {
       case 'whatsapp':
         return 'Se abrió WhatsApp con tu mensaje. ¡Envíalo para completar el contacto!';
@@ -205,14 +221,15 @@ export default function ContactForm({
   };
 
   return (
+    
 
     <div className="bg-white p-1 md:p-2">
-
       {submitStatus === 'success' && (
         <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-start gap-3 animate-fade-in">
           <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center shrink-0">
-            <i data-lucide="check" className="w-5 h-5 text-green-600"></i>
+            <Icon name="check-lg" className="w-6 h-6 text-green-600" />
           </div>
+
           <div>
             <p className="font-semibold text-green-800">¡Mensaje preparado!</p>
             <p className="text-sm text-green-600">{getSuccessMessage()}</p>
@@ -239,10 +256,11 @@ export default function ContactForm({
           />
           {touched.name && errors.name && (
             <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
-              <i data-lucide="alert-circle" className="w-4 h-4"></i>
+              <Icon name="exclamation-circle" className="w-4 h-4" />
               {errors.name}
             </p>
           )}
+
         </div>
 
         {/* Email Field */}
@@ -263,10 +281,11 @@ export default function ContactForm({
           />
           {touched.email && errors.email && (
             <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
-              <i data-lucide="alert-circle" className="w-4 h-4"></i>
+              <Icon name="exclamation-circle" className="w-4 h-4" />
               {errors.email}
             </p>
           )}
+
         </div>
 
         {/* Phone Field */}
@@ -287,10 +306,11 @@ export default function ContactForm({
           />
           {touched.phone && errors.phone && (
             <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
-              <i data-lucide="alert-circle" className="w-4 h-4"></i>
+              <Icon name="exclamation-circle" className="w-4 h-4" />
               {errors.phone}
             </p>
           )}
+
         </div>
 
         {/* Subject Field */}
@@ -311,10 +331,11 @@ export default function ContactForm({
           />
           {touched.subject && errors.subject && (
             <p className="mt-1 text-sm text-red-600 flex items-center gap-1">
-              <i data-lucide="alert-circle" className="w-4 h-4"></i>
+              <Icon name="exclamation-circle" className="w-4 h-4" />
               {errors.subject}
             </p>
           )}
+
         </div>
 
         {/* Preferred Contact Method */}
@@ -324,10 +345,11 @@ export default function ContactForm({
           </label>
           <div className="flex gap-3">
             {[
-              { value: 'whatsapp', label: 'WhatsApp', icon: 'message-circle' },
-              { value: 'phone', label: 'Llamada', icon: 'phone' },
-              { value: 'email', label: 'Email', icon: 'mail' }
+              { value: 'whatsapp', label: 'WhatsApp', icon: 'whatsapp' },
+              { value: 'phone', label: 'Llamada', icon: 'telephone' },
+              { value: 'email', label: 'Email', icon: 'envelope' }
             ].map(option => (
+
               <button
                 key={option.value}
                 type="button"
@@ -339,7 +361,8 @@ export default function ContactForm({
                 }`}
                 disabled={isSubmitting}
               >
-                <i data-lucide={option.icon} className="w-4 h-4"></i>
+                <Icon name={option.icon} className="w-5 h-5" />
+
                 <span className="text-sm font-medium">{option.label}</span>
               </button>
             ))}
@@ -366,10 +389,11 @@ export default function ContactForm({
           <div className="flex items-center justify-between mt-2">
             {touched.message && errors.message ? (
               <p className="text-sm text-red-600 flex items-center gap-1">
-                <i data-lucide="alert-circle" className="w-4 h-4"></i>
+                <Icon name="exclamation-circle" className="w-4 h-4" />
                 {errors.message}
               </p>
             ) : (
+
               <span className="text-sm text-gray-400">
                 Mínimo 20 caracteres
               </span>
@@ -410,11 +434,12 @@ export default function ContactForm({
             </>
           ) : (
             <>
-              <i data-lucide="send" className="w-5 h-5"></i>
+              <Icon name="send" className="w-5 h-5" />
               {formData.preferredContact === 'whatsapp' ? 'Enviar por WhatsApp' : 
                formData.preferredContact === 'email' ? 'Enviar por Email' : 'Solicitar llamada'}
             </>
           )}
+
         </button>
         
         {/* Helper text */}

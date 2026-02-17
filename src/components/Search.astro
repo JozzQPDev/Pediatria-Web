@@ -1,5 +1,5 @@
 ---
-// Search.astro - Search component with expandable input and suggestions
+// Search.astro - Enhanced search component with voice search and predictive features
 import SearchSuggestions from './SearchSuggestions.jsx';
 ---
 
@@ -21,7 +21,29 @@ import SearchSuggestions from './SearchSuggestions.jsx';
       aria-label="Buscar en el sitio"
       aria-autocomplete="list"
       aria-controls="search-suggestions"
+      aria-expanded="false"
     >
+    
+    <!-- Voice Search Button -->
+    <button 
+      type="button"
+      id="voice-search-btn"
+      class="voice-btn hidden absolute left-2 z-20 p-1.5 text-gray-400 hover:text-pink-600 transition-colors rounded-full"
+      aria-label="Buscar por voz"
+      title="Buscar por voz (Ctrl+Shift+V)"
+    >
+      <i data-lucide="mic" class="w-4 h-4 pointer-events-none"></i>
+    </button>
+
+    <!-- Clear Button -->
+    <button 
+      type="button"
+      id="clear-search-btn"
+      class="clear-btn hidden absolute right-12 z-20 p-1.5 text-gray-400 hover:text-gray-600 transition-colors rounded-full"
+      aria-label="Limpiar búsqueda"
+    >
+      <i data-lucide="x" class="w-4 h-4 pointer-events-none"></i>
+    </button>
     
     <button 
       type="button"
@@ -34,7 +56,7 @@ import SearchSuggestions from './SearchSuggestions.jsx';
 
   </form>
   
-  <!-- Search Suggestions Dropdown - Moved outside form -->
+  <!-- Search Suggestions Dropdown -->
   <div class="absolute top-full left-0 right-0 mt-2 z-30">
     <SearchSuggestions client:load />
   </div>
@@ -43,6 +65,33 @@ import SearchSuggestions from './SearchSuggestions.jsx';
   <!-- Keyboard shortcut hint -->
   <div class="hidden lg:block absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 transition-opacity duration-300" id="search-hint">
     <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">Ctrl + K</span>
+  </div>
+
+  <!-- Voice Search Modal -->
+  <div id="voice-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center">
+    <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="voice-modal-content">
+      <div class="text-center">
+        <div class="w-20 h-20 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4 relative">
+          <div class="absolute inset-0 bg-pink-500 rounded-full animate-ping opacity-20"></div>
+          <i data-lucide="mic" class="w-10 h-10 text-pink-600"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">Búsqueda por voz</h3>
+        <p class="text-gray-500 mb-6" id="voice-status">Habla ahora...</p>
+        <div class="flex items-center justify-center gap-2 mb-6">
+          <div class="voice-wave w-1 h-8 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0s"></div>
+          <div class="voice-wave w-1 h-8 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0.1s"></div>
+          <div class="voice-wave w-1 h-8 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+          <div class="voice-wave w-1 h-8 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
+          <div class="voice-wave w-1 h-8 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+        </div>
+        <button 
+          id="close-voice-modal"
+          class="px-6 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -69,6 +118,18 @@ import SearchSuggestions from './SearchSuggestions.jsx';
     padding-right: 0.5rem;
   }
 
+  .search-form.expanded.has-content {
+    padding-left: 2.5rem;
+  }
+
+  .search-form.expanded.has-content .voice-btn {
+    display: flex;
+  }
+
+  .search-form.expanded.has-content .clear-btn {
+    display: flex;
+  }
+
   @media (min-width: 1024px) {
     .search-form.expanded .search-input {
       width: 280px;
@@ -83,220 +144,292 @@ import SearchSuggestions from './SearchSuggestions.jsx';
 
   .search-input:focus {
     outline: none;
-    box-shadow: none;
   }
 
-  .search-btn:focus {
-    outline: none;
-    box-shadow: none;
-    ring: none;
+  /* Voice wave animation */
+  @keyframes pulse {
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1); }
   }
 
-  .search-btn:focus-visible {
-    outline: none;
-    box-shadow: none;
+  .voice-wave {
+    animation: pulse 1s ease-in-out infinite;
   }
 
-  /* Bounce animation for nav and logo */
-  @keyframes bounce-effect {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    50% { transform: translateX(4px); }
-    75% { transform: translateX(-2px); }
+  /* Modal animations */
+  #voice-modal.active {
+    display: flex;
+  }
+
+  #voice-modal.active #voice-modal-content {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  /* Bounce animation for mobile logo */
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
   }
 
   .bounce-animation {
-    animation: bounce-effect 0.5s ease-in-out;
+    animation: bounce 0.5s ease;
   }
 
-  /* Reduce mobile logo text when search is expanded */
-  .mobile-logo-text.search-expanded {
-    font-size: 6px;
-    transform: scale(0.85);
-    transition: all 0.3s ease;
+  /* Slide down animation for suggestions */
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .search-suggestions {
+    animation: slideDown 0.2s ease-out;
+  }
+
+  /* Focus visible styles for accessibility */
+  .search-btn:focus-visible,
+  .voice-btn:focus-visible,
+  .clear-btn:focus-visible {
+    outline: 2px solid #ec4899;
+    outline-offset: 2px;
   }
 </style>
 
 <script is:inline>
-  // Search button click handler
-  document.getElementById('search-btn').addEventListener('click', function(e) {
-    e.preventDefault();
-    e.stopPropagation();
+  // Search functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchBtn = document.getElementById('search-btn');
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.getElementById('search-input');
+    const searchHint = document.getElementById('search-hint');
+    const voiceBtn = document.getElementById('voice-search-btn');
+    const clearBtn = document.getElementById('clear-search-btn');
+    const voiceModal = document.getElementById('voice-modal');
+    const voiceModalContent = document.getElementById('voice-modal-content');
+    const closeVoiceModal = document.getElementById('close-voice-modal');
+    const voiceStatus = document.getElementById('voice-status');
     
-    var form = document.getElementById('search-form');
-    var input = document.getElementById('search-input');
-    var mobileLogoText = document.querySelector('.mobile-logo-text');
-    var searchHint = document.getElementById('search-hint');
+    let isExpanded = false;
+    let recognition = null;
     
-    if (!form.classList.contains('expanded')) {
-      // Expand and focus
-      form.classList.add('expanded');
-      input.focus();
+    // Initialize speech recognition if available
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.lang = 'es-ES';
+      recognition.continuous = false;
+      recognition.interimResults = true;
       
-      // Show keyboard hint
-      if (searchHint) {
-        searchHint.classList.remove('opacity-0');
-      }
+      recognition.onstart = function() {
+        voiceStatus.textContent = 'Escuchando...';
+        voiceModal.classList.add('active');
+      };
       
-      // Reduce mobile logo text size
-      if (mobileLogoText) {
-        mobileLogoText.classList.add('search-expanded');
-      }
+      recognition.onresult = function(event) {
+        const transcript = Array.from(event.results)
+          .map(result => result[0])
+          .map(result => result.transcript)
+          .join('');
+        
+        if (event.results[0].isFinal) {
+          searchInput.value = transcript;
+          voiceStatus.textContent = 'Buscando: "' + transcript + '"';
+          setTimeout(() => {
+            voiceModal.classList.remove('active');
+            searchForm.submit();
+          }, 1000);
+        } else {
+          voiceStatus.textContent = 'Escuchando: ' + transcript;
+        }
+      };
       
-      // Trigger bounce animation on nav
-      var nav = document.querySelector('nav');
-      var mobileLogo = document.querySelector('header a.lg\\:hidden');
+      recognition.onerror = function(event) {
+        voiceStatus.textContent = 'Error: ' + event.error;
+        setTimeout(() => {
+          voiceModal.classList.remove('active');
+        }, 2000);
+      };
       
-      if (nav) {
-        nav.classList.remove('bounce-animation');
-        void nav.offsetWidth;
-        nav.classList.add('bounce-animation');
-        setTimeout(function() {
-          nav.classList.remove('bounce-animation');
-        }, 500);
-      }
-      
-      if (mobileLogo) {
-        mobileLogo.classList.remove('bounce-animation');
-        void mobileLogo.offsetWidth;
-        mobileLogo.classList.add('bounce-animation');
-        setTimeout(function() {
-          mobileLogo.classList.remove('bounce-animation');
-        }, 500);
-      }
+      recognition.onend = function() {
+        if (!voiceStatus.textContent.includes('Buscando')) {
+          voiceModal.classList.remove('active');
+        }
+      };
     } else {
-      // Search or collapse
-      var q = input.value.trim();
-      if (q) {
-        window.location.href = '/busqueda?q=' + encodeURIComponent(q);
+      // Hide voice button if not supported
+      if (voiceBtn) voiceBtn.style.display = 'none';
+    }
+    
+    // Toggle search expansion
+    function toggleSearch() {
+      isExpanded = !isExpanded;
+      
+      if (isExpanded) {
+        searchForm.classList.add('expanded');
+        searchInput.focus();
+        searchHint.classList.remove('opacity-0');
+        
+        // Check if input has content
+        if (searchInput.value.length > 0) {
+          searchForm.classList.add('has-content');
+        }
       } else {
-        form.classList.remove('expanded');
-        input.value = '';
-        // Restore mobile logo text size
-        if (mobileLogoText) {
-          mobileLogoText.classList.remove('search-expanded');
-        }
-        // Hide keyboard hint
-        if (searchHint) {
-          searchHint.classList.add('opacity-0');
-        }
+        searchForm.classList.remove('expanded', 'has-content');
+        searchInput.blur();
+        searchHint.classList.add('opacity-0');
+        
         // Hide suggestions
         if (window.searchSuggestions) {
           window.searchSuggestions.hide();
         }
       }
     }
-  });
-
-
-  // Enter key handler
-  document.getElementById('search-input').addEventListener('keydown', function(e) {
-    // Don't intercept if suggestions are being navigated
-    if (e.key === 'Enter') {
-      // Only submit if not navigating suggestions
-      if (!window.searchSuggestions || !document.getElementById('search-suggestions')?.classList.contains('hidden')) {
-        // Let the suggestions component handle it
-        return;
-      }
+    
+    // Search button click
+    searchBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      var q = this.value.trim();
-      if (q) {
-        window.location.href = '/busqueda?q=' + encodeURIComponent(q);
-      }
-    }
-    if (e.key === 'Escape') {
-      var form = document.getElementById('search-form');
-      var mobileLogoText = document.querySelector('.mobile-logo-text');
-      var searchHint = document.getElementById('search-hint');
-      form.classList.remove('expanded');
-      this.value = '';
-      // Restore mobile logo text size
-      if (mobileLogoText) {
-        mobileLogoText.classList.remove('search-expanded');
-      }
-      // Hide keyboard hint
-      if (searchHint) {
-        searchHint.classList.add('opacity-0');
-      }
-      // Hide suggestions
-      if (window.searchSuggestions) {
-        window.searchSuggestions.hide();
-      }
-    }
-  });
-
-
-  // Close when clicking outside
-  document.addEventListener('click', function(e) {
-    var form = document.getElementById('search-form');
-    var wrapper = document.getElementById('search-wrapper');
-    var mobileLogoText = document.querySelector('.mobile-logo-text');
-    var searchHint = document.getElementById('search-hint');
-    if (form && wrapper && !wrapper.contains(e.target) && form.classList.contains('expanded')) {
-      form.classList.remove('expanded');
-      var input = document.getElementById('search-input');
-      if (input) input.value = '';
-      // Restore mobile logo text size
-      if (mobileLogoText) {
-        mobileLogoText.classList.remove('search-expanded');
-      }
-      // Hide keyboard hint
-      if (searchHint) {
-        searchHint.classList.add('opacity-0');
-      }
-      // Hide suggestions
-      if (window.searchSuggestions) {
-        window.searchSuggestions.hide();
-      }
-    }
-  });
-
-  
-  // Ctrl+K shortcut
-  document.addEventListener('keydown', function(e) {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-      e.preventDefault();
-      var form = document.getElementById('search-form');
-      var input = document.getElementById('search-input');
-      var mobileLogoText = document.querySelector('.mobile-logo-text');
-      var searchHint = document.getElementById('search-hint');
+      e.stopPropagation();
       
-      if (form && input) {
-        form.classList.add('expanded');
-        input.focus();
+      if (isExpanded && searchInput.value.trim()) {
+        searchForm.submit();
+      } else {
+        toggleSearch();
+      }
+    });
+    
+    // Voice search button
+    if (voiceBtn && recognition) {
+      voiceBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         
-        // Show keyboard hint
-        if (searchHint) {
-          searchHint.classList.remove('opacity-0');
+        try {
+          recognition.start();
+        } catch (e) {
+          console.error('Voice recognition error:', e);
         }
-        
-        // Reduce mobile logo text size
-        if (mobileLogoText) {
-          mobileLogoText.classList.add('search-expanded');
+      });
+    }
+    
+    // Close voice modal
+    if (closeVoiceModal) {
+      closeVoiceModal.addEventListener('click', function() {
+        voiceModal.classList.remove('active');
+        if (recognition) {
+          try {
+            recognition.stop();
+          } catch (e) {}
         }
+      });
+    }
+    
+    // Clear button
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        searchInput.value = '';
+        searchForm.classList.remove('has-content');
+        searchInput.focus();
         
-        // Trigger bounce on nav and mobile logo
-        var nav = document.querySelector('nav');
-        var mobileLogo = document.querySelector('header a.lg\\:hidden');
-        
-        if (nav) {
-          nav.classList.remove('bounce-animation');
-          void nav.offsetWidth;
-          nav.classList.add('bounce-animation');
-          setTimeout(function() { 
-            nav.classList.remove('bounce-animation'); 
-          }, 500);
+        // Show history if available
+        if (window.searchSuggestions) {
+          // Trigger input event to show history
+          searchInput.dispatchEvent(new Event('input'));
         }
-        
-        if (mobileLogo) {
-          mobileLogo.classList.remove('bounce-animation');
-          void mobileLogo.offsetWidth;
+      });
+    }
+    
+    // Input change handler
+    searchInput.addEventListener('input', function() {
+      if (this.value.length > 0) {
+        searchForm.classList.add('has-content');
+      } else {
+        searchForm.classList.remove('has-content');
+      }
+    });
+    
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+      // Ctrl/Cmd + K to toggle search
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        toggleSearch();
+      }
+      
+      // Ctrl/Cmd + Shift + V for voice search
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'V') {
+        e.preventDefault();
+        if (recognition && voiceBtn) {
+          voiceBtn.click();
+        }
+      }
+      
+      // Escape to close
+      if (e.key === 'Escape' && isExpanded) {
+        toggleSearch();
+      }
+      
+      // Slash to focus search
+      if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        if (!isExpanded) toggleSearch();
+        searchInput.focus();
+      }
+    });
+    
+    // Close when clicking outside
+    document.addEventListener('click', function(e) {
+      const wrapper = document.getElementById('search-wrapper');
+      if (wrapper && !wrapper.contains(e.target) && isExpanded) {
+        toggleSearch();
+      }
+    });
+    
+    // Prevent form submission on empty search
+    searchForm.addEventListener('submit', function(e) {
+      if (!searchInput.value.trim()) {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+    
+    // Mobile: Close search when scrolling
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', function() {
+      if (window.innerWidth < 1024 && isExpanded) {
+        const currentScrollY = window.scrollY;
+        if (Math.abs(currentScrollY - lastScrollY) > 50) {
+          toggleSearch();
+        }
+        lastScrollY = currentScrollY;
+      }
+    }, { passive: true });
+    
+    // Mobile logo animation trigger
+    const mobileLogo = document.querySelector('.mobile-logo');
+    if (mobileLogo && searchBtn) {
+      searchBtn.addEventListener('click', function() {
+        if (window.innerWidth < 1024 && !isExpanded) {
           mobileLogo.classList.add('bounce-animation');
           setTimeout(function() { 
             mobileLogo.classList.remove('bounce-animation'); 
           }, 500);
         }
-      }
+      });
+    }
+    
+    // Focus search input on page load if URL has search param
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('q') && searchInput) {
+      searchInput.value = urlParams.get('q');
+      if (!isExpanded) toggleSearch();
     }
   });
   
@@ -325,5 +458,4 @@ import SearchSuggestions from './SearchSuggestions.jsx';
       { title: "Guía Completa sobre Alergias en Niños", type: "blog", url: "/blog/alergias-infantiles", category: "Alergias" }
     ];
   })();
-
 </script>
