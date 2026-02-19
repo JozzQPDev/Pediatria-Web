@@ -2,6 +2,7 @@
 // Header.astro
 // Componente de header con barra superior, navegación y menú móvil
 import { siteConfig } from "../data/siteConfig";
+import { services } from "../data/services";
 import Search from "./Search.astro";
 const pathname = new URL(Astro.request.url).pathname;
 import ContactForm from '../components/ContactForm.jsx';
@@ -12,30 +13,30 @@ const currentPath = pathname.slice(1);
 <!-- Skip Link para accesibilidad (oculto por defecto, visible al navegar con tab) -->
 <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg z-50">Saltar a contenido principal</a>
 
-<!-- Barra Superior -->
-<div class="bg-[linear-gradient(to_right,#FF1493,#FFFF00,#44B5E6)] text-white py-1 text-[10px] sm:text-[11px] md:text-sm font-semibold uppercase tracking-wider sm:tracking-widest relative z-50 border-b border-white/20 shadow-lg">
-   <div class="max-w-7xl mx-auto px-3 sm:px-4 flex justify-between items-center">
-    <div class="flex gap-2 sm:gap-4 md:gap-8">
-      <a href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`} class="flex items-center gap-1.5 sm:gap-2 hover:text-yellow-200 transition-all duration-300 group focus:ring-2 focus:ring-yellow-300" aria-label="Llamar al teléfono">
-        <i data-lucide="phone" class="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:scale-110 transition-transform duration-300"></i>
-      <span class="font-bold truncate max-w-25 sm:max-w-none">{siteConfig.contact.phone}</span>
-
+<div class="bg-[linear-gradient(to_right,#F9A8D4,#FEF08A,#BAE6FD)] text-gray-700 py-1.5 text-[10px] sm:text-[11px] md:text-sm font-bold uppercase tracking-wider relative z-50 border-b border-white/40 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+    
+    <div class="flex gap-3 sm:gap-6">
+      <a href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`} class="flex items-center gap-1.5 hover:text-pink-600 transition-colors duration-300 group">
+        <i data-lucide="phone" class="w-3.5 h-3.5 group-hover:rotate-12 transition-transform"></i>
+        <span class="truncate">{siteConfig.contact.phone}</span>
       </a>
 
-      <a href={siteConfig.location.googleMapsLink} target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-2 hover:text-yellow-200 transition-all duration-300 group focus:ring-2 focus:ring-yellow-300" aria-label="Ver ubicación en mapa">
-        <i data-lucide="map-pin" class="w-4 h-4 group-hover:scale-105 transition-transform duration-300"></i>
-        <span>{siteConfig.location.city}, {siteConfig.location.district}</span>
+      <a href={siteConfig.location.googleMapsLink} target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-1.5 hover:text-blue-600 transition-colors duration-300 group">
+        <i data-lucide="map-pin" class="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform"></i>
+        <span>{siteConfig.location.city}</span>
       </a>
     </div>
-    <div class="flex items-center gap-2 sm:gap-4 border-l border-white/30 pl-2 sm:pl-4">
-      <a href={siteConfig.socials.facebook} target="_blank" rel="noopener noreferrer" class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300 p-1" aria-label="Facebook">
-        <i data-lucide="facebook" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+
+    <div class="flex items-center gap-3 border-l border-gray-400/20 pl-4">
+      <a href={siteConfig.socials.facebook} target="_blank" class="hover:text-pink-600 transition-all hover:scale-120">
+        <i data-lucide="facebook" class="w-4 h-4"></i>
       </a>
-      <a href={siteConfig.socials.instagram} target="_blank" rel="noopener noreferrer" class="hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300 p-1" aria-label="Instagram">
-        <i data-lucide="instagram" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+      <a href={siteConfig.socials.instagram} target="_blank" class="hover:text-pink-600 transition-all hover:scale-120">
+        <i data-lucide="instagram" class="w-4 h-4"></i>
       </a>
-      <a href={`mailto:${siteConfig.contact.email}`} class="hidden sm:flex hover:text-yellow-200 transition-all duration-300 hover:scale-110 transform focus:ring-2 focus:ring-yellow-300 p-1" aria-label="Enviar email">
-        <i data-lucide="mail" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+      <a href={`mailto:${siteConfig.contact.email}`} class="hidden sm:block hover:text-blue-600 transition-all hover:scale-120">
+        <i data-lucide="mail" class="w-4 h-4"></i>
       </a>
     </div>
 
@@ -51,15 +52,16 @@ const currentPath = pathname.slice(1);
       <!-- Botón para abrir modal de contacto -->
       <button 
         id="contact-modal-btn" 
-        class="group flex items-center gap-0 bg-linear-to-r from-pink-500 to-pink-600 text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-pink-300 overflow-hidden"
+        class="group flex items-center gap-0 bg-linear-to-r from-[#F9A8D4] to-[#F472B6] text-white px-4 py-3 rounded-full shadow-md hover:shadow-pink-200/50 hover:scale-105 transition-all duration-300 focus:ring-4 focus:ring-[#F9A8D4]/50 overflow-hidden"
         aria-label="Abrir formulario de contacto"
-       >
-        <i data-lucide="send" class="w-5 h-5 shrink-0"></i>
-        <span class="text-sm font-bold tracking-wide max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-37.5 group-hover:ml-2 transition-all duration-500 ease-out group-hover:animate-bounce-text">Contáctanos</span>
+      >
+        <i data-lucide="send" class="w-5 h-5 shrink-0 drop-shadow-sm"></i>
+        
+        <span class="text-sm font-bold tracking-wide max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-35.5 group-hover:ml-2 transition-all duration-500 ease-out">
+          Contáctanos
+        </span>
       </button>
     </div>
-
-
 
     <div class="flex items-center justify-center lg:flex-none">
         <a href="/" class="lg:hidden flex flex-col items-center justify-center mobile-logo-link" aria-label="Ir a inicio">
@@ -68,41 +70,70 @@ const currentPath = pathname.slice(1);
             alt={`${siteConfig.name} logo`} 
             class="h-7 sm:h-8 w-auto object-contain mobile-logo-img"
           >
-           <span class="text-center text-[8px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-1 leading-none mobile-logo-text">
-          {siteConfig.location.city} · {siteConfig.location.district}
-        </span>
+          <span class="text-center text-[8px] font-bold tracking-[0.2em] text-gray-400 uppercase mt-1 leading-none mobile-logo-text">
+            {siteConfig.location.city} · {siteConfig.location.district}
+          </span>
         </a>
 
-
-        <nav class="hidden lg:flex items-center gap-12 text-[13px] font-medium uppercase tracking-wide text-gray-600" role="navigation">
-          <a href="/" class={`nav-link ${pathname === "/" ? "active" : ""}`}>Inicio</a>
-          <a href="/nosotros" class={`nav-link ${currentPath.includes("nosotros") ? "active" : ""}`}>Nosotros</a>
-          <a href="/servicios" class={`nav-link ${currentPath.includes("servicios") ? "active" : ""}`}>Servicios</a>
+        <nav class="hidden lg:flex items-center gap-12 text-[13px] font-bold uppercase tracking-widest text-gray-500" role="navigation">
           
-          <a href="/" class="flex items-center px-4" aria-label="Ir a inicio">
+          <a href="/" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${pathname === "/" ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Inicio</a>
+          <a href="/nosotros" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${currentPath.includes("nosotros") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Nosotros</a>
+          
+          <!-- Dropdown de Servicios -->
+          <div class="relative group">
+            <a href="/servicios" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] flex items-center gap-1 ${currentPath.includes("servicios") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>
+              Servicios
+              <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </a>
+            <!-- Dropdown Menu -->
+            <div class="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible transform -translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
+              <div class="py-2">
+                <a href="/servicios" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-[#F9A8D4] hover:bg-pink-50 transition-colors border-b border-gray-50">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                  </svg>
+                  Ver Todos los Servicios
+                </a>
+                {services.map((service) => (
+                  <a 
+                    href={`/servicios/${service.slug}`}
+                    class="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:bg-pink-50 hover:text-[#F9A8D4] transition-colors"
+                  >
+                    <span class="w-2 h-2 rounded-full bg-[#F9A8D4]/30"></span>
+                    {service.title}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+          
+          <a href="/" class="flex items-center px-6 transition-transform duration-300 hover:scale-105" aria-label="Ir a inicio">
             <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-10 w-auto object-contain">
           </a>
 
-          <a href="/equipo" class={`nav-link ${currentPath.includes("equipo") ? "active" : ""}`}>Equipo</a>
-          <a href="/blogs" class={`nav-link ${currentPath.includes("blogs") ? "active" : ""}`}>Blogs</a>
-          <a href="/contacto" class={`nav-link ${currentPath.includes("contacto") ? "active" : ""}`}>Contacto</a>
+          <a href="/equipo" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${currentPath.includes("equipo") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Equipo</a>
+          <a href="/blogs" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${currentPath.includes("blog") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Blogs</a>
+          <a href="/contacto" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${currentPath.includes("contacto") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Contacto</a>
+          
         </nav>
     </div>
 
-    <div class="flex items-center flex-1 justify-end gap-2">
-        <div class="lg:block">
-            <Search />
-        </div>
-
-        <button id="menu-btn" class="lg:hidden p-2 sm:p-3 text-pink-600 hover:bg-pink-50 rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-pink-300" aria-label="Abrir menú móvil">
-          <div class="w-5 h-5 sm:w-6 sm:h-6 flex flex-col justify-around items-center">
-            <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
-            <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
-            <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
-          </div>
-        </button>
+     <div class="flex items-center flex-1 justify-end gap-2">
+    <div class="lg:block">
+        <Search />
     </div>
 
+    <button id="menu-btn" class="lg:hidden p-2 sm:p-3 text-[#BAE6FD] hover:bg-blue-50 rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-[#BAE6FD]" aria-label="Abrir menú móvil">
+      <div class="w-5 h-5 sm:w-6 sm:h-6 flex flex-col justify-around items-center">
+        <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
+        <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
+        <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
+      </div>
+    </button>
+</div>
 
   </div>
 </header>
@@ -117,9 +148,6 @@ const currentPath = pathname.slice(1);
   
   <!-- Panel Content (desliza desde la izquierda) -->
   <div id="contact-modal-content" class="absolute left-0 top-0 h-full w-full max-w-md bg-white shadow-2xl overflow-y-auto -translate-x-full transition-transform duration-300 ease-out">
-
-
-
 
     <!-- Header del Panel -->
     <div class="sticky top-0 bg-white border-b border-gray-100 p-6 flex items-center justify-between z-10">
@@ -147,53 +175,91 @@ const currentPath = pathname.slice(1);
   </div>
 </div>
 
-
-
-<!-- Menú Móvil -->
-<div id="mobile-menu" class="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-slate-50 z-999 translate-x-full transition-transform duration-500 ease-in-out lg:hidden flex flex-col shadow-2xl overflow-hidden" role="dialog" aria-modal="true" aria-hidden="true">
-  <div class="p-6 bg-white border-b border-gray-100 flex items-center justify-between">
+<div id="mobile-menu" class="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-[#FDFCFD] z-999 translate-x-full transition-transform duration-500 ease-in-out lg:hidden flex flex-col shadow-2xl overflow-hidden" role="dialog" aria-modal="true" aria-hidden="true">
+  
+  <div class="p-6 bg-white border-b border-gray-50 flex items-center justify-between">
     <div class="flex items-center gap-3">
       <div class="flex flex-col">
-      <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-10 w-auto object-contain">
-        <span class="text-center text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase mt-1 leading-none">
+        <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-10 w-auto object-contain">
+        <span class="text-center text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase mt-1 leading-none">
           {siteConfig.location.city} · {siteConfig.location.district}
         </span>
       </div>
     </div>
-    <button id="close-menu" class="p-2 bg-gray-100 text-gray-500 rounded-full hover:bg-red-50 hover:text-red-500 transition-all active:scale-90 focus:ring-2 focus:ring-red-300" aria-label="Cerrar menú móvil">
+    <button id="close-menu" class="p-2 bg-gray-50 text-gray-400 rounded-full hover:bg-pink-50 hover:text-[#F9A8D4] transition-all active:scale-90" aria-label="Cerrar menú móvil">
       <i data-lucide="x" class="w-6 h-6"></i>
     </button>
   </div>
 
-  <nav class="flex flex-col p-6 gap-3 overflow-y-auto" role="navigation" aria-label="Navegación móvil">
+  <nav class="flex flex-col p-6 gap-3 overflow-y-auto bg-[#FDFCFD]" role="navigation" aria-label="Navegación móvil">
   {[
     { name: 'Inicio', href: '/', icon: 'home' },
     { name: 'Nosotros', href: '/nosotros', icon: 'users' },
-    { name: 'Servicios', href: '/servicios', icon: 'stethoscope' },
+    { name: 'Servicios', href: '/servicios', icon: 'stethoscope', isExpandable: true },
     { name: 'Equipo', href: '/equipo', icon: 'user-round-check' },
     { name: 'Blogs', href: '/blogs', icon: 'book-open' },
     { name: 'Contacto', href: '/contacto', icon: 'mail' }
   ].map((item, index) => (
-    <a 
-      href={item.href} 
-      class={`mobile-link flex items-center gap-4 p-4 rounded-2xl border border-transparent transition-all duration-300 group focus:ring-2 focus:ring-pink-300
-        ${(pathname === item.href || (item.href !== '/' && currentPath.includes(item.href.slice(1)))) 
-          ? 'bg-pink-500 text-white shadow-lg shadow-pink-100 font-bold' 
-          : 'bg-white text-gray-600 hover:bg-pink-50 hover:border-pink-100 shadow-sm'}`}
-      style={`transition-delay: ${index * 70}ms;`}
-      aria-current={(pathname === item.href || (item.href !== '/' && currentPath.includes(item.href.slice(1)))) ? "page" : undefined}
-    >
-      <div class={`p-2 rounded-lg ${(pathname === item.href) ? 'bg-white/20' : 'group-hover:bg-emerald-100 transition-colors'}`}>
-        <i data-lucide={item.icon} class="w-5 h-5"></i>
+    item.isExpandable ? (
+      <div class="mobile-services-wrapper">
+        <button 
+          id="mobile-services-toggle"
+          class="mobile-link mobile-services-btn flex items-center justify-between gap-4 p-4 rounded-2xl border transition-all duration-300 group w-full bg-white text-gray-500 border-gray-100 hover:border-[#F9A8D4]/30 hover:bg-pink-50/50"
+          aria-expanded="false"
+          aria-controls="mobile-services-list"
+        >
+          <div class="flex items-center gap-4">
+            <div class="p-2 rounded-lg bg-gray-50 group-hover:bg-[#F9A8D4]/10 transition-colors">
+              <i data-lucide={item.icon} class="w-5 h-5"></i>
+            </div>
+            <span class="text-lg">{item.name}</span>
+          </div>
+          <i id="mobile-services-chevron" data-lucide="chevron-down" class="w-5 h-5 opacity-40 transition-transform duration-300"></i>
+        </button>
+        
+        <!-- Lista de servicios móvil -->
+        <div id="mobile-services-list" class="hidden flex-col gap-2 mt-2 pl-4 overflow-hidden transition-all duration-300">
+          <a 
+            href="/servicios" 
+            class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-[#F9A8D4] hover:bg-pink-50 transition-colors border-b border-gray-50 rounded-xl"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+            Ver Todos los Servicios
+          </a>
+          {services.map((service) => (
+            <a 
+              href={`/servicios/${service.slug}`}
+              class="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:bg-pink-50 hover:text-[#F9A8D4] transition-colors rounded-xl"
+            >
+              <span class="w-2 h-2 rounded-full bg-[#F9A8D4]/30"></span>
+              {service.title}
+            </a>
+          ))}
+        </div>
       </div>
-      <span class="text-lg flex-1">{item.name}</span>
-      <i data-lucide="chevron-right" class="w-5 h-5 opacity-30 group-hover:opacity-100 transition-opacity"></i>
-    </a>
+    ) : (
+      <a 
+        href={item.href} 
+        class={`mobile-link flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 group
+          ${(pathname === item.href || (item.href !== '/' && currentPath.includes(item.href.slice(1)))) 
+            ? 'bg-[#F9A8D4] text-white border-[#F9A8D4] shadow-md shadow-pink-100 font-bold' 
+            : 'bg-white text-gray-500 border-gray-100 hover:border-[#F9A8D4]/30 hover:bg-pink-50/50'}`}
+        style={`transition-delay: ${index * 70}ms;`}
+      >
+        <div class={`p-2 rounded-lg ${(pathname === item.href) ? 'bg-white/20' : 'bg-gray-50 group-hover:bg-[#F9A8D4]/10 transition-colors'}`}>
+          <i data-lucide={item.icon} class="w-5 h-5"></i>
+        </div>
+        <span class="text-lg flex-1">{item.name}</span>
+        <i data-lucide="chevron-right" class="w-5 h-5 opacity-20 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
+      </a>
+    )
   ))}
 </nav>
 
-  <div class="mt-auto p-6 bg-white border-t border-gray-100">
-    <a href={siteConfig.contact.whatsappUrl} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-3 bg-linear-to-r from-pink-400 to-blue-500 text-white py-4 rounded-2xl shadow-xl shadow-pink-100 font-bold text-lg active:scale-95 transition-all uppercase tracking-wide focus:ring-2 focus:ring-pink-300" aria-label="Pedir cita por WhatsApp">
+  <div class="mt-auto p-6 bg-white border-t border-gray-50">
+    <a href={siteConfig.contact.whatsappUrl} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-3 bg-[#F9A8D4] text-white py-4 rounded-2xl shadow-lg shadow-pink-100 font-bold text-lg active:scale-95 transition-all uppercase tracking-wider" aria-label="Pedir cita por WhatsApp">
       <i data-lucide="calendar-check" class="w-6 h-6"></i>
       <span>Pedir Cita</span>
     </a>
@@ -203,10 +269,10 @@ const currentPath = pathname.slice(1);
 <style>
   @reference "../styles/global.css";
 
-  .nav-link { @apply hover:text-pink-600 transition-all duration-300 relative py-1 focus:outline-none; }
-  .nav-link::after { content: ""; @apply absolute bottom-0 left-0 w-0 h-0.5 bg-pink-600 transition-all duration-300; }
+  .nav-link { @apply hover:text-[#F9A8D4] transition-all duration-300 relative py-1 focus:outline-none; }
+  .nav-link::after { content: ""; @apply absolute bottom-0 left-0 w-0 h-0.5 bg-[#F9A8D4] transition-all duration-300; }
   .nav-link:hover::after, .nav-link.active::after { @apply w-full; }
-  .nav-link.active { @apply text-pink-600 font-bold; }
+  .nav-link.active { @apply text-[#F9A8D4] font-bold; }
   
 
 
@@ -259,6 +325,42 @@ const currentPath = pathname.slice(1);
     // Verificar si Lucide está disponible
     if (typeof lucide !== 'undefined') {
       lucide.createIcons();
+    }
+
+    // Mobile Services Toggle
+    const mobileServicesToggle = document.getElementById("mobile-services-toggle");
+    const mobileServicesList = document.getElementById("mobile-services-list");
+    const mobileServicesChevron = document.getElementById("mobile-services-chevron");
+    
+    if (mobileServicesToggle && mobileServicesList) {
+      mobileServicesToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const isExpanded = mobileServicesToggle.getAttribute('aria-expanded') === 'true';
+        
+        if (isExpanded) {
+          // Cerrar
+          mobileServicesList.classList.add('hidden');
+          mobileServicesToggle.setAttribute('aria-expanded', 'false');
+          if (mobileServicesChevron) {
+            mobileServicesChevron.classList.remove('rotate-180');
+          }
+        } else {
+          // Abrir
+          mobileServicesList.classList.remove('hidden');
+          mobileServicesList.classList.add('flex');
+          mobileServicesToggle.setAttribute('aria-expanded', 'true');
+          if (mobileServicesChevron) {
+            mobileServicesChevron.classList.add('rotate-180');
+          }
+        }
+      });
+      
+      // Cerrar cuando se hace click en un servicio
+      mobileServicesList.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => toggle(false));
+      });
     }
 
     if (!menuBtn || !mobileMenu || !closeBtn || !mobileOverlay) return;

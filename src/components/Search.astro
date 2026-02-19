@@ -5,56 +5,50 @@ import SearchSuggestions from './SearchSuggestions.jsx';
 
 <div class="search-container relative flex items-center" id="search-wrapper">
 
-  <form 
-    id="search-form" 
-    class="search-form flex items-center overflow-hidden transition-all duration-300 ease-in-out relative z-10"
-    action="/busqueda"
-    method="GET"
+<form 
+  id="search-form" 
+  class="search-form flex items-center overflow-hidden transition-all duration-300 ease-in-out relative z-10"
+  action="/busqueda"
+  method="GET"
+>
+  <input 
+    type="text" 
+    id="search-input"
+    name="q"
+    class="search-input w-0 opacity-0 bg-transparent outline-none placeholder:text-gray-400 text-gray-800 text-sm transition-all duration-300 ease-in-out focus:ring-0"
+    placeholder="Buscar servicios, artículos..."
+    autocomplete="off"
+    aria-label="Buscar en el sitio"
   >
-    <input 
-      type="text" 
-      id="search-input"
-      name="q"
-      class="search-input w-0 opacity-0 bg-transparent outline-none placeholder:text-gray-400 text-gray-800 text-sm transition-all duration-300 ease-in-out"
-      placeholder="Buscar servicios, artículos..."
-      autocomplete="off"
-      aria-label="Buscar en el sitio"
-      aria-autocomplete="list"
-      aria-controls="search-suggestions"
-      aria-expanded="false"
-    >
-    
-    <!-- Voice Search Button -->
-    <button 
-      type="button"
-      id="voice-search-btn"
-      class="voice-btn hidden absolute left-2 z-20 p-1.5 text-gray-400 hover:text-pink-600 transition-colors rounded-full"
-      aria-label="Buscar por voz"
-      title="Buscar por voz (Ctrl+Shift+V)"
-    >
-      <i data-lucide="mic" class="w-4 h-4 pointer-events-none"></i>
-    </button>
+  
+  <button 
+    type="button"
+    id="voice-search-btn"
+    class="voice-btn hidden absolute left-2 z-20 p-1.5 text-gray-400 hover:text-[#BAE6FD] transition-colors rounded-full"
+    aria-label="Buscar por voz"
+  >
+    <i data-lucide="mic" class="w-4 h-4 pointer-events-none"></i>
+  </button>
 
-    <!-- Clear Button -->
-    <button 
-      type="button"
-      id="clear-search-btn"
-      class="clear-btn hidden absolute right-12 z-20 p-1.5 text-gray-400 hover:text-gray-600 transition-colors rounded-full"
-      aria-label="Limpiar búsqueda"
-    >
-      <i data-lucide="x" class="w-4 h-4 pointer-events-none"></i>
-    </button>
-    
-    <button 
-      type="button"
-      id="search-btn" 
-      class="search-btn relative z-20 p-2.5 text-gray-500 hover:text-pink-600 hover:bg-pink-50 lg:hover:bg-pink-100 lg:bg-white lg:border lg:border-gray-200 lg:shadow-sm rounded-xl lg:rounded-full transition-all duration-300 shrink-0 cursor-pointer"
-      aria-label="Buscar"
-    >
-      <i data-lucide="search" class="w-5 h-5 pointer-events-none"></i>
-    </button>
+  <button 
+    type="button"
+    id="clear-search-btn"
+    class="clear-btn hidden absolute right-12 z-20 p-1.5 text-gray-400 hover:text-gray-600 transition-colors rounded-full"
+    aria-label="Limpiar búsqueda"
+  >
+    <i data-lucide="x" class="w-4 h-4 pointer-events-none"></i>
+  </button>
+  
+  <button 
+    type="button"
+    id="search-btn" 
+    class="search-btn relative z-20 p-2.5 text-gray-500 hover:text-[#BAE6FD] hover:bg-blue-50 lg:hover:bg-[#BAE6FD]/10 lg:bg-white lg:border lg:border-gray-100 lg:shadow-sm rounded-xl lg:rounded-full transition-all duration-300 shrink-0 cursor-pointer"
+    aria-label="Buscar"
+  >
+    <i data-lucide="search" class="w-5 h-5 pointer-events-none"></i>
+  </button>
 
-  </form>
+</form>
   
   <!-- Search Suggestions Dropdown -->
   <div class="absolute top-full left-0 right-0 mt-2 z-30">
@@ -67,32 +61,35 @@ import SearchSuggestions from './SearchSuggestions.jsx';
     <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">Ctrl + K</span>
   </div>
 
-  <!-- Voice Search Modal -->
-  <div id="voice-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center">
-    <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="voice-modal-content">
-      <div class="text-center">
-        <div class="w-20 h-20 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-          <div class="absolute inset-0 bg-pink-500 rounded-full animate-ping opacity-20"></div>
-          <i data-lucide="mic" class="w-10 h-10 text-pink-600"></i>
-        </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Búsqueda por voz</h3>
-        <p class="text-gray-500 mb-6" id="voice-status">Habla ahora...</p>
-        <div class="flex items-center justify-center gap-2 mb-6">
-          <div class="voice-wave w-1 h-8 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0s"></div>
-          <div class="voice-wave w-1 h-8 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0.1s"></div>
-          <div class="voice-wave w-1 h-8 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
-          <div class="voice-wave w-1 h-8 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
-          <div class="voice-wave w-1 h-8 bg-pink-500 rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
-        </div>
-        <button 
-          id="close-voice-modal"
-          class="px-6 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
-        >
-          Cancelar
-        </button>
+<div id="voice-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center">
+  <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="voice-modal-content">
+    <div class="text-center">
+      
+      <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 relative">
+        <div class="absolute inset-0 bg-[#BAE6FD] rounded-full animate-ping opacity-30"></div>
+        <i data-lucide="mic" class="w-10 h-10 text-[#BAE6FD]"></i>
       </div>
+
+      <h3 class="text-xl font-semibold text-gray-900 mb-2">Búsqueda por voz</h3>
+      <p class="text-gray-500 mb-6" id="voice-status">Habla ahora...</p>
+      
+      <div class="flex items-center justify-center gap-2 mb-6">
+        <div class="voice-wave w-1 h-8 bg-[#BAE6FD] rounded-full animate-pulse" style="animation-delay: 0s"></div>
+        <div class="voice-wave w-1 h-8 bg-[#BAE6FD] rounded-full animate-pulse" style="animation-delay: 0.1s"></div>
+        <div class="voice-wave w-1 h-8 bg-[#BAE6FD] rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
+        <div class="voice-wave w-1 h-8 bg-[#BAE6FD] rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
+        <div class="voice-wave w-1 h-8 bg-[#BAE6FD] rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
+      </div>
+
+      <button 
+        id="close-voice-modal"
+        class="px-6 py-2 bg-gray-50 hover:bg-blue-50 hover:text-[#BAE6FD] text-gray-700 rounded-lg transition-colors font-medium"
+      >
+        Cancelar
+      </button>
     </div>
   </div>
+</div>
 </div>
 
 
@@ -106,8 +103,8 @@ import SearchSuggestions from './SearchSuggestions.jsx';
   .search-form.expanded {
     background-color: white;
     border-radius: 9999px;
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px -2px rgba(186, 230, 253, 0.2); /* Sombra con tinte azul */
+    border: 1px solid #BAE6FD; /* Borde azul pastel al expandir */
     padding: 0.25rem;
     padding-left: 1rem;
   }
@@ -192,12 +189,17 @@ import SearchSuggestions from './SearchSuggestions.jsx';
     animation: slideDown 0.2s ease-out;
   }
 
-  /* Focus visible styles for accessibility */
   .search-btn:focus-visible,
   .voice-btn:focus-visible,
   .clear-btn:focus-visible {
-    outline: 2px solid #ec4899;
+    outline: 2px solid #BAE6FD;
     outline-offset: 2px;
+  }
+
+  /* Animación de las barras de voz con el color correcto */
+  .voice-wave {
+    background-color: #BAE6FD;
+    animation: pulse 1s ease-in-out infinite;
   }
 </style>
 

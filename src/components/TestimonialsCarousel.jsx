@@ -170,7 +170,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
       <i 
         key={i}
         data-lucide="star" 
-        className={`w-4 h-4 ${i < rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
+        className={`w-4 h-4 ${i < rating ? 'text-yellow-300 fill-yellow-300' : 'text-gray-300'}`}
       ></i>
     ));
   };
@@ -181,7 +181,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
       <div className="text-center mb-12">
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 italic mb-4">
           Lo que dicen <br />
-          <span className="text-orange-400 not-italic">nuestras familias</span>
+          <span className="text-orange-300 not-italic">nuestras familias</span>
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Descubre por qué miles de familias confían en nosotros para el cuidado de sus pequeños
@@ -204,7 +204,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
             prevSlide();
             setIsPaused(true);
           }}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-gray-600 hover:text-pink-600 hover:shadow-xl hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-300"
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-gray-600 hover:text-pink-400 hover:shadow-xl hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-200"
           aria-label="Testimonio anterior"
         >
           <i data-lucide="chevron-left" className="w-6 h-6"></i>
@@ -215,7 +215,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
             nextSlide();
             setIsPaused(true);
           }}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-gray-600 hover:text-pink-600 hover:shadow-xl hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-300"
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-gray-600 hover:text-pink-400 hover:shadow-xl hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-200"
           aria-label="Siguiente testimonio"
         >
           <i data-lucide="chevron-right" className="w-6 h-6"></i>
@@ -233,7 +233,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
                 <div className="flex flex-col md:flex-row items-center gap-6">
                   {/* Avatar */}
                   <div className="relative shrink-0">
-                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-pink-100 shadow-lg">
+                    <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden border-4 border-pink-200 shadow-lg">
                       <img
                         src={testimonial.image}
                         alt={`Foto de ${testimonial.name}`}
@@ -242,7 +242,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
                       />
                     </div>
                     {/* Quote icon */}
-                    <div className="absolute -top-2 -right-2 w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center shadow-lg">
+                    <div className="absolute -top-2 -right-2 w-10 h-10 bg-pink-300 rounded-full flex items-center justify-center shadow-lg">
                       <i data-lucide="quote" className="w-5 h-5 text-white"></i>
                     </div>
                   </div>
@@ -264,7 +264,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
                       <p className="font-bold text-gray-900 text-lg">
                         {testimonial.name}
                       </p>
-                      <p className="text-pink-600 font-medium">
+                      <p className="text-pink-400 font-medium">
                         {testimonial.role}
                       </p>
                     </div>
@@ -284,10 +284,10 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
                 goToSlide(index);
                 setIsPaused(true);
               }}
-              className={`transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-300 ${
+              className={`transition-all duration-300 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-200 ${
                 index === currentIndex
-                  ? 'w-8 h-3 bg-pink-500'
-                  : 'w-3 h-3 bg-gray-300 hover:bg-pink-300'
+                  ? 'w-8 h-3 bg-pink-300'
+                  : 'w-3 h-3 bg-gray-300 hover:bg-pink-200'
               }`}
               aria-label={`Ir al testimonio ${index + 1}`}
               aria-current={index === currentIndex ? 'true' : 'false'}
@@ -299,7 +299,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
         <div className="flex items-center justify-center gap-2 mt-4">
           <button
             onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-            className="flex items-center gap-2 text-sm text-gray-500 hover:text-pink-600 transition-colors"
+            className="flex items-center gap-2 text-sm text-gray-500 hover:text-pink-400 transition-colors"
           >
             {isAutoPlaying ? (
               <>
@@ -316,7 +316,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
           {isAutoPlaying && !isPaused && (
             <div className="w-16 h-1 bg-gray-200 rounded-full overflow-hidden">
               <div 
-                className="h-full bg-pink-500 rounded-full animate-progress"
+                className="h-full bg-pink-300 rounded-full animate-progress"
                 style={{
                   animation: 'progress 5s linear infinite'
                 }}
@@ -326,21 +326,21 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
         </div>
       </div>
 
-      {/* Stats Section */}
+      {/* Stats Section 
       <div className="max-w-4xl mx-auto mt-16 grid grid-cols-3 gap-8 text-center">
         <div className="p-4">
-          <p className="text-3xl md:text-4xl font-bold text-pink-600">15k+</p>
+          <p className="text-3xl md:text-4xl font-bold text-pink-400">15k+</p>
           <p className="text-gray-600 text-sm mt-1">Familias atendidas</p>
         </div>
         <div className="p-4 border-x border-gray-200">
-          <p className="text-3xl md:text-4xl font-bold text-pink-600">4.9</p>
+          <p className="text-3xl md:text-4xl font-bold text-pink-400">4.9</p>
           <p className="text-gray-600 text-sm mt-1">Calificación promedio</p>
         </div>
         <div className="p-4">
-          <p className="text-3xl md:text-4xl font-bold text-pink-600">98%</p>
+          <p className="text-3xl md:text-4xl font-bold text-pink-400">98%</p>
           <p className="text-gray-600 text-sm mt-1">Recomendarían</p>
         </div>
-      </div>
+      </div>*/}
 
       <style>{`
         @keyframes progress {

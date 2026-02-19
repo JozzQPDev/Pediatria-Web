@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos a Actualizar - Clínica Pediátrica</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8fafc;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #e2e8f0;
+        }
+        
+        .header h1 {
+            color: #1e293b;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            color: #64748b;
+            font-size: 1.1em;
+        }
+        
+        .date {
+            text-align: right;
+            color: #94a3b8;
+            font-size: 0.9em;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-number {
+            background: rgba(255,255,255,0.2);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+        
+        th {
+            background: #f1f5f9;
+            color: #475569;
+            font-weight: 600;
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+        
+        tr:hover {
+            background: #f8fafc;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        
+        .status-verify {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .info-box strong {
+            color: #1e40af;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .summary-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .summary-card h4 {
+            color: #64748b;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .summary-card .number {
+            font-size: 2em;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .priority-high {
+            color: #dc2626;
+            font-weight: 600;
+        }
+        
+        .priority-medium {
+            color: #d97706;
+            font-weight: 600;
+        }
+        
+        .footer {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.9em;
+        }
+        
+        .checklist {
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "☐";
+            position: absolute;
+            left: 0;
+            color: #94a3b8;
+            font-size: 1.2em;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 20px;
+            }
+            
+            .container {
+                box-shadow: none;
+                padding: 30px;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Datos a Actualizar</h1>
+            <p class="subtitle">Clínica Pediátrica - Sitio Web</p>
+        </div>
+        
+        <div class="date">
+            Generado: <span id="current-date"></span>
+        </div>
+
+        <!-- SECCIÓN 1: INFORMACIÓN DE CONTACTO -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">1</span>
+                Información de Contacto (siteConfig.js)
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Campo</th>
+                        <th>Valor Actual</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Dirección</strong></td>
+                        <td>Av. Arenales 123</td>
+                        <td><span class="status status-pending">❌ Necesita dirección real</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Teléfono</strong></td>
+                        <td>(066) 234 567</td>
+                        <td><span class="status status-pending">❌ Necesita número real</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Email</strong></td>
+                        <td>jhonbeck860@gmail.com</td>
+                        <td><span class="status status-pending">❌ Necesita email institucional</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>WhatsApp</strong></td>
+                        <td>51997307782</td>
+                        <td><span class="status status-verify">⚠️ Confirmar número</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Facebook</strong></td>
+                        <td>facebook.com/clinica</td>
+                        <td><span class="status status-pending">❌ URL real necesaria</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Instagram</strong></td>
+                        <td>instagram.com/clinica</td>
+                        <td><span class="status status-pending">❌ URL real necesaria</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>LinkedIn</strong></td>
+                        <td>linkedin.com/company/clinica</td>
+                        <td><span class="status status-pending">❌ URL real necesaria</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>TikTok</strong></td>
+                        <td>tiktok.com/@clinica</td>
+                        <td><span class="status status-pending">❌ URL real necesaria</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN 2: TESTIMONIOS -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">2</span>
+                Testimonios de Pacientes (TestimonialsCarousel.jsx)
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre Actual</th>
+                        <th>Rol Actual</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>María López</td>
+                        <td>Madre de Sofía (3 años)</td>
+                        <td><span class="status status-pending">❌ Nombre real + testimonio + foto</span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Carlos Ramírez</td>
+                        <td>Padre de Mateo (1 año)</td>
+                        <td><span class="status status-pending">❌ Nombre real + testimonio + foto</span></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Ana Torres</td>
+                        <td>Madre de Lucas (5 años)</td>
+                        <td><span class="status status-pending">❌ Nombre real + testimonio + foto</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="info-box">
+                <strong>Estadísticas a verificar:</strong><br>
+                • "15k+ Familias atendidas" - Verificar número real<br>
+                • "4.9 Calificación promedio" - Verificar calificación real<br>
+                • "98% Recomendarían" - Verificar porcentaje real
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: EQUIPO MÉDICO -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">3</span>
+                Equipo Médico (equipo.astro)
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Doctor</th>
+                        <th>Especialidad</th>
+                        <th>Email Actual</th>
+                        <th>LinkedIn Actual</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dra. Elena Martínez</td>
+                        <td>Pediatra Neonatóloga</td>
+                        <td>emartinez@clinica.com</td>
+                        <td>linkedin.com/in/elena-martinez</td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Ricardo Santos</td>
+                        <td>Pediatra Especialista</td>
+                        <td>rsantos@clinica.com</td>
+                        <td>linkedin.com/in/ricardo-santos</td>
+                    </tr>
+                    <tr>
+                        <td>Dra. Sofía Alva</td>
+                        <td>Odontopediatra</td>
+                        <td>salva@clinica.com</td>
+                        <td>linkedin.com/in/sofia-alva</td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Carlos Ruiz</td>
+                        <td>Psicólogo Infantil</td>
+                        <td>cruiz@clinica.com</td>
+                        <td>linkedin.com/in/carlos-ruiz</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="info-box">
+                <strong>Para cada doctor se necesita:</strong> Confirmar nombre real • Email institucional real • URL de LinkedIn real (si aplica) • Confirmar especialidad
+            </div>
+        </div>
+
+        <!-- SECCIÓN 4: SERVICIOS Y PRECIOS -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">4</span>
+                Servicios y Precios (services.js)
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Servicio</th>
+                        <th>Precio Actual</th>
+                        <th>Doctor Asignado</th>
+                        <th>Prioridad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Control de Crecimiento</td>
+                        <td>Desde S/ 80.00</td>
+                        <td>Dr. Ricardo Santos</td>
+                        <td class="priority-high">🔴 Precio real + confirmar doctor</td>
+                    </tr>
+                    <tr>
+                        <td>Vacunación Integral</td>
+                        <td>Desde S/ 40.00</td>
+                        <td>Dra. Elena Martínez</td>
+                        <td class="priority-high">🔴 Precio real + confirmar doctor</td>
+                    </tr>
+                    <tr>
+                        <td>Nutrición Infantil</td>
+                        <td>Desde S/ 100.00</td>
+                        <td>Dr. Ricardo Santos</td>
+                        <td class="priority-high">🔴 Precio real + confirmar doctor</td>
+                    </tr>
+                    <tr>
+                        <td>Atención de Recién Nacidos</td>
+                        <td>Desde S/ 120.00</td>
+                        <td>Dra. Elena Martínez</td>
+                        <td class="priority-high">🔴 Precio real + confirmar doctor</td>
+                    </tr>
+                    <tr>
+                        <td>Psicología Infantil</td>
+                        <td>Desde S/ 100.00</td>
+                        <td>Dr. Carlos Ruiz</td>
+                        <td class="priority-high">🔴 Precio real + confirmar doctor</td>
+                    </tr>
+                    <tr>
+                        <td>Nebulizaciones</td>
+                        <td>Desde S/ 30.00</td>
+                        <td>Dr. Ricardo Santos</td>
+                        <td class="priority-high">🔴 Precio real + confirmar doctor</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN 5: BLOG POSTS -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">5</span>
+                Blog Posts (blogPosts.js)
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Artículo</th>
+                        <th>Fecha Actual</th>
+                        <th>Autor Actual</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Importancia de la Vacunación</td>
+                        <td>2024-01-15</td>
+                        <td>Dra. Elena Martínez</td>
+                        <td><span class="status status-pending">❌ Fecha real + confirmar autor</span></td>
+                    </tr>
+                    <tr>
+                        <td>Guía de Alimentación Complementaria</td>
+                        <td>2024-01-10</td>
+                        <td>Dr. Ricardo Santos</td>
+                        <td><span class="status status-pending">❌ Fecha real + confirmar autor</span></td>
+                    </tr>
+                    <tr>
+                        <td>Hitos del Desarrollo Psicomotor</td>
+                        <td>2024-01-05</td>
+                        <td>Dra. Sofía Alva</td>
+                        <td><span class="status status-pending">❌ Fecha real + confirmar autor</span></td>
+                    </tr>
+                    <tr>
+                        <td>Cuidados del Recién Nacido</td>
+                        <td>2023-12-28</td>
+                        <td>Dra. Elena Martínez</td>
+                        <td><span class="status status-pending">❌ Fecha real + confirmar autor</span></td>
+                    </tr>
+                    <tr>
+                        <td>Salud Emocional en la Infancia</td>
+                        <td>2023-12-20</td>
+                        <td>Dr. Carlos Ruiz</td>
+                        <td><span class="status status-pending">❌ Fecha real + confirmar autor</span></td>
+                    </tr>
+                    <tr>
+                        <td>Prevención de Infecciones Respiratorias</td>
+                        <td>2023-12-15</td>
+                        <td>Dr. Ricardo Santos</td>
+                        <td><span class="status status-pending">❌ Fecha real + confirmar autor</span></td>
+                    </tr>
+                    <tr>
+                        <td>Guía sobre Alergias en Niños</td>
+                        <td>2024-01-20</td>
+                        <td>Dra. Elena Martínez</td>
+                        <td><span class="status status-pending">❌ Fecha real + confirmar autor</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN 6: IMÁGENES -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">6</span>
+                Imágenes - Verificación Requerida
+            </div>
+            
+            <div class="info-box">
+                <strong>⚠️ Todas las imágenes necesitan confirmación de que son reales y tienen permisos de uso:</strong>
+            </div>
+            
+            <ul class="checklist">
+                <li><strong>Fotos de Doctores:</strong> /images/medic-1.jpg a /images/medic-4.jpg</li>
+                <li><strong>Fotos de Testimonios:</strong> /images/testimonial-1.jpg a /images/testimonial-3.jpg</li>
+                <li><strong>Fotos de la Clínica:</strong> /images/clinic-1.jpg a /images/clinic-4.jpg</li>
+                <li><strong>Fotos de Servicios:</strong> /images/service-*.jpg (6 imágenes)</li>
+                <li><strong>Fotos de Beneficios:</strong> /images/benefit-*.jpg (3 imágenes)</li>
+                <li><strong>Fotos de Valores:</strong> /images/value-*.jpg (4 imágenes)</li>
+                <li><strong>Imágenes de Contacto:</strong> /images/contact-*.jpg (4 imágenes)</li>
+                <li><strong>Hero Images:</strong> /img/hero-*.jpg (4 imágenes)</li>
+            </ul>
+        </div>
+
+        <!-- RESUMEN -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">7</span>
+                Resumen por Categoría
+            </div>
+            
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h4>Contacto</h4>
+                    <div class="number">8</div>
+                    <p class="priority-high">🔴 Alta Prioridad</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Testimonios</h4>
+                    <div class="number">3</div>
+                    <p class="priority-high">🔴 Alta Prioridad</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Equipo Médico</h4>
+                    <div class="number">4</div>
+                    <p class="priority-high">🔴 Alta Prioridad</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Servicios</h4>
+                    <div class="number">6</div>
+                    <p class="priority-medium">🟡 Media Prioridad</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Blog Posts</h4>
+                    <div class="number">7</div>
+                    <p class="priority-medium">🟡 Media Prioridad</p>
+                </div>
+                <div class="summary-card">
+                    <h4>Imágenes</h4>
+                    <div class="number">20+</div>
+                    <p class="priority-medium">🟡 Media Prioridad</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRÓXIMOS PASOS -->
+        <div class="section">
+            <div class="section-title">
+                <span class="section-number">8</span>
+                Próximos Pasos - Información Requerida
+            </div>
+            
+            <ul class="checklist">
+                <li>Información de contacto real (dirección, teléfono, email, WhatsApp, redes sociales)</li>
+                <li>Datos reales del equipo médico (nombres, especialidades, emails, LinkedIn)</li>
+                <li>Testimonios de pacientes reales (con consentimiento para publicar)</li>
+                <li>Precios actuales de todos los servicios</li>
+                <li>Fechas reales de publicación de los artículos del blog</li>
+                <li>Confirmación de que las imágenes son reales y tienen permisos de uso</li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>Documento generado para actualización de datos del sitio web</p>
+            <p style="margin-top: 10px; font-size: 0.85em;">Clínica Pediátrica - Proyecto Web</p>
+        </div>
+    </div>
+
+    <script>
+        // Fecha actual
+        const date = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('current-date').textContent = date.toLocaleDateString('es-ES', options);
+    </script>
+</body>
+</html>

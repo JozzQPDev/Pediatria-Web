@@ -12,52 +12,52 @@ const quickServices = [
     icon: "baby",
     desc: "Seguimiento especializado del desarrollo físico y motor de tu pequeño.",
     image: "/images/service-growth.jpg",
-    color: "bg-pink-500/20", // icono
-    hoverColor: "group-hover:bg-pink-500 group-hover:border-pink-400", // icono hover
-    buttonColor: "bg-pink-600/80", // botón
-    buttonHover: "hover:bg-pink-600", // botón hover
+    color: "bg-pink-300/30", // icono pastel
+    hoverColor: "group-hover:bg-pink-300 group-hover:border-pink-200", // icono hover pastel
+    buttonColor: "bg-pink-400/80", // botón pastel
+    buttonHover: "hover:bg-pink-300", // botón hover pastel
     overlayColor: "from-pink-900/80 via-pink-900/40 to-transparent", // overlay
-    cardColor: "bg-pink-50/10", // fondo tarjeta
-    cardHover: "hover:shadow-pink-400/50", // sombra hover tarjeta
+    cardColor: "bg-pink-50/30", // fondo tarjeta pastel
+    cardHover: "hover:shadow-pink-200/50", // sombra hover tarjeta pastel
   },
   {
     title: "Vacunación Integral",
     icon: "syringe",
     desc: "Esquema completo de vacunas en un ambiente seguro y tranquilo.",
     image: "/images/service-vaccine.jpg",
-    color: "bg-yellow-500/20",
-    hoverColor: "group-hover:bg-yellow-500 group-hover:border-yellow-400",
-    buttonColor: "bg-yellow-600/80",
-    buttonHover: "hover:bg-yellow-600",
+    color: "bg-yellow-300/30",
+    hoverColor: "group-hover:bg-yellow-300 group-hover:border-yellow-200",
+    buttonColor: "bg-yellow-400/80",
+    buttonHover: "hover:bg-yellow-300",
     overlayColor: "from-yellow-900/80 via-yellow-900/40 to-transparent",
-    cardColor: "bg-yellow-50/10",
-    cardHover: "hover:shadow-yellow-400/50",
+    cardColor: "bg-yellow-50/30",
+    cardHover: "hover:shadow-yellow-200/50",
   },
   {
     title: "Nutrición Infantil",
     icon: "apple",
     desc: "Especialistas en crear hábitos saludables desde la primera infancia.",
     image: "/images/service-nutrition.jpg",
-    color: "bg-green-500/20",
-    hoverColor: "group-hover:bg-green-500 group-hover:border-green-400",
-    buttonColor: "bg-green-600/80",
-    buttonHover: "hover:bg-green-600",
+    color: "bg-green-300/30",
+    hoverColor: "group-hover:bg-green-300 group-hover:border-green-200",
+    buttonColor: "bg-green-400/80",
+    buttonHover: "hover:bg-green-300",
     overlayColor: "from-green-900/80 via-green-900/40 to-transparent",
-    cardColor: "bg-green-50/10",
-    cardHover: "hover:shadow-green-400/50",
+    cardColor: "bg-green-50/30",
+    cardHover: "hover:shadow-green-200/50",
   },
   {
     title: "Urgencias 24h",
     icon: "ambulance",
     desc: "Atención médica inmediata con protocolos de respuesta rápida.",
     image: "/images/service-emergency.jpg",
-    color: "bg-blue-500/20",
-    hoverColor: "group-hover:bg-blue-500 group-hover:border-blue-400",
-    buttonColor: "bg-blue-600/80",
-    buttonHover: "hover:bg-blue-600",
+    color: "bg-blue-300/30",
+    hoverColor: "group-hover:bg-blue-300 group-hover:border-blue-200",
+    buttonColor: "bg-blue-400/80",
+    buttonHover: "hover:bg-blue-300",
     overlayColor: "from-blue-900/80 via-blue-900/40 to-transparent",
-    cardColor: "bg-blue-50/10",
-    cardHover: "hover:shadow-blue-400/50",
+    cardColor: "bg-blue-50/30",
+    cardHover: "hover:shadow-blue-200/50",
   },
 ];
 
@@ -146,66 +146,65 @@ const galleryImages = [
 
 <Layout title={`Inicio`} description={`Bienvenido a nuestra clínica pediátrica en ${siteConfig.location.city}, donde la salud y el bienestar de tus hijos son nuestra prioridad. Descubre un entorno seguro, moderno y acogedor diseñado para brindar atención médica integral a los más pequeños de la casa. Con especialistas certificados, tecnología avanzada y un enfoque humano, ofrecemos servicios que acompañan cada etapa del crecimiento infantil. Tu tranquilidad comienza aquí, en un lugar donde cada sonrisa cuenta.`}>
    <Welcome /> <!-- Removido client:load para evitar problemas de hidratación -->
-  <!-- Hero con imagen de fondo: Cambié a un diseño más visual con overlay y CTA prominente -->
-  <section
-    id="hero-parallax"
-    class="relative h-screen flex items-center justify-center overflow-hidden"
-  >
-    <div
-      id="parallax-bg"
-      class="absolute inset-0 bg-cover bg-center scale-110"
-      style="background-image: url('/images/hero-pediatric.jpg'); will-change: transform;"
-    >
+<section id="hero-parallax" class="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-slate-900 -mt-16 sm:-mt-20">
+  
+  <div class="absolute inset-0 z-0" id="carousel-bg">
+    <div class="carousel-slide absolute inset-0 opacity-100 transition-opacity duration-1000">
+      <div class="absolute inset-0 bg-cover bg-center animate-ken-burns" style="background-image: url('/images/hero-pediatric.jpg');"></div> 
     </div>
+    <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/benefit-modern.jpg');"></div>
+    </div>
+    <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/contact-emergency.jpg');"></div>
+    </div>
+  </div>
 
-    <div class="relative z-10 text-center text-white px-4 max-w-4xl">
-      <h1
-        class="text-5xl md:text-7xl font-bold italic tracking-tighter leading-none mb-6 animate-fade-in"
-      >
-        Atención pediátrica <br />
-        <span class="text-yellow-300 not-italic">con corazón</span>
-      </h1>
-      <p
-        class="text-xl md:text-2xl font-medium mb-10 text-white/80 animate-fade-in animation-delay-200"
-      >
-        Brindamos soluciones médicas integrales para la salud de tus hijos en un
-        entorno moderno y seguro. Tu tranquilidad es nuestro compromiso diario.
-      </p>
-      <div
-        class="flex flex-col sm:flex-row gap-6 justify-center animate-fade-in animation-delay-400"
-      >
-        <a
-          href={siteConfig.contact.whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="bg-white text-pink-600 px-10 py-5 rounded-2xl font-bold text-lg hover:shadow-xl hover:-translate-y-1 hover:scale-105 transition-all flex items-center justify-center gap-3 focus:ring-2 focus:ring-white"
-          aria-label="Reservar cita por WhatsApp"
-        >
-          <i class="bi bi-whatsapp text-xl" aria-hidden="true"></i> Reservar Cita
-        </a>
-        <a
-          href="/nosotros"
-          class="px-10 py-5 rounded-2xl font-bold text-lg border-2 border-white/30 hover:bg-white/10 hover:scale-105 transition-all flex items-center justify-center gap-3 focus:ring-2 focus:ring-white"
-          aria-label="Conoce más sobre nosotros"
-        >
-          <i data-lucide="info" class="w-5 h-5" aria-hidden="true"></i> Conócenos
-        </a>
-      </div>
+  <div class="absolute inset-0 z-10 pointer-events-none select-none" id="parallax-icons">
+    <div class="absolute top-[15%] left-[10%] parallax-layer" data-speed="2">
+      <i data-lucide="baby" class="w-16 h-16 text-yellow-200/40 animate-float"></i>
     </div>
-    <!-- Elementos decorativos infantiles -->
-    <div class="absolute bottom-10 left-10 animate-bounce-soft">
-      <i
-        data-lucide="heart"
-        class="w-12 h-12 text-yellow-300"
-        aria-hidden="true"></i>
+    <div class="absolute top-[20%] right-[15%] parallax-layer" data-speed="-3">
+      <i class="bi bi-heart-fill text-4xl text-pink-300/30 animate-float-delayed"></i>
     </div>
-    <div
-      class="absolute top-20 right-20 animate-bounce-soft animation-delay-500"
-    >
-      <i data-lucide="star" class="w-10 h-10 text-yellow-300" aria-hidden="true"
-      ></i>
+    <div class="absolute bottom-[20%] left-[15%] parallax-layer" data-speed="4">
+      <i data-lucide="stethoscope" class="w-12 h-12 text-white/20 animate-float-slow -rotate-12"></i>
     </div>
-  </section>
+    <div class="absolute bottom-[25%] right-[10%] parallax-layer" data-speed="-2">
+      <i class="bi bi-star-fill text-3xl text-yellow-100/30 animate-float"></i>
+    </div>
+  </div>
+
+  <div class="relative z-20 text-center text-white px-6 max-w-5xl mx-auto">
+    <span class="inline-flex items-center gap-2 px-4 py-1.5 mb-8 text-xs font-bold tracking-[0.2em] uppercase bg-white/10 backdrop-blur-md border border-white/20 rounded-full animate-fade-in">
+      <i class="bi bi-shield-check text-yellow-200"></i> Especialistas en pediatría
+    </span>
+
+    <h1 class="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-8 animate-slide-up">
+      Atención pediátrica <br />
+      <span class="bg-linear-to-r from-yellow-200 via-white to-yellow-200 bg-clip-text text-transparent italic font-serif py-2">
+        con corazón
+      </span>
+    </h1>
+
+    <p class="text-xl md:text-2xl font-light mb-12 text-white/90 max-w-2xl mx-auto leading-relaxed animate-slide-up animation-delay-200">
+      Cuidamos lo que más amas con tecnología moderna y un trato <strong>dulce y humano.</strong>
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-5 justify-center items-center animate-slide-up animation-delay-400">
+      <a href="#" class="group relative bg-white text-pink-500 px-12 py-5 rounded-2xl font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-[0_20px_50px_rgba(255,182,193,0.4)]">
+        <span class="relative z-10 flex items-center gap-3">
+          <i class="bi bi-whatsapp text-xl"></i> Reservar Cita
+        </span>
+        <div class="absolute inset-0 bg-linear-to-r from-transparent via-pink-100/50 to-transparent -translate-x-full group-hover:animate-shimmer"></div>
+      </a>
+
+      <a href="#nosotros" class="px-10 py-5 rounded-2xl font-bold text-lg text-white border-2 border-white/20 backdrop-blur-sm hover:bg-white/10 transition-all flex items-center gap-2">
+        <i class="bi bi-info-circle"></i> Conócenos
+      </a>
+    </div>
+  </div>
+</section>
 
   <main class="main-section overflow-hidden bg-white">
   <span class="cloud cloud--1" aria-hidden="true"></span>
@@ -224,53 +223,37 @@ const galleryImages = [
     <section class="relative overflow-hidden py-16 md:py-32 px-4">
       <!-- Este contenedor va encima de las nubes -->
       <div class="max-w-7xl mx-auto relative z-10">
-        <div
-          class="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-20 gap-8"
-        >
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-20 gap-8">
           <div class="max-w-2xl">
-            <h2
-              class="text-3xl md:text-4xl lg:text-6xl font-extrabold text-gray-900 leading-tight"
-            >
+            <h2 class="text-3xl md:text-4xl lg:text-6xl font-extrabold text-gray-900 leading-tight">
               Cuidado Integral <br />
-              <span class="bg-clip-text text-green-400 italic">Pediátrico</span>
+              <span class="bg-clip-text text-green-300 italic">Pediátrico</span>
             </h2>
           </div>
 
-          <p
-            class="text-gray-500 max-w-sm font-medium leading-relaxed text-sm md:text-base"
-          >
+          <p class="text-gray-500 max-w-sm font-medium leading-relaxed text-sm md:text-base">
             Especialidades médicas diseñadas para acompañar cada etapa del
             crecimiento de tus hijos.
           </p>
+
         </div>
 
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12"
-        >
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12">
           {
             quickServices.map((service, index) => (
-              <div
-                class={`group relative min-h-115 md:h-100 overflow-hidden rounded-[2.5rem] shadow-2xl transition-all duration-700 hover:-translate-y-4 ${
+              <div class={`group relative min-h-115 md:h-100 overflow-hidden rounded-[2.5rem] shadow-2xl transition-all duration-700 hover:-translate-y-4 ${
                   index % 2 !== 0 ? "lg:mt-8" : ""
                 } ${service.cardColor} ${service.cardHover}`}
-                role="article"
-              >
-                <img
-                  src={service.image}
+                role="article">
+                <img src={service.image}
                   alt={service.title}
                   class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                />
-
+                  />
                 <div class="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500" />
 
-
-
                 <div class="absolute inset-0 p-6 md:p-8 flex flex-col justify-end transform transition-transform duration-500">
-                  <div
-                    class={`w-12 h-12 md:w-16 md:h-16 ${service.color} backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-4 md:mb-6 border border-white/30 ${service.hoverColor} transition-all duration-500 shadow-xl`}
-                  >
-                    <i
-                      data-lucide={service.icon}
+                  <div class={`w-12 h-12 md:w-16 md:h-16 ${service.color} backdrop-blur-md rounded-2xl flex items-center justify-center text-white mb-4 md:mb-6 border border-white/30 ${service.hoverColor} transition-all duration-500 shadow-xl`}>
+                    <i data-lucide={service.icon}
                       class="w-6 h-6 md:w-8 md:h-8 group-hover:animate-pulse"
                       aria-hidden="true"
                     />
@@ -287,8 +270,7 @@ const galleryImages = [
                   <div class="overflow-hidden h-12 md:h-0 group-hover:h-12 transition-all duration-500">
                     <a
                       href={`/servicios#${service.title.toLowerCase().replace(/\s+/g, "-")}`}
-                      class={`inline-flex items-center gap-2 text-white font-bold text-sm ${service.buttonColor} ${service.buttonHover} px-4 md:px-6 py-2 md:py-3 rounded-xl backdrop-blur-sm transition-colors`}
-                    >
+                      class={`inline-flex items-center gap-2 text-white font-bold text-sm ${service.buttonColor} ${service.buttonHover} px-4 md:px-6 py-2 md:py-3 rounded-xl backdrop-blur-sm transition-colors`}>
                       Saber más
                       <i data-lucide="chevron-right" class="w-4 h-4" />
                     </a>
@@ -305,28 +287,19 @@ const galleryImages = [
       <div class="max-w-7xl mx-auto relative z-10">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
           <div class="z-10 text-center lg:text-left">
-            <h2
-              class="text-4xl md:text-5xl font-bold text-gray-900 italic leading-tight"
-            >
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 italic leading-tight">
               <span id="big-title">{allBenefits[0].title}</span>
               <br />
-              <span id="big-subtitle" class="text-blue-400 not-italic"
-                >{allBenefits[0].subtitle}</span
-              >
+              <span id="big-subtitle" class="text-blue-300 not-italic">{allBenefits[0].subtitle}</span>
             </h2>
 
-            <div
-              id="big-desc-container"
-              class="mt-6 text-gray-600 text-lg md:text-xl font-medium max-w-2xl mx-auto lg:mx-0 space-y-4 transition-all duration-500"
-            >
+            <div id="big-desc-container" class="mt-6 text-gray-600 text-lg md:text-xl font-medium max-w-2xl mx-auto lg:mx-0 space-y-4 transition-all duration-500">
               {allBenefits[0].desc.map((p) => <p class="fade-in">{p}</p>)}
             </div>
           </div>
 
           <div class="relative mt-12 lg:mt-0">
-            <div
-              class="relative z-0 rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video lg:aspect-square"
-            >
+            <div class="relative z-0 rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-video lg:aspect-square">
               <img
                 id="big-image"
                 src={allBenefits[0].image}
@@ -335,9 +308,7 @@ const galleryImages = [
               />
             </div>
 
-            <div
-              class="relative mt-8 w-full z-20 lg:absolute lg:mt-0 lg:-right-40 lg:top-1/2 lg:-translate-y-1/2 lg:w-125"
-            >
+            <div class="relative mt-8 w-full z-20 lg:absolute lg:mt-0 lg:-right-40 lg:top-1/2 lg:-translate-y-1/2 lg:w-125">
               <ul id="cards-container" class="flex flex-col gap-6 w-full">
                 {
                   allBenefits.slice(1).map((item) => (
@@ -382,26 +353,17 @@ const galleryImages = [
       />
     </section>
 
-
-
     <!-- Galería de la clínica: Grid de imágenes -->
-    <section class="py-24 px-4 bg-gray-900">
+    <section class="py-24 px-4 bg-[#A7B39F]">
       <div class="max-w-7xl mx-auto">
         <div class="text-center mb-16">
-          <h2 class="text-4xl md:text-6xl font-black text-white italic mt-2">
-            Nuestra <span
-              class="bg-[linear-gradient(to_right,#FF1493,#FFFF00,#44B5E6)] bg-clip-text text-transparent"
-              >clínica</span
-            >
+          <h2 class="text-4xl md:text-6xl font-extrabold text-white italic mt-2">
+            Nuestra <span class="bg-[#E8D5B7] bg-clip-text text-transparent">clínica</span>
           </h2>
         </div>
 
-        <div
-          class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-150"
-        >
-
-          {
-            galleryImages.map((image, index) => (
+        <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-150">
+          {galleryImages.map((image, index) => (
               <div
                 class={`group relative overflow-hidden rounded-3xl shadow-2xl cursor-pointer gallery-item
                 ${index === 0 ? "md:col-span-2 md:row-span-2" : ""}
@@ -427,81 +389,50 @@ const galleryImages = [
       </div>
     </section>
  
-    <!-- Sección de CTA: Imagen de fondo con overlay -->
+        <!-- Sección de CTA: Imagen de fondo con overlay -->
     <section class="py-32 px-4">
-      <div
-        class="max-w-6xl mx-auto relative rounded-[3rem] p-12 lg:p-24 text-center text-white overflow-hidden shadow-[0_20px_50px_rgba(34,197,94,0.3)] group"
-      >
-        <div
-          id="cta-parallax-bg"
+      <div class="max-w-6xl mx-auto relative rounded-[3rem] p-12 lg:p-24 text-center text-white overflow-hidden group" >
+        <div id="cta-parallax-bg"
           class="absolute inset-0 bg-cover bg-center scale-110 transition-transform duration-500 ease-out"
-          style="background-image: url('/images/service-psychology.jpg');"
-        >
+          style="background-image: url('/images/service-psychology.jpg');">
         </div>
 
-        <div
-          class="absolute inset-0 bg-linear-to-br from-pink-600/95 via-yellow-500/15 to-blue-800/95 group-hover:opacity-95 transition-all duration-700"
-        >
-        </div>
-
-
-
-        <div
-          class="absolute inset-0 overflow-hidden pointer-events-none opacity-20"
-        >
-          <i
-            data-lucide="sparkles"
+        <div class="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+          <i data-lucide="sparkles"
             class="absolute top-10 left-10 w-12 h-12 animate-pulse"></i>
-          <i
-            data-lucide="stethoscope"
+          <i data-lucide="stethoscope"
             class="absolute bottom-10 right-20 w-16 h-16 rotate-12"></i>
         </div>
 
         <div class="relative z-10">
-          <span
-            class="inline-block bg-white/20 backdrop-blur-md px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-6 animate-bounce-slow"
-          >
+          <span class="inline-block bg-white/20 backdrop-blur-md px-4 py-1 rounded-full text-sm font-bold tracking-widest uppercase mb-6 animate-bounce-slow">
             Estamos listos para ayudarte
           </span>
 
-          <h2
-            class="text-5xl md:text-7xl font-bold mb-8 italic tracking-tighter leading-tight"
-          >
+          <h2 class="text-5xl md:text-7xl font-bold mb-8 italic tracking-tighter leading-tight">
             Tu tranquilidad <br />
-            <span class="text-yellow-300 not-italic drop-shadow-md"
-              >empieza aquí</span
-            >
+            <span class="text-yellow-300 not-italic drop-shadow-md">empieza aquí</span>
           </h2>
-
-          <p
-            class="text-white/90 text-lg md:text-2xl mb-12 max-w-2xl mx-auto font-medium leading-relaxed"
-          >
-            Agenda una consulta hoy mismo en <span
-              class="text-white font-bold underline decoration-yellow-300 underline-offset-4"
-              >{siteConfig.location.city}</span
-            > y brinda a tus hijos la atención que merecen.
+          <p class="text-white/90 text-lg md:text-2xl mb-12 max-w-2xl mx-auto font-medium leading-relaxed">
+            Agenda una consulta hoy mismo en 
+            <span class="text-white font-bold underline decoration-yellow-300 underline-offset-4"
+              >{siteConfig.location.city}</span> 
+              y brinda a tus hijos la atención que merecen.
           </p>
 
-          <div
-            class="flex flex-col sm:flex-row gap-6 justify-center items-center"
-          >
-            <a
-              href={siteConfig.contact.whatsappUrl}
+          <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <a href={siteConfig.contact.whatsappUrl}
               target="_blank"
               class="cta-btn-primary group/btn bg-white text-green-700 px-12 py-5 rounded-2xl font-black text-xl hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all flex items-center gap-3 active:scale-95"
             >
-              <i
-                class="bi bi-whatsapp text-2xl group-hover/btn:rotate-12 transition-transform"
-              ></i>
+              <i class="bi bi-whatsapp text-2xl group-hover/btn:rotate-12 transition-transform"></i>
               Reservar Cita
             </a>
 
-            <a
-              href={`tel:${siteConfig.contact.phone}`}
-              class="group/btn px-10 py-5 rounded-2xl font-bold text-lg border-2 border-white/40 backdrop-blur-sm hover:bg-white hover:text-green-700 transition-all flex items-center gap-3 active:scale-95"
+            <a href={`tel:${siteConfig.contact.phone}`}
+            class="group/btn px-10 py-5 rounded-2xl font-bold text-lg border-2 border-white/40 backdrop-blur-sm hover:bg-white hover:text-green-700 transition-all flex items-center gap-3 active:scale-95"
             >
-              <i
-                data-lucide="phone-call"
+              <i data-lucide="phone-call"
                 class="w-5 h-5 group-hover/btn:animate-tada"></i>
               Llamar Ahora
             </a>
@@ -513,6 +444,47 @@ const galleryImages = [
 </Layout>
 
 <style>
+/* Definición del efecto de Zoom */
+  @keyframes kenburns {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.15); }
+  }
+
+  .animate-ken-burns {
+    animation: kenburns 8s ease-out forwards;
+  }
+
+  /* --- Animaciones --- */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  .animate-float { animation: float 5s ease-in-out infinite; }
+  .animate-float-delayed { animation: float 7s ease-in-out infinite 1s; }
+  .animate-float-slow { animation: float 9s ease-in-out infinite 2s; }
+
+  @keyframes kenburns {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.2); }
+  }
+  .animate-ken-burns { animation: kenburns 10s ease-out forwards; }
+
+  @keyframes shimmer {
+    100% { transform: translateX(100%); }
+  }
+  .animate-shimmer { animation: shimmer 1.5s infinite; }
+
+  .animate-slide-up {
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .animation-delay-200 { animation-delay: 0.2s; }
+  .animation-delay-400 { animation-delay: 0.4s; }
+
   /* Animaciones para tema infantil */
   @keyframes fade-in {
     from {
@@ -773,26 +745,27 @@ const galleryImages = [
     });
   });
 
-  const container = document.getElementById("testimonials-container")!;
-  const track = document.getElementById("testimonials-track")!;
+  const container = document.getElementById("testimonials-container") as HTMLElement | null;
+  const track = document.getElementById("testimonials-track") as HTMLElement | null;
 
   if (container && track) {
+    const _container = container;
+    const _track = track;
 
     let scrollAmount = 0;
     const speed = 0.5;
 
     function autoScroll() {
       scrollAmount += speed;
-      if (scrollAmount >= track.scrollWidth / 2) {
+      if (scrollAmount >= _track.scrollWidth / 2) {
         scrollAmount = 0;
       }
-      container.scrollLeft = scrollAmount;
+      _container.scrollLeft = scrollAmount;
       requestAnimationFrame(autoScroll);
     }
 
     autoScroll();
   }
-
 
   // Lógica simple de visualización (Lightbox)
   const galleryItems = document.querySelectorAll(".gallery-item .view-btn");
@@ -828,6 +801,40 @@ const galleryImages = [
         overlay.classList.add("opacity-0");
         setTimeout(() => overlay.remove(), 300);
       };
+    });
+  });
+</script>
+<script>
+  // 1. Lógica del Carrusel del hero
+  const slides = document.querySelectorAll('.carousel-slide');
+  let current = 0;
+  setInterval(() => {
+    slides[current].classList.replace('opacity-100', 'opacity-0');
+    const currentSlideDiv = slides[current].querySelector('div') as HTMLElement | null;
+    if (currentSlideDiv) {
+      currentSlideDiv.classList.remove('animate-ken-burns');
+    }
+    current = (current + 1) % slides.length;
+    slides[current].classList.replace('opacity-0', 'opacity-100');
+    const nextImg = slides[current].querySelector('div') as HTMLElement | null;
+    if (nextImg) {
+      void nextImg.offsetWidth; 
+      nextImg.classList.add('animate-ken-burns');
+    }
+  }, 6000);
+
+  // 2. Lógica Parallax para Iconos
+  document.addEventListener('mousemove', (e) => {
+    const layers = document.querySelectorAll('.parallax-layer');
+    const x = (window.innerWidth - e.pageX * 2) / 100;
+    const y = (window.innerHeight - e.pageY * 2) / 100;
+
+    layers.forEach(layer => {
+      const speed = layer.getAttribute('data-speed');
+      const htmlLayer = layer as HTMLElement;
+      if (speed) {
+        htmlLayer.style.transform = `translateX(${x * Number(speed)}px) translateY(${y * Number(speed)}px)`;
+      }
     });
   });
 </script>

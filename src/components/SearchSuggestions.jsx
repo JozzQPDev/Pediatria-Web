@@ -287,8 +287,11 @@ export default function SearchSuggestions() {
     for (const term of expandedTerms) {
       if (term.length < 2) continue;
       const regex = new RegExp(`(${escapeRegex(term)})`, 'gi');
-      highlighted = highlighted.replace(regex, '<mark class="bg-pink-100 text-pink-800 px-0.5 rounded">$1</mark>');
-    }
+highlighted = highlighted.replace(
+  regex,
+  '<mark class="bg-blue-50 text-blue-700 px-0.5 rounded">$1</mark>'
+);
+ }
     
     return highlighted;
   };
@@ -484,8 +487,8 @@ export default function SearchSuggestions() {
             role="option"
             aria-selected={index === selectedIndex}
             style={{
-              backgroundColor: index === selectedIndex ? '#fdf2f8' : 'transparent',
-              borderLeft: index === selectedIndex ? '3px solid #ec4899' : '3px solid transparent'
+              backgroundColor: index === selectedIndex ? '#E0F2FE' : 'transparent',
+              borderLeft: index === selectedIndex ? '3px solid #38BDF8' : '3px solid transparent'
             }}
           >
             <div className="flex items-center gap-3">
@@ -525,7 +528,7 @@ export default function SearchSuggestions() {
               setSearchHistory([]);
               localStorage.removeItem('searchHistory');
             }}
-            className="text-xs text-gray-500 hover:text-pink-600 transition-colors"
+            className="text-xs text-gray-500 hover:text-blue-600 transition-colors"
           >
             Limpiar historial
           </button>
@@ -550,7 +553,7 @@ export default function SearchSuggestions() {
             <button
               key={`popular-${index}`}
               onClick={() => handleSuggestionClick(`/busqueda?q=${encodeURIComponent(item.query)}`, item.query)}
-              className="px-3 py-1.5 bg-pink-50 hover:bg-pink-100 text-pink-700 rounded-full text-sm transition-colors flex items-center gap-1.5"
+              className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-full text-sm transition-colors flex items-center gap-1.5"
             >
               <Icon name="trending-up" className="w-3 h-3" />
               {item.query}
@@ -589,8 +592,8 @@ export default function SearchSuggestions() {
             }}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${
               activeCategory === cat.id 
-                ? 'bg-pink-100 text-pink-700' 
-                : 'bg-white text-gray-600 hover:bg-gray-100'
+                ? 'bg-blue-100 text-blue-700' 
+                : 'bg-white text-gray-600 hover:bg-blue-50'
             }`}
           >
             <Icon name={cat.icon} className="w-3.5 h-3.5" />
@@ -632,14 +635,14 @@ export default function SearchSuggestions() {
               aria-selected={index === selectedIndex}
               data-suggestion-index={index}
               style={{
-                transition: 'all 0.15s ease',
-                backgroundColor: index === selectedIndex ? '#fdf2f8' : 'transparent',
-                borderLeft: index === selectedIndex ? '3px solid #ec4899' : '3px solid transparent'
-              }}
+                  transition: 'all 0.15s ease',
+                  backgroundColor: index === selectedIndex ? '#E0F2FE' : 'transparent',
+                  borderLeft: index === selectedIndex ? '3px solid #38BDF8' : '3px solid transparent'
+                }}
             >
               <div className="flex items-center gap-3">
               <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
-                  suggestion.matchType === 'exact' ? 'bg-pink-100 text-pink-600' : 'bg-gray-100 text-gray-500'
+                  suggestion.matchType === 'exact' ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-500'
                 }`}>
                   <Icon name={suggestion.icon} className="w-4 h-4" />
                 </div>
@@ -658,7 +661,7 @@ export default function SearchSuggestions() {
                   )}
                 </div>
                 {suggestion.matchType === 'exact' && (
-                  <span className="text-xs text-pink-600 font-medium bg-pink-50 px-2 py-0.5 rounded">
+                  <span className="text-xs text-blue-600 font-medium bg-blue-50 px-2 py-0.5 rounded">
                     Exacto
                   </span>
                 )}
@@ -690,7 +693,7 @@ export default function SearchSuggestions() {
               <button
                 key={i}
                 onClick={() => handleSuggestionClick(`/busqueda?q=${encodeURIComponent(trend.query)}`, trend.query)}
-                className="text-pink-600 hover:text-pink-700 font-medium"
+                className="text-blue-600 hover:text-blue-700 font-medium"
               >
                 {trend.query}
               </button>

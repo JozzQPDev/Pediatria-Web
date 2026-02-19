@@ -46,7 +46,7 @@ const relatedPosts = getRelatedPosts(post.slug, 3);
           <img 
             src={post.authorImage} 
             alt={post.author}
-            class="w-14 h-14 rounded-full object-cover ring-4 ring-pink-100"
+            class="w-14 h-14 rounded-full object-cover ring-4 ring-pink-200"
           />
           <div>
             <p class="font-bold text-gray-900">{post.author}</p>
@@ -68,7 +68,7 @@ const relatedPosts = getRelatedPosts(post.slug, 3);
 
       <!-- Category Badge -->
       <div class="mb-8 reveal">
-        <span class="inline-block bg-pink-500 text-white px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider">
+        <span class="inline-block bg-pink-300 text-white px-4 py-2 rounded-full text-sm font-bold uppercase tracking-wider">
           {post.category}
         </span>
       </div>
@@ -92,7 +92,7 @@ const relatedPosts = getRelatedPosts(post.slug, 3);
           {post.tags.map(tag => (
             <a 
               href={`/blogs?tag=${tag}`}
-              class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium hover:bg-pink-500 hover:text-white transition-all"
+              class="px-4 py-2 bg-gray-100 text-gray-600 rounded-full text-sm font-medium hover:bg-pink-300 hover:text-white transition-all"
             >
               #{tag}
             </a>
@@ -108,7 +108,7 @@ const relatedPosts = getRelatedPosts(post.slug, 3);
             href={`https://www.facebook.com/sharer/sharer.php?u=${Astro.url}`}
             target="_blank"
             rel="noopener noreferrer"
-            class="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 hover:scale-110 transition-all"
+            class="w-12 h-12 bg-blue-400 text-white rounded-full flex items-center justify-center hover:bg-blue-500 hover:scale-110 transition-all"
             aria-label="Compartir en Facebook"
           >
             <i data-lucide="facebook" class="w-5 h-5"></i>
@@ -117,7 +117,7 @@ const relatedPosts = getRelatedPosts(post.slug, 3);
             href={`https://twitter.com/intent/tweet?url=${Astro.url}&text=${post.title}`}
             target="_blank"
             rel="noopener noreferrer"
-            class="w-12 h-12 bg-sky-500 text-white rounded-full flex items-center justify-center hover:bg-sky-600 hover:scale-110 transition-all"
+            class="w-12 h-12 bg-sky-300 text-white rounded-full flex items-center justify-center hover:bg-sky-400 hover:scale-110 transition-all"
             aria-label="Compartir en Twitter"
           >
             <i data-lucide="twitter" class="w-5 h-5"></i>
@@ -126,14 +126,14 @@ const relatedPosts = getRelatedPosts(post.slug, 3);
             href={`https://wa.me/?text=${encodeURIComponent(post.title + ' ' + Astro.url)}`}
             target="_blank"
             rel="noopener noreferrer"
-            class="w-12 h-12 bg-green-500 text-white rounded-full flex items-center justify-center hover:bg-green-600 hover:scale-110 transition-all"
+            class="w-12 h-12 bg-green-300 text-white rounded-full flex items-center justify-center hover:bg-green-400 hover:scale-110 transition-all"
             aria-label="Compartir en WhatsApp"
           >
              <i class="bi bi-whatsapp text-lg" aria-hidden="true"></i>
           </a>
           <button 
             onclick="navigator.clipboard.writeText(window.location.href); alert('¡Enlace copiado al portapapeles!');"
-            class="w-12 h-12 bg-gray-600 text-white rounded-full flex items-center justify-center hover:bg-gray-700 hover:scale-110 transition-all"
+            class="w-12 h-12 bg-gray-400 text-white rounded-full flex items-center justify-center hover:bg-gray-500 hover:scale-110 transition-all"
             aria-label="Copiar enlace"
           >
             <i data-lucide="link" class="w-5 h-5"></i>
@@ -151,16 +151,16 @@ const relatedPosts = getRelatedPosts(post.slug, 3);
           <img 
             src={post.authorImage} 
             alt={post.author}
-            class="w-24 h-24 rounded-full object-cover ring-4 ring-pink-100"
+            class="w-24 h-24 rounded-full object-cover ring-4 ring-pink-200"
           />
           <div class="text-center md:text-left">
             <h3 class="text-xl font-bold text-gray-900 mb-2">Escrito por {post.author}</h3>
             <p class="text-gray-600 mb-4">
-              Especialista médico con amplia experiencia en pediatría. Comprometido con brindar información de calidad para el cuidado de la salud infantil.
+              Especialista médico con amplia experiencia en pediatría. Comprometido con brinews de calidad para el cuidado de la salud infantil.
             </p>
             <a 
               href="/equipo"
-              class="inline-flex items-center gap-2 text-pink-500 font-bold hover:text-pink-600 transition-colors"
+              class="inline-flex items-center gap-2 text-pink-400 font-bold hover:text-pink-500 transition-colors"
             >
               Conoce a nuestro equipo
               <i data-lucide="arrow-right" class="w-4 h-4"></i>
@@ -190,7 +190,7 @@ const relatedPosts = getRelatedPosts(post.slug, 3);
                   class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
                 <div class="absolute top-4 left-4">
-                  <span class="bg-white/90 backdrop-blur-sm text-pink-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                  <span class="bg-white/90 backdrop-blur-sm text-pink-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
                     {relatedPost.category}
                   </span>
                 </div>
@@ -208,13 +208,13 @@ const relatedPosts = getRelatedPosts(post.slug, 3);
                   </span>
                 </div>
                 
-                <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-pink-500 transition-colors">
+                <h3 class="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-pink-400 transition-colors">
                   {relatedPost.title}
                 </h3>
                 
                 <a 
                   href={`/blog/${relatedPost.slug}`}
-                  class="text-pink-500 font-bold text-sm hover:text-pink-600 transition-colors flex items-center gap-1 group/link"
+                  class="text-pink-400 font-bold text-sm hover:text-pink-500 transition-colors flex items-center gap-1 group/link"
                 >
                   Leer más
                   <i data-lucide="arrow-right" class="w-4 h-4 group-hover/link:translate-x-1 transition-transform"></i>
@@ -228,7 +228,7 @@ const relatedPosts = getRelatedPosts(post.slug, 3);
   )}
 
   <!-- CTA Section -->
-  <section class="py-16 bg-linear-to-br from-pink-500 to-purple-600 text-white">
+  <section class="py-16 bg-linear-to-br from-pink-300 to-purple-400 text-white">
 
     <div class="max-w-4xl mx-auto px-4 text-center reveal">
       <h2 class="text-3xl lg:text-4xl font-bold mb-4">
@@ -240,7 +240,7 @@ const relatedPosts = getRelatedPosts(post.slug, 3);
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a 
           href="/contacto"
-          class="px-8 py-4 bg-white text-pink-600 font-bold rounded-2xl hover:bg-gray-100 hover:scale-105 transition-all shadow-lg"
+          class="px-8 py-4 bg-white text-pink-400 font-bold rounded-2xl hover:bg-gray-100 hover:scale-105 transition-all shadow-lg"
         >
           Contactar Especialista
         </a>

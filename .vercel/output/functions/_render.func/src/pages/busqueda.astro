@@ -1,0 +1,851 @@
+---
+// Página de búsqueda mejorada - Muestra resultados de búsqueda del sitio
+export const prerender = false;
+
+import Layout from "../layouts/Layout.astro";
+import SearchFilters from "../components/SearchFilters.jsx";
+
+import { searchContent, getSearchCategories, searchData, advancedSearch } from "../data/searchData.js";
+
+// Obtener parámetros de la URL
+const url = new URL(Astro.request.url);
+const query = url.searchParams.get('q') || '';
+const typeFilter = url.searchParams.get('type') || '';
+const categoryFilter = url.searchParams.get('category') || '';
+const sortBy = url.searchParams.get('sort') || 'relevance';
+const dateFrom = url.searchParams.get('dateFrom') || '';
+const dateTo = url.searchParams.get('dateTo') || '';
+const isAdvanced = url.searchParams.get('advanced') === 'true';
+const currentPage = parseInt(url.searchParams.get('page') || '1', 10);
+const viewMode = url.searchParams.get('view') || 'list'; // 'list' or 'grid'
+const itemsPerPage = 12;
+
+// Realizar búsqueda con filtros
+const searchOptions = {
+  limit: 100, // Get more for pagination
+  fuzzy: true,
+  sortBy: sortBy,
+  filters: {
+    ...(typeFilter && { type: typeFilter }),
+    ...(categoryFilter && { category: categoryFilter }),
+    ...(dateFrom && { dateFrom }),
+    ...(dateTo && { dateTo })
+  }
+};
+
+// Use advanced search if requested
+let allResults = [];
+try {
+  if (isAdvanced && query) {
+    allResults = advancedSearch(query, searchOptions);
+  } else if (query) {
+    allResults = searchContent(query, searchOptions);
+  }
+} catch (error) {
+  console.error('Search error:', error);
+  allResults = [];
+}
+
+const totalResults = allResults.length;
+const totalPages = Math.ceil(totalResults / itemsPerPage);
+
+// Paginate results
+const startIndex = (currentPage - 1) * itemsPerPage;
+const results = allResults.slice(startIndex, startIndex + itemsPerPage);
+
+// Generate pagination URLs
+const buildPageUrl = (page: number) => {
+  const params = new URLSearchParams(url.searchParams);
+  params.set('page', page.toString());
+  return `?${params.toString()}`;
+};
+
+
+
+// Obtener categorías disponibles para filtros
+const allCategories: string[] = getSearchCategories().filter((cat: string) => 
+  !['page', 'service', 'blog'].includes(cat)
+);
+
+
+
+
+// Iconos para cada tipo
+const typeIcons: Record<string, string> = {
+  page: 'file-text',
+  service: 'stethoscope',
+  blog: 'book-open'
+};
+
+// Etiquetas para cada tipo
+const typeLabels: Record<string, string> = {
+  page: 'Página',
+  service: 'Servicio',
+  blog: 'Artículo'
+};
+
+// Colores para cada tipo
+const typeColors: Record<string, { bg: string; text: string; border: string; badge: string; gradient: string }> = {
+  page: { 
+    bg: 'bg-blue-50', 
+    text: 'text-blue-600', 
+    border: 'border-blue-200', 
+    badge: 'bg-blue-100 text-blue-700',
+    gradient: 'from-blue-500 to-blue-600'
+  },
+  service: { 
+    bg: 'bg-green-50', 
+    text: 'text-green-600', 
+    border: 'border-green-200', 
+    badge: 'bg-green-100 text-green-700',
+    gradient: 'from-green-500 to-green-600'
+  },
+  blog: { 
+    bg: 'bg-purple-50', 
+    text: 'text-purple-600', 
+    border: 'border-purple-200', 
+    badge: 'bg-purple-100 text-purple-700',
+    gradient: 'from-purple-500 to-purple-600'
+  }
+};
+
+// Función para obtener imagen según el tipo y slug
+function getResultImage(result: any): string {
+  if (result.type === 'service') {
+    const serviceImages: Record<string, string> = {
+      'control-crecimiento': '/images/service-growth.jpg',
+      'vacunacion-integral': '/images/service-vaccine.jpg',
+      'nutricion-infantil': '/images/service-nutrition.jpg',
+      'atencion-recien-nacidos': '/images/service-newborn.jpg',
+      'psicologia-infantil': '/images/service-psychology.jpg',
+      'nebulizaciones': '/images/service-nebulization.jpg'
+    };
+    return serviceImages[result.slug] || '/images/clinic-1.jpg';
+  }
+  
+  if (result.type === 'blog') {
+    const blogImages: Record<string, string> = {
+      'importancia-vacunacion-infantil': '/images/service-vaccine.jpg',
+      'alimentacion-complementaria': '/images/service-nutrition.jpg',
+      'desarrollo-psicomotor': '/images/service-growth.jpg',
+      'cuidado-recien-nacido': '/images/service-newborn.jpg',
+      'salud-emocional-infantil': '/images/service-psychology.jpg',
+      'prevencion-respiratoria': '/images/service-nebulization.jpg',
+      'alergias-infantiles': '/images/service-vaccine.jpg'
+    };
+    return blogImages[result.slug] || '/images/clinic-1.jpg';
+  }
+  
+  return '/images/clinica-home.jpg';
+}
+
+// Sugerencias de búsqueda populares
+const popularSearches = ['vacunación', 'nutrición', 'desarrollo', 'recién nacido', 'control', 'psicología'];
+
+// Pagination helper functions
+const getVisiblePages = (current: number, total: number) => {
+
+  const delta = 2;
+  const range = [];
+  const rangeWithDots = [];
+  let l;
+
+  for (let i = 1; i <= total; i++) {
+    if (i === 1 || i === total || (i >= current - delta && i <= current + delta)) {
+      range.push(i);
+    }
+  }
+
+  for (let i of range) {
+    if (l) {
+      if (i - l === 2) {
+        rangeWithDots.push(l + 1);
+      } else if (i - l !== 1) {
+        rangeWithDots.push('...');
+      }
+    }
+    rangeWithDots.push(i);
+    l = i;
+  }
+
+  return rangeWithDots;
+};
+
+const visiblePages = getVisiblePages(currentPage, totalPages);
+
+---
+
+<Layout title={query ? `Resultados para "${query}" | Clínica Pediátrica` : "Búsqueda | Clínica Pediátrica"}>
+  <main class="main-section min-h-screen  from-gray-50 via-white to-pink-50/30 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- Decorative elements -->
+  <span class="cloud cloud--1" aria-hidden="true"></span>
+  <span class="cloud cloud--2" aria-hidden="true"></span>
+  <span class="cloud cloud--3" aria-hidden="true"></span>
+  <span class="cloud cloud--4" aria-hidden="true"></span>
+  <span class="cloud cloud--5" aria-hidden="true"></span>
+  <span class="cloud cloud--6" aria-hidden="true"></span>
+  <span class="cloud cloud--7" aria-hidden="true"></span>
+  <span class="cloud cloud--8" aria-hidden="true"></span>
+  <span class="cloud cloud--9" aria-hidden="true"></span>
+  <span class="cloud cloud--10" aria-hidden="true"></span>
+  <span class="cloud cloud--11" aria-hidden="true"></span>
+  <span class="cloud cloud--12" aria-hidden="true"></span>
+
+    <div class="max-w-5xl mx-auto relative z-10">
+      <!-- Header de Búsqueda -->
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm border border-gray-100 mb-6">
+          <i data-lucide="sparkles" class="w-4 h-4 text-pink-500"></i>
+          <span class="text-sm text-gray-600">Búsqueda inteligente</span>
+        </div>
+        
+        <h1 class="text-4xl sm:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-linear-to-r from-gray-900 via-pink-600 to-gray-900">
+
+          {query ? 'Resultados de búsqueda' : '¿Qué estás buscando?'}
+        </h1>
+        
+        <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+          {query 
+            ? `Encontramos ${totalResults} resultado${totalResults !== 1 ? 's' : ''} para tu búsqueda` 
+            : 'Encuentra servicios, artículos y información sobre la salud de tus hijos'}
+        </p>
+        
+        <!-- Formulario de Búsqueda Mejorado -->
+        <form action="/busqueda" method="GET" class="max-w-2xl mx-auto relative group">
+          <div class="relative flex items-center">
+            <div class="absolute left-4 text-gray-400 group-focus-within:text-pink-500 transition-colors">
+              <i data-lucide="search" class="w-5 h-5"></i>
+            </div>
+            <input 
+              type="text" 
+              name="q" 
+              value={query}
+              placeholder="Buscar servicios, artículos, información..."
+              class="w-full pl-12 pr-32 py-4 rounded-2xl border border-gray-200 shadow-lg shadow-gray-200/50 focus:outline-none text-lg transition-all"
+              autocomplete="off"
+              id="main-search-input"
+            />
+
+
+
+            <button 
+              type="submit"
+              class="absolute right-2 bg-linear-to-r from-pink-500 to-pink-600 hover:from-pink-600 hover:to-pink-700 text-white px-6 py-2.5 rounded-xl font-medium transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+
+              Buscar
+            </button>
+          </div>
+          
+          <!-- Búsquedas populares -->
+          {!query && (
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+              <span class="text-sm text-gray-500">Populares:</span>
+              {popularSearches.map((term) => (
+                <a 
+                  href={`/busqueda?q=${encodeURIComponent(term)}`}
+                  class="text-sm px-3 py-1 bg-white/80 hover:bg-pink-50 text-gray-600 hover:text-pink-600 rounded-full border border-gray-200 hover:border-pink-200 transition-all"
+                >
+                  {term}
+                </a>
+              ))}
+            </div>
+          )}
+        </form>
+      </div>
+
+      <!-- Filtros (solo cuando hay búsqueda) -->
+      {query && (
+        <SearchFilters 
+          currentType={typeFilter}
+          currentCategory={categoryFilter}
+          currentSort={sortBy}
+          currentDateFrom={dateFrom}
+          currentDateTo={dateTo}
+          availableCategories={allCategories as any}
+          totalResults={totalResults}
+          isLoading={false}
+          client:load
+        />
+      )}
+
+      <!-- View Toggle and Results Info -->
+      {query && totalResults > 0 && (
+        <div class="flex items-center justify-between mb-4 px-1">
+          <p class="text-sm text-gray-500">
+            Mostrando {startIndex + 1}-{Math.min(startIndex + itemsPerPage, totalResults)} de {totalResults} resultados
+            {isAdvanced && <span class="ml-2 text-purple-600 font-medium">(Búsqueda avanzada)</span>}
+          </p>
+          
+          <div class="flex items-center gap-2">
+            <span class="text-sm text-gray-500 hidden sm:inline">Vista:</span>
+            <div class="flex bg-gray-100 rounded-lg p-1">
+              <a 
+                href={`?${new URLSearchParams({...Object.fromEntries(url.searchParams), view: 'list'})}`}
+                class={`p-1.5 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow-sm text-pink-600' : 'text-gray-500 hover:text-gray-700'}`}
+                aria-label="Vista de lista"
+                aria-pressed={viewMode === 'list'}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+              </a>
+              <a 
+                href={`?${new URLSearchParams({...Object.fromEntries(url.searchParams), view: 'grid'})}`}
+                class={`p-1.5 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow-sm text-pink-600' : 'text-gray-500 hover:text-gray-700'}`}
+                aria-label="Vista de grid"
+                aria-pressed={viewMode === 'grid'}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
+
+
+
+      <!-- Resultados - List View -->
+      {query && totalResults > 0 && viewMode === 'list' && (
+        <div class="space-y-4">
+          {results.map((result: any, index: number) => {
+
+            const colors = typeColors[result.type];
+            const image = getResultImage(result);
+            const isEven = index % 2 === 0;
+            const actualIndex = startIndex + index;
+            
+            return (
+              <a 
+                href={result.url}
+                class="group block bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-pink-200 transition-all duration-300 transform hover:-translate-y-1"
+                style={`animation-delay: ${index * 50}ms`}
+                data-result-index={actualIndex}
+              >
+                <div class={`flex flex-col sm:flex-row gap-4 ${isEven ? '' : 'sm:flex-row-reverse'}`}>
+                  <!-- Imagen -->
+                  <div class="sm:w-48 shrink-0">
+                    <div class="relative aspect-video sm:aspect-square rounded-xl overflow-hidden bg-gray-100">
+                      <img 
+                        src={image} 
+                        alt={result.title}
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <div class={`absolute top-2 left-2 px-2 py-1 rounded-lg text-xs font-medium ${colors.badge} backdrop-blur-sm bg-opacity-90`}>
+                        <span class="flex items-center gap-1">
+                          <i data-lucide={typeIcons[result.type]} class="w-3 h-3"></i>
+                          {typeLabels[result.type]}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Contenido -->
+                  <div class="flex-1 min-w-0 flex flex-col">
+                    <div class="flex items-start justify-between gap-3 mb-2">
+                      <h2 class="text-xl font-semibold text-gray-900 group-hover:text-pink-600 transition-colors line-clamp-2">
+                        {(result as any).highlightedTitle ? (
+                          <Fragment set:html={(result as any).highlightedTitle} />
+                        ) : (
+                          result.title
+                        )}
+                      </h2>
+
+                      <div class={`shrink-0 w-10 h-10 rounded-xl ${colors.bg} ${colors.text} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                        <i data-lucide={typeIcons[result.type]} class="w-5 h-5"></i>
+                      </div>
+                    </div>
+                    
+                    <p class="text-gray-600 text-sm sm:text-base line-clamp-2 mb-3 grow">
+                      {(result as any).highlightedDescription ? (
+                        <Fragment set:html={(result as any).highlightedDescription} />
+                      ) : (
+                        result.description
+                      )}
+                    </p>
+                    
+                    <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
+                      <div class="flex items-center gap-3 text-sm text-gray-500">
+                        {(result as any).category && (
+                          <span class="flex items-center gap-1 px-2 py-1 bg-gray-50 rounded-lg">
+                            <i data-lucide="tag" class="w-3.5 h-3.5"></i>
+                            {(result as any).category}
+                          </span>
+                        )}
+                        {(result as any).relevanceScore && sortBy === 'relevance' && (
+                          <span class="flex items-center gap-1 text-xs">
+                            <i data-lucide="target" class="w-3.5 h-3.5"></i>
+                            {Math.min(100, Math.round((result as any).relevanceScore / 2))}% match
+                          </span>
+                        )}
+                      </div>
+                      
+                      <span class="flex items-center gap-1 text-pink-600 font-medium text-sm group-hover:gap-2 transition-all">
+                        Ver más
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      )}
+
+      <!-- Resultados - Grid View -->
+      {query && totalResults > 0 && viewMode === 'grid' && (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {results.map((result: any, index: number) => {
+
+            const colors = typeColors[result.type];
+            const image = getResultImage(result);
+            const actualIndex = startIndex + index;
+            
+            return (
+              <a 
+                href={result.url}
+                class="group block bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:border-pink-200 transition-all duration-300 transform hover:-translate-y-1"
+                style={`animation-delay: ${index * 30}ms`}
+                data-result-index={actualIndex}
+              >
+                <!-- Imagen -->
+                <div class="relative aspect-video overflow-hidden bg-gray-100">
+                  <img 
+                    src={image} 
+                    alt={result.title}
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div class={`absolute top-3 left-3 px-2 py-1 rounded-lg text-xs font-medium ${colors.badge} backdrop-blur-sm bg-opacity-90`}>
+                    <span class="flex items-center gap-1">
+                      <i data-lucide={typeIcons[result.type]} class="w-3 h-3"></i>
+                      {typeLabels[result.type]}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Contenido -->
+                <div class="p-4">
+                  <h2 class="text-lg font-semibold text-gray-900 group-hover:text-pink-600 transition-colors line-clamp-2 mb-2">
+                    {(result as any).highlightedTitle ? (
+                      <Fragment set:html={(result as any).highlightedTitle} />
+                    ) : (
+                      result.title
+                    )}
+                  </h2>
+                  
+                  <p class="text-gray-600 text-sm line-clamp-2 mb-3">
+                    {(result as any).highlightedDescription ? (
+                      <Fragment set:html={(result as any).highlightedDescription} />
+                    ) : (
+                      result.description
+                    )}
+                  </p>
+                  
+                  <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                    {(result as any).category && (
+                      <span class="flex items-center gap-1 text-xs text-gray-500 px-2 py-1 bg-gray-50 rounded-lg">
+                        <i data-lucide="tag" class="w-3 h-3"></i>
+                        {(result as any).category}
+                      </span>
+                    )}
+                    
+                    <span class="flex items-center gap-1 text-pink-600 font-medium text-sm ml-auto">
+                      Ver más
+                      <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </span>
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      )}
+
+      <!-- Pagination -->
+      {query && totalPages > 1 && (
+        <nav class="mt-8 flex items-center justify-center gap-2" aria-label="Paginación de resultados">
+          <!-- Previous Page -->
+          {currentPage > 1 ? (
+            <a 
+              href={buildPageUrl(currentPage - 1)}
+              class="p-2 rounded-lg bg-white border border-gray-200 text-gray-600 hover:bg-pink-50 hover:text-pink-600 hover:border-pink-200 transition-colors"
+              aria-label="Página anterior"
+            >
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </a>
+          ) : (
+            <span class="p-2 rounded-lg bg-gray-50 border border-gray-200 text-gray-300 cursor-not-allowed" aria-disabled="true">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </span>
+          )}
+
+          <!-- Page Numbers -->
+          <div class="flex items-center gap-1">
+            {visiblePages.map((page: number | string, idx: number) => (
+              page === '...' ? (
+                <span class="px-3 py-2 text-gray-400">...</span>
+              ) : (
+                <a
+                  href={buildPageUrl(page as number)}
+                  class={`min-w-10 px-3 py-2 rounded-lg text-sm font-medium transition-colors text-center ${
+                    currentPage === page
+                      ? 'bg-pink-500 text-white'
+                      : 'bg-white border border-gray-200 text-gray-600 hover:bg-pink-50 hover:text-pink-600 hover:border-pink-200'
+                  }`}
+                  aria-label={`Página ${page}`}
+                  aria-current={currentPage === page ? 'page' : undefined}
+                >
+                  {page}
+                </a>
+              )
+            ))}
+          </div>
+
+
+          <!-- Next Page -->
+          {currentPage < totalPages ? (
+            <a 
+              href={buildPageUrl(currentPage + 1)}
+              class="p-2 rounded-lg bg-white border border-gray-200 text-gray-600 hover:bg-pink-50 hover:text-pink-600 hover:border-pink-200 transition-colors"
+              aria-label="Página siguiente"
+            >
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </a>
+          ) : (
+            <span class="p-2 rounded-lg bg-gray-50 border border-gray-200 text-gray-300 cursor-not-allowed" aria-disabled="true">
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </span>
+          )}
+        </nav>
+      )}
+
+      <!-- Pagination Info -->
+      {query && totalPages > 1 && (
+        <p class="text-center text-sm text-gray-500 mt-4">
+          Página {currentPage} de {totalPages}
+        </p>
+      )}
+
+
+      <!-- Estado vacío - Sin resultados -->
+      {query && totalResults === 0 && (
+        <div class="text-center py-16 px-4">
+          <div class="w-32 h-32 mx-auto mb-8 relative">
+            <div class="absolute inset-0 bg-linear-to-br from-red-100 to-pink-100 rounded-full animate-pulse"></div>
+            <div class="relative w-full h-full flex items-center justify-center">
+              <i data-lucide="search-x" class="w-16 h-16 text-red-400"></i>
+            </div>
+          </div>
+          
+          <h2 class="text-2xl font-bold text-gray-900 mb-3">
+            No se encontraron resultados
+          </h2>
+          <p class="text-gray-500 max-w-md mx-auto mb-8 text-lg">
+            No encontramos resultados para "<span class="font-semibold text-gray-700 bg-yellow-100 px-1 rounded">{query}</span>". 
+            {isAdvanced && <span class="block mt-2 text-sm">Intenta simplificar tu búsqueda avanzada o verifica los operadores booleanos.</span>}
+          </p>
+          
+          {isAdvanced && (
+            <div class="bg-purple-50 rounded-2xl p-4 mb-6 max-w-lg mx-auto border border-purple-100">
+              <h4 class="font-medium text-purple-900 mb-2 text-sm">Sintaxis de búsqueda avanzada:</h4>
+              <ul class="text-sm text-purple-700 space-y-1 text-left">
+                <li><code class="bg-purple-100 px-1 rounded">AND</code> - Ambos términos deben estar presentes</li>
+                <li><code class="bg-purple-100 px-1 rounded">OR</code> - Al menos uno de los términos</li>
+                <li><code class="bg-purple-100 px-1 rounded">NOT</code> - Excluye términos</li>
+                <li><code class="bg-purple-100 px-1 rounded">"frase exacta"</code> - Busca la frase completa</li>
+              </ul>
+            </div>
+          )}
+          
+          <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 max-w-lg mx-auto">
+            <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <i data-lucide="lightbulb" class="w-5 h-5 text-yellow-500"></i>
+              Sugerencias:
+            </h3>
+            <div class="flex flex-wrap justify-center gap-2">
+              {popularSearches.map((suggestion) => (
+                <a 
+                  href={`/busqueda?q=${encodeURIComponent(suggestion)}`}
+                  class="px-4 py-2 bg-gray-50 hover:bg-pink-50 text-gray-700 hover:text-pink-700 rounded-xl transition-colors border border-gray-200 hover:border-pink-200"
+                >
+                  {suggestion}
+                </a>
+              ))}
+            </div>
+          </div>
+          
+          <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a 
+              href="/busqueda"
+              class="inline-flex items-center gap-2 text-pink-600 hover:text-pink-700 font-medium"
+            >
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              Volver a la búsqueda
+            </a>
+            {!isAdvanced && (
+              <a 
+                href={`/busqueda?q=${encodeURIComponent(query)}&advanced=true`}
+                class="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium"
+              >
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                Intentar búsqueda avanzada
+              </a>
+            )}
+          </div>
+        </div>
+      )}
+
+      <!-- Error State -->
+      {query && !results && (
+        <div class="text-center py-16 px-4">
+          <div class="w-24 h-24 mx-auto mb-6 bg-red-50 rounded-full flex items-center justify-center">
+            <i data-lucide="alert-circle" class="w-12 h-12 text-red-500"></i>
+          </div>
+          <h2 class="text-xl font-bold text-gray-900 mb-2">Error en la búsqueda</h2>
+          <p class="text-gray-500 mb-4">Hubo un problema al procesar tu búsqueda. Por favor, intenta nuevamente.</p>
+          <button 
+            onclick="window.location.reload()"
+            class="px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+          >
+            Reintentar
+          </button>
+        </div>
+      )}
+
+
+      <!-- Estado inicial - Sin búsqueda -->
+      {!query && (
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+          <!-- Categorías destacadas -->
+          <a 
+            href="/servicios"
+            class="group p-6 bg-white rounded-2xl border border-gray-200 hover:border-green-300 hover:shadow-xl transition-all text-center relative overflow-hidden"
+          >
+            <div class="absolute inset-0 bg-linear-to-br from-green-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+            <div class="relative">
+              <div class="w-16 h-16 mx-auto mb-4 bg-linear-to-br from-green-100 to-green-200 rounded-2xl flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform shadow-sm">
+
+                <i data-lucide="stethoscope" class="w-8 h-8"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Servicios</h3>
+              <p class="text-sm text-gray-500">Descubre todos nuestros servicios pediátricos especializados</p>
+              <div class="mt-4 flex items-center justify-center gap-1 text-green-600 font-medium text-sm group-hover:gap-2 transition-all">
+                Explorar <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+          
+          <a 
+            href="/blogs"
+            class="group p-6 bg-white rounded-2xl border border-gray-200 hover:border-purple-300 hover:shadow-xl transition-all text-center relative overflow-hidden"
+          >
+            <div class="absolute inset-0 bg-linear-to-br from-purple-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+            <div class="relative">
+              <div class="w-16 h-16 mx-auto mb-4 bg-linear-to-br from-purple-100 to-purple-200 rounded-2xl flex items-center justify-center text-purple-600 group-hover:scale-110 transition-transform shadow-sm">
+
+                <i data-lucide="book-open" class="w-8 h-8"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Artículos</h3>
+              <p class="text-sm text-gray-500">Lee consejos y artículos sobre salud infantil y desarrollo</p>
+              <div class="mt-4 flex items-center justify-center gap-1 text-purple-600 font-medium text-sm group-hover:gap-2 transition-all">
+                Leer <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+          
+          <a 
+            href="/contacto"
+            class="group p-6 bg-white rounded-2xl border border-gray-200 hover:border-blue-300 hover:shadow-xl transition-all text-center relative overflow-hidden"
+          >
+            <div class="absolute inset-0 bg-linear-to-br from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+
+            <div class="relative">
+              <div class="w-16 h-16 mx-auto mb-4 bg-linear-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center text-blue-600 group-hover:scale-110 transition-transform shadow-sm">
+
+                <i data-lucide="message-circle" class="w-8 h-8"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Contacto</h3>
+              <p class="text-sm text-gray-500">¿Tienes preguntas? Contáctanos y te ayudaremos</p>
+              <div class="mt-4 flex items-center justify-center gap-1 text-blue-600 font-medium text-sm group-hover:gap-2 transition-all">
+                Escribir <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+          </a>
+        </div>
+      )}
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+  
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+  
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+  
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #ec4899;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #db2777;
+  }
+  
+
+  
+  /* Remove default focus border from search input */
+  #main-search-input:focus,
+  #main-search-input:focus-visible {
+    outline: none !important;
+    border-color: #e5e7eb !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Result card animation */
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .space-y-4 > a,
+  .grid > a {
+    animation: slideInUp 0.5s ease-out forwards;
+    opacity: 0;
+  }
+
+  /* Grid view animation with stagger */
+  .grid > a:nth-child(1) { animation-delay: 0ms; }
+  .grid > a:nth-child(2) { animation-delay: 50ms; }
+  .grid > a:nth-child(3) { animation-delay: 100ms; }
+  .grid > a:nth-child(4) { animation-delay: 150ms; }
+  .grid > a:nth-child(5) { animation-delay: 200ms; }
+  .grid > a:nth-child(6) { animation-delay: 250ms; }
+  .grid > a:nth-child(7) { animation-delay: 300ms; }
+  .grid > a:nth-child(8) { animation-delay: 350ms; }
+  .grid > a:nth-child(9) { animation-delay: 400ms; }
+  .grid > a:nth-child(10) { animation-delay: 450ms; }
+  .grid > a:nth-child(11) { animation-delay: 500ms; }
+  .grid > a:nth-child(12) { animation-delay: 550ms; }
+
+  /* Pagination hover effects */
+  nav a:hover {
+    transform: translateY(-1px);
+  }
+
+  /* View toggle button transitions */
+  .view-toggle {
+    transition: all 0.2s ease;
+  }
+
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus visible styles for accessibility */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid #ec4899;
+    outline-offset: 2px;
+  }
+</style>
+
+
+<script is:inline>
+  // Focus search input on page load if there's a query
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('main-search-input');
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+    
+    if (query && searchInput) {
+      // Place cursor at the end of the text
+      const length = searchInput.value.length;
+      searchInput.setSelectionRange(length, length);
+      searchInput.focus();
+    }
+
+    // Smooth scroll to results if coming from pagination
+    const page = urlParams.get('page');
+    if (page && page !== '1') {
+      const resultsSection = document.querySelector('.search-filters');
+      if (resultsSection) {
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  });
+
+  // Keyboard navigation for pagination
+  document.addEventListener('keydown', function(e) {
+    // Only if not in an input
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentPage = parseInt(urlParams.get('page') || '1', 10);
+    
+    if (e.key === 'ArrowLeft' && e.altKey) {
+      // Previous page
+      if (currentPage > 1) {
+        urlParams.set('page', (currentPage - 1).toString());
+        window.location.href = '?' + urlParams.toString();
+      }
+    } else if (e.key === 'ArrowRight' && e.altKey) {
+      // Next page
+      const totalPages = parseInt(document.querySelector('[data-total-pages]')?.dataset.totalPages || '1', 10);
+      if (currentPage < totalPages) {
+        urlParams.set('page', (currentPage + 1).toString());
+        window.location.href = '?' + urlParams.toString();
+      }
+    }
+  });
+</script>

@@ -464,7 +464,7 @@ html {
 
 /* Focus visible styles for accessibility */
 :focus-visible {
-  outline: 3px solid #3b82f6;
+  outline: 3px solid #ffffff00;
   outline-offset: 2px;
 }
 

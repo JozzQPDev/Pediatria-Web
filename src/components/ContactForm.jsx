@@ -189,17 +189,17 @@ export default function ContactForm({
   };
 
   const getInputClassName = (fieldName) => {
-    const baseClass = "w-full px-4 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-200";
+    const baseClass = "w-full px-4 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-100";
     
     if (touched[fieldName] && errors[fieldName]) {
-      return `${baseClass} border-red-300 bg-red-50 text-red-900 placeholder-red-400`;
+      return `${baseClass} border-red-200 bg-red-50/70 text-red-800 placeholder-red-400`;
     }
     
     if (touched[fieldName] && !errors[fieldName]) {
-      return `${baseClass} border-green-300 bg-green-50 text-green-900`;
+      return `${baseClass} border-green-200 bg-green-50/70 text-green-800`;
     }
     
-    return `${baseClass} border-gray-200 bg-white text-gray-900 placeholder-gray-400 hover:border-pink-300`;
+    return `${baseClass} border-gray-200 bg-white text-gray-900 placeholder-gray-400 hover:border-pink-200`;
   };
 
   const messageLength = formData.message.length;
@@ -225,13 +225,13 @@ export default function ContactForm({
 
     <div className="bg-white p-1 md:p-2">
       {submitStatus === 'success' && (
-        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-start gap-3 animate-fade-in">
+        <div className="mb-6 p-4 bg-green-50/70 border border-green-200 rounded-xl flex items-start gap-3 animate-fade-in">
           <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center shrink-0">
             <Icon name="check-lg" className="w-6 h-6 text-green-600" />
           </div>
 
           <div>
-            <p className="font-semibold text-green-800">¡Mensaje preparado!</p>
+            <p className="font-semibold text-green-700">¡Mensaje preparado!</p>
             <p className="text-sm text-green-600">{getSuccessMessage()}</p>
           </div>
         </div>
@@ -356,8 +356,8 @@ export default function ContactForm({
                 onClick={() => setFormData(prev => ({ ...prev, preferredContact: option.value }))}
                 className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 transition-all ${
                   formData.preferredContact === option.value
-                    ? 'border-pink-500 bg-pink-50 text-pink-700'
-                    : 'border-gray-200 bg-white text-gray-600 hover:border-pink-300'
+                    ? 'border-pink-300 bg-pink-50/70 text-pink-700'
+                    : 'border-gray-200 bg-white text-gray-600 hover:border-pink-200'
                 }`}
                 disabled={isSubmitting}
               >
@@ -388,7 +388,7 @@ export default function ContactForm({
           />
           <div className="flex items-center justify-between mt-2">
             {touched.message && errors.message ? (
-              <p className="text-sm text-red-600 flex items-center gap-1">
+              <p className="text-sm text-red-500 flex items-center gap-1">
                 <Icon name="exclamation-circle" className="w-4 h-4" />
                 {errors.message}
               </p>
@@ -399,7 +399,7 @@ export default function ContactForm({
               </span>
             )}
             <span className={`text-sm ${
-              messageLength > 900 ? 'text-orange-500' : 'text-gray-400'
+              messageLength > 900 ? 'text-amber-500' : 'text-gray-400'
             }`}>
               {messageLength}/1000
             </span>
@@ -408,8 +408,8 @@ export default function ContactForm({
           <div className="mt-2 h-1 bg-gray-200 rounded-full overflow-hidden">
             <div 
               className={`h-full transition-all duration-300 ${
-                messageLength < 20 ? 'bg-red-400' : 
-                messageLength < 100 ? 'bg-yellow-400' : 'bg-green-400'
+                messageLength < 20 ? 'bg-red-300' : 
+                messageLength < 100 ? 'bg-yellow-300' : 'bg-green-300'
               }`}
               style={{ width: `${messageProgress}%` }}
             ></div>
@@ -423,7 +423,7 @@ export default function ContactForm({
           className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center gap-2 ${
             isSubmitting 
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-              : 'bg-linear-to-r from-pink-500 to-pink-600 text-white hover:from-pink-600 hover:to-pink-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0'
+              : 'bg-linear-to-r from-pink-300 to-pink-400 text-white hover:from-pink-400 hover:to-pink-500 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0'
 
           }`}
         >

@@ -28,9 +28,9 @@ const mainTitle = words.join(' ');
 ---
 
 <section 
-  class={`relative overflow-hidden py-20 lg:py-28 bg-linear-to-br from-green-50 via-white to-green-50/30 border-b border-gray-100 transition-all duration-700 ${
+  class={`relative overflow-hidden py-20 lg:py-28 bg-linear-to-br from-teal-50 via-white to-teal-50/30 border-b border-gray-100 transition-all duration-700 ${
     backgroundImage ? 'bg-cover bg-center bg-fixed' : ''
-  }`} 
+  }`}
   style={backgroundImage ? `background-image: url(${backgroundImage});` : ''}
   role="banner"
   aria-labelledby="hero-title"
@@ -50,7 +50,7 @@ const mainTitle = words.join(' ');
       
       <div class="animate-fade-in-up space-y-6">
         <h1 id="hero-title" class="font-bold text-gray-900 leading-[1.05] mb-6 tracking-tight italic text-4xl md:text-5xl lg:text-6xl">
-          {mainTitle} <span class="text-pink-600 not-italic inline-block hover:scale-110 hover:text-yellow-500 transition-all duration-300 ease-out">{lastWord}</span>
+          {mainTitle} <span class="text-rose-400 not-italic inline-block hover:scale-110 hover:text-amber-300 transition-all duration-300 ease-out">{lastWord}</span>
         </h1>
 
         <p class="text-gray-600 mb-8 leading-relaxed font-medium text-balance text-lg md:text-xl max-w-2xl">
@@ -63,7 +63,7 @@ const mainTitle = words.join(' ');
               href={siteConfig.contact.whatsappUrl} 
               target="_blank"
               rel="noopener noreferrer"
-              class="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-linear-to-r from-green-500 to-blue-600 text-white font-bold rounded-2xl hover:from-green-600 hover:to-blue-700 hover:-translate-y-1 hover:scale-105 hover:shadow-xl transition-all duration-300 shadow-lg shadow-green-200 active:scale-95 text-base group focus:outline-none focus:ring-4 focus:ring-green-300" 
+              class="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-linear-to-r from-teal-200 to-purple-200 text-gray-800 font-bold rounded-2xl hover:from-teal-300 hover:to-purple-300 hover:-translate-y-1 hover:scale-105 hover:shadow-xl transition-all duration-300 shadow-lg shadow-teal-200 active:scale-95 text-base group focus:outline-none focus:ring-4 focus:ring-teal-300" 
               aria-label={`Reservar cita por WhatsApp - ${ctaText}`}
             >
               <i class="bi bi-whatsapp text-lg"></i>
@@ -73,7 +73,7 @@ const mainTitle = words.join(' ');
             
             <a 
               href="/servicios" 
-              class="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-white text-gray-700 font-bold rounded-2xl border-2 border-gray-200 hover:border-green-300 hover:bg-green-50 hover:scale-105 hover:shadow-lg transition-all duration-300 text-base shadow-sm focus:outline-none focus:ring-4 focus:ring-green-200" 
+              class="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-white text-gray-700 font-bold rounded-2xl border-2 border-gray-200 hover:border-teal-300 hover:bg-teal-50 hover:scale-105 hover:shadow-lg transition-all duration-300 text-base shadow-sm focus:outline-none focus:ring-4 focus:ring-teal-200" 
               aria-label={`Ver especialidades - ${secondaryCtaText}`}
             >
               {secondaryCtaText}
@@ -97,15 +97,15 @@ const mainTitle = words.join(' ');
             
             <!-- Iconos decorativos movidos dentro del contenedor de la imagen para asegurar que estén encima -->
             <div class="absolute top-10 right-10 z-20 animate-bounce-soft">
-              <i data-lucide="heart" class="w-8 h-8 text-yellow-400 drop-shadow-lg"></i>
+              <i data-lucide="heart" class="w-8 h-8 text-rose-300 drop-shadow-lg"></i>
             </div>
             <div class="absolute bottom-10 left-10 z-20 animate-bounce-soft delay-500">
-              <i data-lucide="star" class="w-6 h-6 text-blue-400 drop-shadow-lg"></i>
+              <i data-lucide="star" class="w-6 h-6 text-sky-300 drop-shadow-lg"></i>
             </div>
           </div>
 
           <!-- Elementos decorativos mejorados -->
-          <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-green-600 rounded-3xl -z-10 opacity-25 blur-xl animate-pulse-soft"></div>
+          <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-teal-400 rounded-3xl -z-10 opacity-25 blur-xl animate-pulse-soft"></div>
         </div>
       )}
     </div>
