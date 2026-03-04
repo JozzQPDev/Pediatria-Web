@@ -1,0 +1,165 @@
+---
+// Header para páginas legales - Versión simplificada y responsiva
+import { siteConfig } from "../../data/siteConfig";
+const pathname = new URL(Astro.request.url).pathname;
+
+// Determinar si estamos en una página activa
+const isPrivacidad = pathname === '/legales/privacidad';
+const isTerminos = pathname === '/legales/terminos';
+const isCookies = pathname === '/legales/cookies';
+const islegales = pathname === '/legales/aviso-legal';
+---
+
+<!-- Header Legal con menú responsivo -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4">
+    
+    <!-- Contenedor principal -->
+    <div class="flex items-center justify-between h-16 md:h-20">
+    
+      <!-- Logo (izquierda) -->
+      <a href="/" class="flex items-center gap-2 md:gap-3 group" aria-label="Volver al inicio">
+        <div class="p-1.5 md:p-2">
+          <img 
+            src="/images/logo-text.png" 
+            alt={`${siteConfig.name} logo`} 
+            class="h-8 md:h-10 w-auto object-contain"
+          >
+        </div>
+      </a>
+
+      <!-- Navegación de escritorio (derecha) -->
+      <nav class="hidden md:flex items-center gap-6 lg:gap-8" role="navigation" aria-label="Navegación legal">
+        <a 
+          href="/legales/aviso-legal" 
+          class={`text-sm font-semibold transition-colors duration-300 ${
+            islegales 
+              ? 'text-[#5086c1]' 
+              : 'text-gray-600 hover:text-[#5086c1]'
+          }`}
+        >
+          Aviso Legal
+        </a>
+        <a 
+          href="/legales/privacidad" 
+          class={`text-sm font-semibold transition-colors duration-300 ${
+            isPrivacidad 
+              ? 'text-[#5086c1]' 
+              : 'text-gray-600 hover:text-[#5086c1]'
+          }`}
+        >
+          Privacidad
+        </a>
+        <a 
+          href="/terminos" 
+          class={`text-sm font-semibold transition-colors duration-300 ${
+            isTerminos 
+              ? 'text-[#5086c1]' 
+              : 'text-gray-600 hover:text-[#5086c1]'
+          }`}
+        >
+          Términos
+        </a>
+        <a 
+          href="/legales/cookies" 
+          class={`text-sm font-semibold transition-colors duration-300 ${
+            isCookies 
+              ? 'text-[#5086c1]' 
+              : 'text-gray-600 hover:text-[#5086c1]'
+          }`}
+        >
+          Cookies
+        </a>
+        <a 
+          href="/legales/contacto" 
+          class="flex items-center gap-2 px-4 py-2 bg-[#5086c1] text-white text-sm font-semibold rounded-full hover:bg-[#3d6a9a] transition-colors duration-300"
+        >
+          <i class="bi bi-whatsapp text-lg" aria-hidden="true"></i>
+          Contacto
+        </a>
+      </nav>
+
+      <!-- Botón menú móvil -->
+      <button 
+        id="mobile-menu-btn" 
+        class="md:hidden p-2 text-gray-600 hover:text-[#5086c1] hover:bg-gray-50 rounded-lg transition-colors"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+
+    </div>
+
+    <!-- Menú móvil desplegable -->
+    <nav id="mobile-menu" class="hidden md:hidden border-t border-gray-100 py-4" role="navigation" aria-label="Navegación móvil">
+      <div class="flex flex-col gap-2">
+        <a 
+          href="/privacidad" 
+          class={`px-4 py-3 rounded-lg text-sm font-semibold transition-colors ${
+            isPrivacidad 
+              ? 'bg-[#5086c1]/10 text-[#5086c1]' 
+              : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          Política de Privacidad
+        </a>
+        <a 
+          href="/terminos" 
+          class={`px-4 py-3 rounded-lg text-sm font-semibold transition-colors ${
+            isTerminos 
+              ? 'bg-[#5086c1]/10 text-[#5086c1]' 
+              : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          Términos de Uso
+        </a>
+        <a 
+          href="/cookies" 
+          class={`px-4 py-3 rounded-lg text-sm font-semibold transition-colors ${
+            isCookies 
+              ? 'bg-[#5086c1]/10 text-[#5086c1]' 
+              : 'text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          Política de Cookies
+        </a>
+        <a 
+          href="/contacto" 
+          class="px-4 py-3 mt-2 bg-[#5086c1] text-white text-sm font-semibold rounded-lg text-center hover:bg-[#3d6a9a] transition-colors"
+        >
+          Contacto
+        </a>
+        <a 
+          href="/" 
+          class="px-4 py-3 text-sm text-gray-500 hover:text-[#5086c1] text-center transition-colors"
+        >
+          ← Volver al inicio
+        </a>
+      </div>
+    </nav>
+
+  </div>
+</header>
+
+<script is:inline>
+  // Toggle menú móvil
+  const menuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (menuBtn && mobileMenu) {
+    menuBtn.addEventListener('click', () => {
+      const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', !isExpanded);
+      mobileMenu.classList.toggle('hidden');
+    });
+  }
+
+  // Inicializar iconos
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
+</script>
+

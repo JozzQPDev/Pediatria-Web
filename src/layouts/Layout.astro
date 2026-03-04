@@ -2,8 +2,10 @@
 // Tu código de importaciones permanece igual
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import CookiesBanner from "../components/CookiesBanner.astro";
 import { siteConfig } from "../data/siteConfig";
 import "../styles/global.css";
+import "../styles/index.css";
 
 interface Props {
   title: string;
@@ -15,6 +17,7 @@ const { title, description = siteConfig.seo.description } = Astro.props;
 const fullTitle = `${title} - ${siteConfig.name}`;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
 ---
+
 
 <!doctype html>
 <html lang="es" class="scroll-smooth">
@@ -78,7 +81,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
   </head>
 
  <!-- Quitamos bg-white y ponemos fondo-nubes -->
-<body class=" text-gray-800 antialiased min-h-screen flex flex-col font-nunito overflow-x-hidden">
+  <body class="text-gray-800 antialiased min-h-screen flex flex-col font-nunito overflow-x-hidden">
     <!-- Skip link mejorado -->
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-green-500 text-white px-4 py-2 rounded-lg z-50 transition-all focus:ring-2 focus:ring-green-300" aria-label="Saltar al contenido principal">Saltar al contenido</a>
 
@@ -89,6 +92,9 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
     </main>
 
     <Footer />
+
+    <!-- Banner de Cookies -->
+    <CookiesBanner />
 
     <!-- Script para lazy loading global y micro-interacciones -->
     <script is:inline src="https://unpkg.com/lucide@latest"></script>

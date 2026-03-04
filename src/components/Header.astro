@@ -76,7 +76,7 @@ const currentPath = pathname.slice(1);
         </a>
 
         <nav class="hidden lg:flex items-center gap-12 text-[13px] font-bold uppercase tracking-widest text-gray-500" role="navigation">
-          
+
           <a href="/" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${pathname === "/" ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Inicio</a>
           <a href="/nosotros" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${currentPath.includes("nosotros") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Nosotros</a>
           
@@ -109,9 +109,9 @@ const currentPath = pathname.slice(1);
               </div>
             </div>
           </div>
-          
-          <a href="/" class="flex items-center px-6 transition-transform duration-300 hover:scale-105" aria-label="Ir a inicio">
-            <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-10 w-auto object-contain">
+                    
+          <a href="/" class="flex p-3 items-center px-4" aria-label="Ir a inicio">
+            <img src="/images/logo-text.png"  alt={`${siteConfig.name} logo`} class="h-10 w-full object-contain">
           </a>
 
           <a href="/equipo" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${currentPath.includes("equipo") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Equipo</a>

@@ -94,3 +94,49 @@
 .animate-bounce-soft {
   animation: bounce-soft 3s ease-in-out infinite;
 }
+
+
+.dr-quote2 {
+  position: relative;
+  background: url("/images/value-care.jpg") no-repeat center center fixed;
+  background-size: cover;
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  overflow: hidden;
+}
+
+.dr-quote2::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.65),
+    rgba(0, 0, 0, 0.65)
+  );
+}
+
+
+.quote-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+.dr-quote2 .quote {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.dr-quote2 .name {
+  font-size: 18px;
+  font-style: italic;
+  letter-spacing: 1px;
+  color: #e0f7f7;
+}

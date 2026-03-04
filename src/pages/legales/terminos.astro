@@ -1,0 +1,164 @@
+---
+import Layout_legales from '../../layouts/Layout_legales.astro';
+import { siteConfig } from "../../data/siteConfig";
+---
+
+<Layout_legales 
+  title="Términos de Uso"
+  description={`Términos y condiciones de uso del sitio web de ${siteConfig.name}.`}
+>
+  <div class="max-w-4xl mx-auto px-4 py-8 md:py-12 lg:py-16">
+    
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6 md:mb-8">
+      <a href="/" class="hover:text-[#5086c1] transition-colors">Inicio</a>
+      <span class="text-gray-300">/</span>
+      <span class="text-gray-700 font-medium">Términos</span>
+    </nav>
+
+    <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-6 md:mb-8">
+      Términos de Uso del Sitio Web
+    </h1>
+    
+    <div class="prose prose-lg max-w-none text-gray-700 space-y-6 md:space-y-8">
+      <p class="text-base md:text-lg">
+        Bienvenido al sitio web de <strong>{siteConfig.name}</strong>. Al acceder y utilizar este sitio, 
+        usted acepta regirse por los siguientes términos y condiciones. 
+        <strong>{siteConfig.name}</strong> es propiedad de <strong>{siteConfig.owner}</strong>.
+      </p>
+
+      <section class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">1. Aceptación de términos</h2>
+        <p class="text-sm md:text-base">
+          Al acceder a este sitio web, usted acepta estar sujeto a estos términos de uso, 
+          todas las leyes y regulaciones aplicables, y acepta que es responsable del cumplimiento 
+          de cualquier ley local aplicable.
+        </p>
+      </section>
+
+      <section class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">2. Uso autorizado</h2>
+        <p class="text-sm md:text-base">
+          Este sitio web tiene fines informativos y de contacto. Usted se compromete a:
+        </p>
+        <ul class="list-disc pl-4 md:pl-6 space-y-2 mt-4 text-sm md:text-base">
+          <li>No utilizar el sitio para fines ilegales</li>
+          <li>No intentar acceder a áreas restringidas del sistema</li>
+          <li>No interferir con el funcionamiento del sitio</li>
+          <li>No recopilar información de otros usuarios</li>
+          <li>No transmitir virus, malware u otro código malicioso</li>
+        </ul>
+      </section>
+
+      <section class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">3. Contenido del sitio</h2>
+        <p class="text-sm md:text-base">
+          El contenido de este sitio web es solo para fines informativos generales. 
+          El contenido no pretende sustituir el asesoramiento médico profesional, 
+          diagnóstico o tratamiento.
+        </p>
+      </section>
+
+      <section class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">4. Propiedad intelectual</h2>
+        <p class="text-sm md:text-base">
+          Todo el contenido de este sitio web, incluyendo pero no limitado a textos, gráficos, 
+          logotipos, imágenes, código y software, es propiedad de {siteConfig.name} 
+          o de sus respectivos propietarios y está protegido por las leyes de propiedad intelectual.
+        </p>
+        <p class="text-sm md:text-base mt-4">
+          <strong>Está prohibido:</strong>
+        </p>
+        <ul class="list-disc pl-4 md:pl-6 space-y-2 mt-2 text-sm md:text-base">
+          <li>Copiar, modificar o distribuir el contenido</li>
+          <li>Usar el contenido para fines comerciales</li>
+          <li>Eliminar avisos de derechos de autor</li>
+          <li>Transferir contenido a otra persona o entidad</li>
+        </ul>
+      </section>
+
+      <section class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">5. Links a terceros</h2>
+        <p class="text-sm md:text-base">
+          Este sitio puede contener enlaces a sitios web de terceros. Estos enlaces se proporcionan 
+          únicamente para su conveniencia. No tenemos control sobre el contenido de esos sitios 
+          y no somos responsables de su contenido o prácticas de privacidad.
+        </p>
+      </section>
+
+      <section class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">6. Exención de garantías</h2>
+        <p class="text-sm md:text-base">
+          Este sitio web se proporciona "tal cual" sin garantías de ningún tipo, expresas o implícitas. 
+          No garantizamos que el sitio sea preciso, completo, confiable o esté libre de errores.
+        </p>
+      </section>
+
+      <section class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">7. Limitación de responsabilidad</h2>
+        <p class="text-sm md:text-base">
+          {siteConfig.name} no será responsable por ningún daño directo, indirecto, incidental, 
+          especial o consecuente derivado del uso o la imposibilidad de usar este sitio web.
+        </p>
+      </section>
+
+      <section class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">8. Modificaciones</h2>
+        <p class="text-sm md:text-base">
+          Nos reservamos el derecho de modificar estos términos en cualquier momento. 
+          Los cambios entrarán en vigor inmediatamente después de su publicación en el sitio.
+        </p>
+      </section>
+
+      <section class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">9. Ley aplicable</h2>
+        <p class="text-sm md:text-base">
+          Estos términos se rigen por las leyes de la República del Perú. 
+          Cualquier disputa derivada del uso de este sitio será resuelta en los tribunales 
+          de la ciudad de Huamanga, Ayacucho.
+        </p>
+      </section>
+
+      <section class="bg-white p-4 md:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">10. Contacto</h2>
+        <p class="text-sm md:text-base">
+          Si tiene preguntas sobre estos términos de uso, puede contactarnos en:
+        </p>
+        <ul class="list-none pl-0 space-y-3 mt-4 text-sm md:text-base">
+          <li class="flex items-center gap-2">
+            <i data-lucide="mail" class="w-4 h-4 text-[#5086c1]"></i>
+            <strong>Email:</strong> {siteConfig.contact.email}
+          </li>
+          <li class="flex items-center gap-2">
+            <i data-lucide="phone" class="w-4 h-4 text-[#5086c1]"></i>
+            <strong>Teléfono:</strong> {siteConfig.contact.phone}
+          </li>
+        </ul>
+      </section>
+
+      <section class="bg-gray-50 p-4 md:p-6 rounded-xl border border-gray-200">
+        <p class="text-xs md:text-sm text-gray-500">
+          Última actualización: {new Date().toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </p>
+      </section>
+    </div>
+
+    <!-- Botón de volver -->
+    <div class="mt-8 md:mt-12 flex justify-center">
+      <a 
+        href="/" 
+        class="inline-flex items-center gap-2 px-6 py-3 bg-[#5086c1] text-white font-semibold rounded-full hover:bg-[#3d6a9a] transition-colors"
+      >
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        Volver al inicio
+      </a>
+    </div>
+  </div>
+</Layout_legales>
+
+<script is:inline>
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
+</script>
+

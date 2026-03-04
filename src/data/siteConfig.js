@@ -1,11 +1,15 @@
 const whatsappNumber = "51997307782"; // Número de WhatsApp con código de país (Perú: +51)
 const clinicName = "Clínica Pediátrica";
 
+// Información del propietario
+const ownerName = "Dharma"; // Nombre del propietario
+
 export const siteConfig = {
   // Información Básica
   name: clinicName,
+  owner: ownerName, // Propietario del sitio
   tagline: "Especialistas en la salud y bienestar de tus hijos en Ayacucho",
-  siteUrl: "https://clinicapediatrica.com", // Añadí esto: URL base de tu sitio
+  siteUrl: "https://clinicapediatrica.com", // URL base de tu sitio
 
   // Contacto Directo
   contact: {

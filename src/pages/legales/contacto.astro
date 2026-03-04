@@ -1,0 +1,145 @@
+---
+import Layout_legales from '../../layouts/Layout_legales.astro';
+import { siteConfig } from "../../data/siteConfig";
+import ContactFormLegal from '../../components/ContactFormLegal';
+---
+
+<Layout_legales 
+  title="Contacto Legal"
+  description={`Formulario de contacto para asuntos legales de ${siteConfig.name}. Consulte sobre términos legales, privacidad y políticas.`}
+>
+  <div class="max-w-4xl mx-auto px-4 py-8 md:py-12 lg:py-16">
+    
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6 md:mb-8">
+      <a href="/" class="hover:text-[#5086c1] transition-colors">Inicio</a>
+      <span class="text-gray-300">/</span>
+      <span class="text-gray-700 font-medium">Contacto Legal</span>
+    </nav>
+
+    <h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+      Contacto para Asuntos Legales
+    </h1>
+    
+    <p class="text-base md:text-lg text-gray-600 mb-8 md:mb-10">
+      Utilice este formulario para consultas relacionadas con aspectos legales de nuestro sitio web, 
+      incluyendo avisos legales, política de privacidad, términos de uso o uso de cookies.
+    </p>
+
+    <!-- Información de contacto -->
+    <div class="grid md:grid-cols-2 gap-6 mb-10">
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 bg-[#5086c1]/10 rounded-full flex items-center justify-center shrink-0">
+            <i data-lucide="mail" class="w-6 h-6 text-[#5086c1]"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">Correo electrónico</h3>
+            <p class="text-gray-600 text-sm">{siteConfig.contact.email}</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <div class="flex items-start gap-4">
+          <div class="w-12 h-12 bg-[#5086c1]/10 rounded-full flex items-center justify-center shrink-0">
+            <i data-lucide="phone" class="w-6 h-6 text-[#5086c1]"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-1">Teléfono</h3>
+            <p class="text-gray-600 text-sm">{siteConfig.contact.phone}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulario de contacto legal -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="p-6 md:p-8 border-b border-gray-100">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-3">
+          <i data-lucide="file-text" class="w-6 h-6 text-[#5086c1]"></i>
+          Formulario de Consulta Legal
+        </h2>
+        <p class="text-gray-600 mt-2 text-sm">
+          Por favor, complete el siguiente formulario indicando el tipo de consulta legal que desea realizar.
+        </p>
+      </div>
+      
+      <div class="p-6 md:p-8">
+        <ContactFormLegal 
+          client:load
+          email={siteConfig.contact.email}
+          whatsappNumber={siteConfig.contact.whatsapp}
+        />
+      </div>
+    </div>
+
+    <!-- Información adicional -->
+    <div class="mt-8 bg-gray-50 p-6 rounded-xl border border-gray-200">
+      <h3 class="font-bold text-gray-900 mb-3 flex items-center gap-2">
+        <i data-lucide="info" class="w-5 h-5 text-[#5086c1]"></i>
+        Información importante
+      </h3>
+      <ul class="space-y-2 text-sm text-gray-600">
+        <li class="flex items-start gap-2">
+          <i data-lucide="check" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i>
+          <span>Responderemos a su consulta en un plazo de 48 horas hábiles.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <i data-lucide="check" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i>
+          <span>Por favor, proporcione información detallada para asuntos legales.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <i data-lucide="check" class="w-4 h-4 text-green-500 mt-0.5 shrink-0"></i>
+          <span>Para consultas médicas, por favor utilize nuestro <a href="/contacto" class="text-[#5086c1] hover:underline">formulario de contacto general</a>.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Enlaces rápidos -->
+    <div class="mt-8 flex flex-wrap gap-3 justify-center">
+      <a 
+        href="/legales/aviso-legal" 
+        class="px-4 py-2 text-sm text-gray-600 hover:text-[#5086c1] hover:bg-[#5086c1]/5 rounded-lg transition-colors"
+      >
+        Aviso Legal
+      </a>
+      <a 
+        href="/legales/privacidad" 
+        class="px-4 py-2 text-sm text-gray-600 hover:text-[#5086c1] hover:bg-[#5086c1]/5 rounded-lg transition-colors"
+      >
+        Política de Privacidad
+      </a>
+      <a 
+        href="/legales/terminos" 
+        class="px-4 py-2 text-sm text-gray-600 hover:text-[#5086c1] hover:bg-[#5086c1]/5 rounded-lg transition-colors"
+      >
+        Términos de Uso
+      </a>
+      <a 
+        href="/legales/cookies" 
+        class="px-4 py-2 text-sm text-gray-600 hover:text-[#5086c1] hover:bg-[#5086c1]/5 rounded-lg transition-colors"
+      >
+        Política de Cookies
+      </a>
+    </div>
+
+    <!-- Botón de volver -->
+    <div class="mt-8 flex justify-center">
+      <a 
+        href="/" 
+        class="inline-flex items-center gap-2 px-6 py-3 bg-[#5086c1] text-white font-semibold rounded-full hover:bg-[#3d6a9a] transition-colors"
+      >
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        Volver al inicio
+      </a>
+    </div>
+  </div>
+</Layout_legales>
+
+<script is:inline>
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
+</script>
+

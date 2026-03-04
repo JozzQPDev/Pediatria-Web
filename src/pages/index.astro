@@ -2,7 +2,7 @@
 // Tu código de importaciones permanece igual
 import Layout from "../layouts/Layout.astro";
 import { siteConfig } from "../data/siteConfig";
-import Welcome from "../components/Welcome.astro"; // Corregido: 'Modal' a 'Welcome'
+//import Welcome from "../components/Welcome.astro"; // Corregido: 'Modal' a 'Welcome'
 import TestimonialsCarousel from "../components/TestimonialsCarousel.jsx";
 
 
@@ -145,7 +145,7 @@ const galleryImages = [
 ---
 
 <Layout title={`Inicio`} description={`Bienvenido a nuestra clínica pediátrica en ${siteConfig.location.city}, donde la salud y el bienestar de tus hijos son nuestra prioridad. Descubre un entorno seguro, moderno y acogedor diseñado para brindar atención médica integral a los más pequeños de la casa. Con especialistas certificados, tecnología avanzada y un enfoque humano, ofrecemos servicios que acompañan cada etapa del crecimiento infantil. Tu tranquilidad comienza aquí, en un lugar donde cada sonrisa cuenta.`}>
-   <Welcome /> <!-- Removido client:load para evitar problemas de hidratación -->
+  <!-- <Welcome />  Removido client:load para evitar problemas de hidratación -->
 <section id="hero-parallax" class="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-slate-900 -mt-16 sm:-mt-20">
   
   <div class="absolute inset-0 z-0" id="carousel-bg">
@@ -232,9 +232,10 @@ const galleryImages = [
           </div>
 
           <p class="text-gray-500 max-w-sm font-medium leading-relaxed text-sm md:text-base">
-            Especialidades médicas diseñadas para acompañar cada etapa del
-            crecimiento de tus hijos.
-          </p>
+            Especialidades médicas diseñadas para acompañar cada etapa del crecimiento de tus hijos, desde sus primeros 
+            meses de vida hasta la adolescencia, brindando atención integral, preventiva y personalizada que protege su 
+            salud, fortalece su desarrollo físico y emocional, y ofrece tranquilidad y confianza a toda la familia.
+         </p>
 
         </div>
 
@@ -345,6 +346,16 @@ const galleryImages = [
         </div>
       </div>
     </section>
+
+    <section class="dr-quote2"> 
+      <div class="quote-content animate-on-scroll animate-scale-in">
+        <h2 class="quote">
+          "Brindamos atención pediátrica especializada, enfocada en prevenir, cuidar y fortalecer la salud integral de cada niño."
+        </h2>
+        <p class="name">— Pediatrica</p>
+      </div>
+    </section>
+
 
     <section class="py-28 px-8 bg-white">
       <TestimonialsCarousel 
