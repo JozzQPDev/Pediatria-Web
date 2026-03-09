@@ -21,34 +21,8 @@
 }
 
 /* === ESTILOS PARA SERVICIOS === */
-.group::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
-  transform: skewX(-25deg);
-  transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.group:hover::after {
-  left: 125%;
-}
-
-.group:hover [data-lucide] {
-  animation: floating-icon 2s ease-in-out infinite;
-}
-
-@keyframes floating-icon {
-  0%, 100% {
-    transform: translateY(0) scale(1.1);
-  }
-  50% {
-    transform: translateY(-8px) scale(1.1);
-  }
-}
+/* Eliminados: los estilos .group genéricos causaban efectos no deseados en toda la página */
+/* Los efectos de hover ya están manejados con clases de Tailwind en el HTML */
 
 /* === ESTILOS PARA TESTIMONIOS === */
 #testimonials-container:hover {

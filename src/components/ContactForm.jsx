@@ -189,17 +189,17 @@ export default function ContactForm({
   };
 
   const getInputClassName = (fieldName) => {
-    const baseClass = "w-full px-4 py-3 rounded-xl border-2 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-100";
+    const baseClass = "w-full px-4 py-3 rounded-lg border border-gray-200 transition-colors focus:outline-none focus:border-pink-300 focus:ring-1 focus:ring-pink-100";
     
     if (touched[fieldName] && errors[fieldName]) {
-      return `${baseClass} border-red-200 bg-red-50/70 text-red-800 placeholder-red-400`;
+      return `${baseClass} border-red-300 bg-white text-red-800 placeholder-red-400`;
     }
     
     if (touched[fieldName] && !errors[fieldName]) {
-      return `${baseClass} border-green-200 bg-green-50/70 text-green-800`;
+      return `${baseClass} border-green-300 bg-white text-green-800`;
     }
     
-    return `${baseClass} border-gray-200 bg-white text-gray-900 placeholder-gray-400 hover:border-pink-200`;
+    return `${baseClass} border-gray-200 bg-white text-gray-900 placeholder-gray-400`;
   };
 
   const messageLength = formData.message.length;
@@ -340,10 +340,10 @@ export default function ContactForm({
 
         {/* Preferred Contact Method */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-3">
+          <label className="block text-sm font-medium text-gray-700 mb-3">
             ¿Cómo prefieres que te contactemos?
           </label>
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             {[
               { value: 'whatsapp', label: 'WhatsApp', icon: 'whatsapp' },
               { value: 'phone', label: 'Llamada', icon: 'telephone' },
@@ -354,16 +354,16 @@ export default function ContactForm({
                 key={option.value}
                 type="button"
                 onClick={() => setFormData(prev => ({ ...prev, preferredContact: option.value }))}
-                className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 transition-all ${
+                className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg border transition-colors ${
                   formData.preferredContact === option.value
-                    ? 'border-pink-300 bg-pink-50/70 text-pink-700'
-                    : 'border-gray-200 bg-white text-gray-600 hover:border-pink-200'
+                    ? 'border-pink-300 bg-pink-50 text-pink-700'
+                    : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300'
                 }`}
                 disabled={isSubmitting}
               >
-                <Icon name={option.icon} className="w-5 h-5" />
+                <Icon name={option.icon} className="w-4 h-4" />
 
-                <span className="text-sm font-medium">{option.label}</span>
+                <span className="text-sm">{option.label}</span>
               </button>
             ))}
           </div>
@@ -420,26 +420,24 @@ export default function ContactForm({
         <button
           type="submit"
           disabled={isSubmitting}
-          className={`w-full py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center gap-2 ${
+          className={`w-full py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 ${
             isSubmitting 
-              ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-              : 'bg-linear-to-r from-pink-300 to-pink-400 text-white hover:from-pink-400 hover:to-pink-500 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0'
-
+              ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
+              : 'bg-pink-500 text-white hover:bg-pink-600'
           }`}
         >
           {isSubmitting ? (
             <>
-              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              Preparando mensaje...
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              Enviando...
             </>
           ) : (
             <>
-              <Icon name="send" className="w-5 h-5" />
+              <Icon name="send" className="w-4 h-4" />
               {formData.preferredContact === 'whatsapp' ? 'Enviar por WhatsApp' : 
                formData.preferredContact === 'email' ? 'Enviar por Email' : 'Solicitar llamada'}
             </>
           )}
-
         </button>
         
         {/* Helper text */}

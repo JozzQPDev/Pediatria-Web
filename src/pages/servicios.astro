@@ -50,7 +50,8 @@ const colorClasses = {
 } as const;
 
 const getColors = (color?: string) =>
-  colorClasses[(color ?? "blue") as keyof typeof colorClasses] ?? colorClasses.blue;
+  colorClasses[(color ?? "blue") as keyof typeof colorClasses] ??
+  colorClasses.blue;
 ---
 
 <Layout
@@ -62,7 +63,7 @@ const getColors = (color?: string) =>
     subtitle="Especialidades pediátricas con tecnología, experiencia y calidez humana."
     sideImage="/img/hero-servicios.jpg"
   />
- <main class="main-section">
+  <main class="main-section">
     <span class="cloud cloud--1" aria-hidden="true"></span>
     <span class="cloud cloud--2" aria-hidden="true"></span>
     <span class="cloud cloud--3" aria-hidden="true"></span>
@@ -75,225 +76,290 @@ const getColors = (color?: string) =>
     <span class="cloud cloud--10" aria-hidden="true"></span>
     <span class="cloud cloud--11" aria-hidden="true"></span>
     <span class="cloud cloud--12" aria-hidden="true"></span>
-     <section class="py-16 bg-white" aria-label="Listado de especialidades médicas">
-    <div class="max-w-7xl mx-auto px-4">
-      <header class="text-center mb-12 reveal">
-        <span
-          class="inline-flex items-center gap-2 text-purple-600 font-bold uppercase tracking-[0.3em] text-[11px] bg-purple-50 px-4 py-2 rounded-full"
-          >Nuestras Especialidades</span
-        >
+    <section
+      class="py-16 bg-white"
+      aria-label="Listado de especialidades médicas"
+    >
+      <div class="max-w-7xl mx-auto px-4">
+        <header class="text-center mb-12 reveal">
+          <span
+            class="inline-flex items-center gap-2 text-purple-600 font-bold uppercase tracking-[0.3em] text-[11px] bg-purple-50 px-4 py-2 rounded-full"
+            >Nuestras Especialidades</span
+          >
 
-        <h2 class="mt-6 text-4xl md:text-6xl font-bold text-gray-900 leading-tight italic">
-          Atención clara, cercana <br />
-          <span class="text-purple-400 not-italic">y orientada a tu familia</span>
-        </h2>
-        <p class="mt-5 text-gray-600 max-w-2xl mx-auto leading-relaxed">
-          Conoce cada especialidad con información práctica y directa para tomar la mejor decisión y agendar tu cita en minutos.
-        </p>
-      </header>
-
-      <div class="space-y-10">
-        {services.map((s, index) => {
-          const colors = getColors(s.color);
-          const reverse = index % 2 !== 0;
-
-          return (
-            <article
-              class={`relative overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-shadow duration-500 rounded-3xl reveal stagger-${index + 1}`}
-              aria-labelledby={`servicio-titulo-${index}`}
+          <h2
+            class="mt-6 text-4xl md:text-6xl font-bold text-gray-900 leading-tight tracking-tight"
+          >
+            Atención clara, cercana <br />
+            <span class="text-purple-400 not-italic"
+              >y orientada a tu familia</span
             >
-              <div
-                class={`absolute inset-x-0 top-0 h-1 bg-linear-to-r ${colors.gradient}`}
-                aria-hidden="true"
-              ></div>
+          </h2>
+          <p class="mt-5 text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            Conoce cada especialidad con información práctica y directa para
+            tomar la mejor decisión y agendar tu cita en minutos.
+          </p>
+        </header>
 
+        <div class="space-y-10">
+          {
+            services.map((s, index) => {
+              const colors = getColors(s.color);
+              const reverse = index % 2 !== 0;
 
-
-              <div
-                class={`grid lg:grid-cols-12 gap-5 ${
-                  reverse
-                    ? "lg:[&_.media]:order-1 lg:[&_.content]:order-2"
-                    : "lg:[&_.media]:order-2 lg:[&_.content]:order-1"
-                }`}
-              >
-                <div class="media lg:col-span-5 relative min-h-85 lg:min-h-full" aria-hidden="true">
-                  <img
-                    src={s.image}
-                    alt={`Imagen representativa de ${s.title}`}
-                    class="absolute inset-0 w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-
-                <div class="content lg:col-span-7 p-7 sm:p-10">
-                  <div class="flex items-center gap-3 mb-5">
-                    <span
-                      class={`w-12 h-12 rounded-2xl ${colors.bgLight} ${colors.text} flex items-center justify-center`}
+              return (
+                <article
+                  class={`relative overflow-hidden bg-white/80 backdrop-blur-xl border border-white/40 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 rounded-3xl reveal stagger-${index + 1}`}
+                  aria-labelledby={`servicio-titulo-${index}`}
+                >
+                  <div class="absolute -top-20 -right-20 w-60 h-60 bg-blue-200/30 rounded-full blur-3xl opacity-40" />
+                  <div
+                    class={`grid lg:grid-cols-12 gap-5 ${
+                      reverse
+                        ? "lg:[&_.media]:order-1 lg:[&_.content]:order-2"
+                        : "lg:[&_.media]:order-2 lg:[&_.content]:order-1"
+                    }`}
+                  >
+                    <div
+                      class="media lg:col-span-5 relative min-h-85 lg:min-h-full"
                       aria-hidden="true"
                     >
-                      <i data-lucide={s.icon} class="w-6 h-6"></i>
-                    </span>
+                      <img
+                        src={s.image}
+                        alt={`Imagen representativa de ${s.title}`}
+                        class="absolute inset-0 w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </div>
 
-                    <div>
-                      <p
-                        class="text-xs font-extrabold tracking-wider uppercase text-gray-500"
-                        id={`servicio-categoria-${index}`}
-                      >
-                        {s.category || "Especialidad"}
+                    <div class="content lg:col-span-7 p-7 sm:p-10">
+                      <div class="flex items-center gap-3 mb-5">
+                        <span
+                          class={`w-12 h-12 rounded-2xl ${colors.bgLight} ${colors.text} flex items-center justify-center`}
+                          aria-hidden="true"
+                        >
+                          <i data-lucide={s.icon} class="w-6 h-6" />
+                        </span>
+
+                        <div>
+                          <p
+                            class="text-xs font-extrabold tracking-wider uppercase text-gray-500"
+                            id={`servicio-categoria-${index}`}
+                          >
+                            {s.category || "Especialidad"}
+                          </p>
+                          <h3
+                            id={`servicio-titulo-${index}`}
+                            class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight"
+                          >
+                            {s.title}
+                          </h3>
+                        </div>
+                      </div>
+
+                      <p class="text-gray-600 leading-relaxed first-letter:text-3xl first-letter:font-bold first-letter:mr-1">
+                        {s.shortDesc}
                       </p>
-                      <h3
-                        id={`servicio-titulo-${index}`}
-                        class="text-2xl sm:text-3xl font-bold text-gray-900 leading-tight"
+
+                      <div
+                        class="mt-6 flex flex-wrap gap-3"
+                        aria-label="Información adicional del servicio"
                       >
-                        {s.title}
-                      </h3>
+                        {s.duration && (
+                          <span
+                            class={`inline-flex items-center gap-2 ${colors.bgLight} px-4 py-2 rounded-2xl`}
+                          >
+                            <i
+                              data-lucide="clock"
+                              class={`w-4 h-4 ${colors.text}`}
+                              aria-hidden="true"
+                            />
+                            <span class="text-sm font-medium text-gray-700">
+                              {s.duration}
+                            </span>
+                          </span>
+                        )}
+
+                        {s.schedule && (
+                          <span
+                            class={`inline-flex items-center gap-2 ${colors.bgLight} px-4 py-2 rounded-2xl`}
+                          >
+                            <i
+                              data-lucide="calendar"
+                              class={`w-4 h-4 ${colors.text}`}
+                              aria-hidden="true"
+                            />
+                            <span class="text-sm font-medium text-gray-700">
+                              {s.schedule}
+                            </span>
+                          </span>
+                        )}
+
+                        {s.doctor && (
+                          <span
+                            class={`inline-flex items-center gap-2 ${colors.bgLight} px-4 py-2 rounded-2xl`}
+                          >
+                            <i
+                              data-lucide="user"
+                              class={`w-4 h-4 ${colors.text}`}
+                              aria-hidden="true"
+                            />
+                            <span class="text-sm font-medium text-gray-700">
+                              {s.doctor}
+                            </span>
+                          </span>
+                        )}
+                      </div>
+
+                      <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                        <a
+                          href={`/servicios/${s.slug}`}
+                          class={`inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-white ${
+                            colors.bg
+                          } hover:opacity-90 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
+                            colors.ring
+                          }`}
+                          aria-label={`Ver detalles de ${s.title}`}
+                        >
+                          Ver detalles
+                          <i
+                            data-lucide="arrow-right"
+                            class="w-4 h-4"
+                            aria-hidden="true"
+                          />
+                        </a>
+
+                        <a
+                          href="/reserva"
+                          class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-bold text-gray-400 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-300"
+                          aria-label={`Agendar ${s.title} por WhatsApp`}
+                        >
+                          <i
+                            class="bi bi-whatsapp text-lg"
+                            aria-hidden="true"
+                          />
+                          Agendar
+                        </a>
+                      </div>
                     </div>
                   </div>
-
-                  <p class="text-gray-600 leading-relaxed first-letter:text-3xl first-letter:font-bold first-letter:mr-1">
-                    {s.shortDesc}
-                  </p>
-
-                  <div class="mt-6 flex flex-wrap gap-3" aria-label="Información adicional del servicio">
-                    {s.duration && (
-                      <span
-                        class={`inline-flex items-center gap-2 ${colors.bgLight} px-4 py-2 rounded-2xl`}
-                      >
-                        <i data-lucide="clock" class={`w-4 h-4 ${colors.text}`} aria-hidden="true"></i>
-                        <span class="text-sm font-medium text-gray-700">{s.duration}</span>
-                      </span>
-                    )}
-
-                    {s.schedule && (
-                      <span
-                        class={`inline-flex items-center gap-2 ${colors.bgLight} px-4 py-2 rounded-2xl`}
-                      >
-                        <i data-lucide="calendar" class={`w-4 h-4 ${colors.text}`} aria-hidden="true"></i>
-                        <span class="text-sm font-medium text-gray-700">{s.schedule}</span>
-                      </span>
-                    )}
-
-                    {s.doctor && (
-                      <span
-                        class={`inline-flex items-center gap-2 ${colors.bgLight} px-4 py-2 rounded-2xl`}
-                      >
-                        <i data-lucide="user" class={`w-4 h-4 ${colors.text}`} aria-hidden="true"></i>
-                        <span class="text-sm font-medium text-gray-700">{s.doctor}</span>
-                      </span>
-                    )}
-                  </div>
-
-                  <div class="mt-8 flex flex-col sm:flex-row gap-3">
-                    <a
-                      href={`/servicios/${s.slug}`}
-                      class={`inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-2xl font-bold text-white ${
-                        colors.bg
-                      } hover:opacity-90 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
-                        colors.ring
-                      }`}
-                      aria-label={`Ver detalles de ${s.title}`}
-                    >
-                      Ver detalles
-                      <i data-lucide="arrow-right" class="w-4 h-4" aria-hidden="true"></i>
-                    </a>
-
-                    <a
-                      href={siteConfig.contact.whatsappUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-bold text-gray-400 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-green-300"
-                      aria-label={`Agendar ${s.title} por WhatsApp`}
-                    >
-                      <i class="bi bi-whatsapp text-lg" aria-hidden="true"></i>
-                      Agendar
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="py-16 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="relative overflow-hidden rounded-3xl shadow-2xl reveal">
-        <div class="absolute inset-0">
-          <img
-            src="/img/hero-servicios.jpg"
-            alt=""
-            class="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
-          />
-          <div class="absolute inset-0 bg-linear-to-br from-green-300/80 to-blue-300/80"></div>
-
-
+                </article>
+              );
+            })
+          }
         </div>
+      </div>
+    </section>
 
-        <div class="relative z-10 px-6 py-14 sm:px-10 lg:px-20 text-center text-white">
-          <span class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em]">
-            <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-200 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+    <!-- CTA -->
+    <section class="py-16 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="relative overflow-hidden rounded-3xl shadow-2xl reveal">
+          <div class="absolute inset-0">
+            <img
+              src="/img/hero-servicios.jpg"
+              alt=""
+              class="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+                <div class="absolute inset-0 bg-black/30"></div>
+          </div>
+
+          <div
+            class="relative z-10 px-6 py-14 sm:px-10 lg:px-20 text-center text-white"
+          >
+            <span
+              class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-4 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em]"
+            >
+              <span class="relative flex h-2 w-2">
+                <span
+                  class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-200 opacity-75"
+                ></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-white"
+                ></span>
+              </span>
+              Agenda tu visita hoy
             </span>
-            Agenda tu visita hoy
-          </span>
 
-          <h2 class="mt-6 text-4xl lg:text-6xl font-bold leading-[1.1] tracking-tight italic">
-            Tu tranquilidad comienza <br />
-            <span class="not-italic text-yellow-100 font-bold">con una cita médica</span>
-          </h2>
-
-          <p class="mt-6 text-white/90 text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed font-medium">
-            Nuestros especialistas están listos para recibirte. Agenda por WhatsApp y recibe atención prioritaria.
-          </p>
-
-          <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href={siteConfig.contact.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center justify-center gap-3 bg-white text-green-600 px-8 py-4 rounded-2xl font-bold hover:bg-green-50 hover:scale-105 transition-all shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-green-600"
-              aria-label="Reservar cita por WhatsApp"
+            <h2
+              class="mt-6 text-4xl lg:text-6xl font-bold leading-[1.1] tracking-tight italic"
             >
-              <i class="bi bi-whatsapp text-xl" aria-hidden="true"></i>
-              Agendar por WhatsApp
-            </a>
+              Tu tranquilidad comienza <br />
+              <span class="not-italic text-yellow-100 font-bold"
+                >con una cita médica</span
+              >
+            </h2>
 
-            <a
-              href="/contacto"
-              class="inline-flex items-center justify-center gap-3 bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/30 transition-all border border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-blue-400"
-              aria-label="Ver ubicación"
+            <p
+              class="mt-6 text-white/90 text-lg lg:text-xl max-w-3xl mx-auto leading-relaxed font-medium"
             >
-              <i data-lucide="map-pin" class="w-5 h-5" aria-hidden="true"></i>
-              Ver ubicación
-            </a>
-          </div>
+              Nuestros especialistas están listos para recibirte. Agenda por
+              WhatsApp y recibe atención prioritaria.
+            </p>
 
-          <div class="pointer-events-none absolute top-8 right-8 animate-bounce-soft">
-            <i data-lucide="heart" class="w-10 h-10 text-yellow-200" aria-hidden="true"></i>
-          </div>
-          <div class="pointer-events-none absolute bottom-8 left-8 animate-bounce-soft animation-delay-500">
-            <i data-lucide="star" class="w-8 h-8 text-yellow-200" aria-hidden="true"></i>
-          </div>
+            <div
+              class="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
+            >
+              <a
+                href="/reserva"
+                class="inline-flex items-center justify-center gap-3 bg-white text-green-600 px-8 py-4 rounded-2xl font-bold hover:bg-green-50 hover:scale-105 transition-all shadow-xl active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-green-600"
+                aria-label="Reservar cita por WhatsApp"
+              >
+                <i class="bi bi-whatsapp text-xl" aria-hidden="true"></i>
+                Agendar por WhatsApp
+              </a>
 
-          <div class="pointer-events-none absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl opacity-60"></div>
-          <div class="pointer-events-none absolute bottom-0 left-0 w-80 h-80 bg-black/10 rounded-full -ml-20 -mb-20 blur-2xl opacity-40"></div>
+              <a
+                href="/contacto"
+                class="inline-flex items-center justify-center gap-3 bg-white/20 backdrop-blur-md text-white px-8 py-4 rounded-2xl font-bold hover:bg-white/30 transition-all border border-white/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-blue-400"
+                aria-label="Ver ubicación"
+              >
+                <i data-lucide="map-pin" class="w-5 h-5" aria-hidden="true"></i>
+                Ver ubicación
+              </a>
+            </div>
+
+            <div
+              class="pointer-events-none absolute top-8 right-8 animate-bounce-soft"
+            >
+              <i
+                data-lucide="heart"
+                class="w-10 h-10 text-yellow-200"
+                aria-hidden="true"></i>
+            </div>
+            <div
+              class="pointer-events-none absolute bottom-8 left-8 animate-bounce-soft animation-delay-500"
+            >
+              <i
+                data-lucide="star"
+                class="w-8 h-8 text-yellow-200"
+                aria-hidden="true"></i>
+            </div>
+
+            <div
+              class="pointer-events-none absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -mr-32 -mt-32 blur-3xl opacity-60"
+            >
+            </div>
+            <div
+              class="pointer-events-none absolute bottom-0 left-0 w-80 h-80 bg-black/10 rounded-full -ml-20 -mb-20 blur-2xl opacity-40"
+            >
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
- </main>
+    </section>
+  </main>
 </Layout>
 
 <style>
   @keyframes bounce-soft {
-    0%, 20%, 50%, 80%, 100% {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
       transform: translateY(0);
     }
     40% {
@@ -321,19 +387,21 @@ const getColors = (color?: string) =>
 </style>
 
 <script>
-  const observerOptions = { root: null, rootMargin: '0px', threshold: 0.12 };
+  const observerOptions = { root: null, rootMargin: "0px", threshold: 0.12 };
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('active');
+        entry.target.classList.add("active");
         observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
-    revealElements.forEach(el => observer.observe(el));
+  document.addEventListener("DOMContentLoaded", () => {
+    const revealElements = document.querySelectorAll(
+      ".reveal, .reveal-left, .reveal-right, .reveal-scale",
+    );
+    revealElements.forEach((el) => observer.observe(el));
   });
 </script>

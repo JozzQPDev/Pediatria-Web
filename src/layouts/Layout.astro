@@ -18,7 +18,6 @@ const fullTitle = `${title} - ${siteConfig.name}`;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
 ---
 
-
 <!doctype html>
 <html lang="es" class="scroll-smooth">
   <head>
@@ -41,32 +40,31 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
     <meta property="og:description" content={description} />
     <meta property="og:image" content={siteConfig.seo.ogImage} />
     <meta property="og:url" content={canonicalUrl} />
-    
 
     <!-- Schema Markup para clínicas pediátricas -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "MedicalBusiness",
-      "name": siteConfig.name,
-      "description": siteConfig.tagline,
-      "url": siteConfig.siteUrl,
-      "telephone": siteConfig.contact.phone,
-      "email": siteConfig.contact.email,
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": siteConfig.location.address,
-        "addressLocality": siteConfig.location.city,
-        "addressRegion": siteConfig.location.district,
-        "postalCode": "00000", // Añade si tienes
-        "addressCountry": siteConfig.location.country
-      },
-      "openingHours": [
-        "Mo-Fr 08:00-20:00",
-        "Sa 09:00-14:00"
-      ],
-      "medicalSpecialty": "Pediatrics",
-      "image": siteConfig.seo.ogImage
-    })} />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "MedicalBusiness",
+        name: siteConfig.name,
+        description: siteConfig.tagline,
+        url: siteConfig.siteUrl,
+        telephone: siteConfig.contact.phone,
+        email: siteConfig.contact.email,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: siteConfig.location.address,
+          addressLocality: siteConfig.location.city,
+          addressRegion: siteConfig.location.district,
+          postalCode: "00000", // Añade si tienes
+          addressCountry: siteConfig.location.country,
+        },
+        openingHours: ["Mo-Fr 08:00-20:00", "Sa 09:00-14:00"],
+        medicalSpecialty: "Pediatrics",
+        image: siteConfig.seo.ogImage,
+      })}
+    />
 
     <link
       rel="stylesheet"
@@ -80,10 +78,16 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
     />
   </head>
 
- <!-- Quitamos bg-white y ponemos fondo-nubes -->
-  <body class="text-gray-800 antialiased min-h-screen flex flex-col font-nunito overflow-x-hidden">
+  <!-- Quitamos bg-white y ponemos fondo-nubes -->
+  <body
+    class="text-gray-800 antialiased min-h-screen flex flex-col font-nunito overflow-x-hidden"
+  >
     <!-- Skip link mejorado -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-green-500 text-white px-4 py-2 rounded-lg z-50 transition-all focus:ring-2 focus:ring-green-300" aria-label="Saltar al contenido principal">Saltar al contenido</a>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-green-500 text-white px-4 py-2 rounded-lg z-50 transition-all focus:ring-2 focus:ring-green-300"
+      aria-label="Saltar al contenido principal">Saltar al contenido</a
+    >
 
     <Header />
 
@@ -93,6 +97,24 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
 
     <Footer />
 
+    <!-- Botón flotante de reserva -->
+    <a
+      href="/reserva"
+      class="fixed bottom-6 right-6 z-50 flex items-center bg-pink-500 text-white h-14 rounded-full font-bold shadow-lg shadow-pink-500/30 hover:bg-pink-600 active:scale-95 animate-button-pulse expandable-button group"
+      aria-label="Reservar Cita"
+    >
+      <div class="min-w-15 flex items-center justify-center">
+        <i
+          data-lucide="calendar-plus"
+          class="w-6 h-6 transition-transform group-hover:rotate-12"></i>
+      </div>
+
+      <span
+        class="pr-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+      >
+        Reservar Cita
+      </span>
+    </a>
     <!-- Banner de Cookies -->
     <CookiesBanner />
 
@@ -109,37 +131,69 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
       document.addEventListener("astro:after-swap", initIcons);
 
       // Lazy loading de imágenes
-      const images = document.querySelectorAll('img[data-src]');
+      const images = document.querySelectorAll("img[data-src]");
       const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const img = entry.target;
             img.src = img.dataset.src;
-            img.classList.remove('lazy');
+            img.classList.remove("lazy");
             observer.unobserve(img);
           }
         });
       });
-      images.forEach(img => imageObserver.observe(img));
+      images.forEach((img) => imageObserver.observe(img));
 
       // Micro-interacciones: Tooltips en hover
-      document.querySelectorAll('[data-tooltip]').forEach(el => {
-        el.addEventListener('mouseenter', (e) => {
-          const tooltip = document.createElement('div');
+      document.querySelectorAll("[data-tooltip]").forEach((el) => {
+        el.addEventListener("mouseenter", (e) => {
+          const tooltip = document.createElement("div");
           tooltip.textContent = e.target.dataset.tooltip;
-          tooltip.className = 'absolute bg-gray-800 text-white px-2 py-1 rounded text-sm z-50';
+          tooltip.className =
+            "absolute bg-gray-800 text-white px-2 py-1 rounded text-sm z-50";
           document.body.appendChild(tooltip);
           tooltip.style.left = `${e.pageX + 10}px`;
           tooltip.style.top = `${e.pageY + 10}px`;
-          e.target.addEventListener('mouseleave', () => tooltip.remove());
+          e.target.addEventListener("mouseleave", () => tooltip.remove());
         });
       });
     </script>
   </body>
 </html>
+<style>
+  @keyframes subtle-pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgba(236, 72, 153, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(236, 72, 153, 0);
+    }
+  }
+
+  .animate-button-pulse {
+    animation: subtle-pulse 2s infinite;
+  }
+
+  /* Control de expansión suave */
+  .expandable-button {
+    max-width: 60px; /* Ancho inicial (solo icono) */
+    white-space: nowrap;
+    overflow: hidden;
+    transition:
+      max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.3s;
+  }
+
+  .expandable-button:hover {
+    max-width: 250px; /* Ancho expandido (ajustable según el texto) */
+  }
+</style>
 
 <style is:global>
-  @reference "../styles/global.css";  /* Agregado para que Tailwind reconozca @apply */
+  @reference "../styles/global.css"; /* Agregado para que Tailwind reconozca @apply */
 
   :root {
     --font-nunito: "Nunito", sans-serif;
@@ -164,17 +218,32 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
 
   /* Animaciones avanzadas */
   @keyframes bounce-soft {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-5px); }
-    60% { transform: translateY(-2px); }
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-5px);
+    }
+    60% {
+      transform: translateY(-2px);
+    }
   }
   .animate-bounce-soft {
     animation: bounce-soft 2s infinite;
   }
 
   @keyframes pulse-soft {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
   }
   .animate-pulse-soft {
     animation: pulse-soft 3s infinite;
@@ -192,7 +261,10 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
       --color-bg: #1f2937;
       --color-text: #f9fafb;
     }
-    body { background: var(--color-bg); color: var(--color-text); }
+    body {
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
   }
 
   :global(body.overflow-hidden) {

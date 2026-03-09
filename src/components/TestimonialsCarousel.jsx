@@ -165,13 +165,24 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
     };
   };
 
+  // Render icons inline to avoid hydration mismatch
+  const renderIcon = (name, className = "w-4 h-4") => {
+    const icons = {
+      star: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+      'chevron-left': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>,
+      'chevron-right': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>,
+      quote: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3"/></svg>,
+      pause: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true"><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></svg>,
+      play: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    };
+    return icons[name] || null;
+  };
+
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, i) => (
-      <i 
-        key={i}
-        data-lucide="star" 
-        className={`w-4 h-4 ${i < rating ? 'text-yellow-300 fill-yellow-300' : 'text-gray-300'}`}
-      ></i>
+      <span key={i} className={i < rating ? 'text-yellow-300' : 'text-gray-300'}>
+        {renderIcon('star', `w-4 h-4 ${i < rating ? 'text-yellow-300 fill-yellow-300' : 'text-gray-300'}`)}
+      </span>
     ));
   };
 
@@ -179,9 +190,13 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
     <div className="w-full">
       {/* Header */}
       <div className="text-center mb-12">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 text-orange-500 font-bold uppercase tracking-widest text-xs animate-bounce-soft">
+              <span class="w-2 h-2 rounded-full bg-orange-400"></span>
+             Testimonios
+            </span>
         <h2 className="text-4xl md:text-5xl font-bold text-gray-900 italic mb-4">
           Lo que dicen <br />
-          <span className="text-orange-300 not-italic">nuestras familias</span>
+          <span className="text-orange-400 not-italic">nuestras familias</span>
         </h2>
         <p className="text-gray-600 max-w-2xl mx-auto">
           Descubre por qué miles de familias confían en nosotros para el cuidado de sus pequeños
@@ -207,7 +222,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
           className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-gray-600 hover:text-pink-400 hover:shadow-xl hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-200"
           aria-label="Testimonio anterior"
         >
-          <i data-lucide="chevron-left" className="w-6 h-6"></i>
+          {renderIcon('chevron-left', 'w-6 h-6')}
         </button>
         
         <button
@@ -218,7 +233,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
           className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white rounded-full shadow-lg border border-gray-100 flex items-center justify-center text-gray-600 hover:text-pink-400 hover:shadow-xl hover:scale-110 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-pink-200"
           aria-label="Siguiente testimonio"
         >
-          <i data-lucide="chevron-right" className="w-6 h-6"></i>
+          {renderIcon('chevron-right', 'w-6 h-6')}
         </button>
 
         {/* Slides Container */}
@@ -243,7 +258,7 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
                     </div>
                     {/* Quote icon */}
                     <div className="absolute -top-2 -right-2 w-10 h-10 bg-pink-300 rounded-full flex items-center justify-center shadow-lg">
-                      <i data-lucide="quote" className="w-5 h-5 text-white"></i>
+                      {renderIcon('quote', 'w-5 h-5 text-white')}
                     </div>
                   </div>
                   
@@ -303,12 +318,12 @@ export default function TestimonialsCarousel({ testimonials = [] }) {
           >
             {isAutoPlaying ? (
               <>
-                <i data-lucide="pause" className="w-4 h-4"></i>
+                {renderIcon('pause', 'w-4 h-4')}
                 <span>Pausar</span>
               </>
             ) : (
               <>
-                <i data-lucide="play" className="w-4 h-4"></i>
+                {renderIcon('play', 'w-4 h-4')}
                 <span>Reproducir</span>
               </>
             )}

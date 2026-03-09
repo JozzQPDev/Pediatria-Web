@@ -7,7 +7,7 @@ import SearchSuggestions from './SearchSuggestions.jsx';
 
 <form 
   id="search-form" 
-  class="search-form flex items-center overflow-hidden transition-all duration-300 ease-in-out relative z-10"
+  class="search-form flex items-center overflow-hidden transition-all duration-300 ease-in-out relative z-50"
   action="/busqueda"
   method="GET"
 >
@@ -133,9 +133,53 @@ import SearchSuggestions from './SearchSuggestions.jsx';
     }
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 1023px) {
+  .search-container {
+      position: relative;
+      z-index: 60;
+      overflow: visible !important;
+    }
+    
+    .search-form.expanded {
+      position: fixed;
+      right: 80px;
+      top: 60px;
+      z-index: 9999;
+      background: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      padding: 0.75rem;
+      padding-left: 1rem;
+      border-radius: 9999px;
+      border: 2px solid #BAE6FD;
+    }
+    
     .search-form.expanded .search-input {
-      width: 150px;
+      width: 200px;
+      opacity: 1;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .search-form.expanded {
+      right: 70px;
+      top: 55px;
+      padding: 0.5rem;
+      padding-left: 0.75rem;
+    }
+    
+    .search-form.expanded .search-input {
+      width: 160px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .search-form.expanded {
+      right: 60px;
+      top: 50px;
+    }
+    
+    .search-form.expanded .search-input {
+      width: 140px;
     }
   }
 
@@ -204,8 +248,8 @@ import SearchSuggestions from './SearchSuggestions.jsx';
 </style>
 
 <script is:inline>
-  // Search functionality
-  document.addEventListener('DOMContentLoaded', function() {
+  // Search functionality - Using Astro's page load events for better compatibility
+  function initSearch() {
     const searchBtn = document.getElementById('search-btn');
     const searchForm = document.getElementById('search-form');
     const searchInput = document.getElementById('search-input');
@@ -216,6 +260,8 @@ import SearchSuggestions from './SearchSuggestions.jsx';
     const voiceModalContent = document.getElementById('voice-modal-content');
     const closeVoiceModal = document.getElementById('close-voice-modal');
     const voiceStatus = document.getElementById('voice-status');
+    
+    if (!searchBtn || !searchForm || !searchInput) return;
     
     let isExpanded = false;
     let recognition = null;
@@ -433,7 +479,21 @@ import SearchSuggestions from './SearchSuggestions.jsx';
       searchInput.value = urlParams.get('q');
       if (!isExpanded) toggleSearch();
     }
-  });
+  }
+  
+  // Initialize on DOM ready
+  function ready(fn) {
+    if (document.readyState !== 'loading') {
+      fn();
+    } else {
+      document.addEventListener('DOMContentLoaded', fn);
+    }
+  }
+  
+  ready(initSearch);
+  
+  // Also listen for Astro's page load event for SPA navigation
+  document.addEventListener('astro:page-load', initSearch);
   
   // Load search data for suggestions
   (function loadSearchData() {

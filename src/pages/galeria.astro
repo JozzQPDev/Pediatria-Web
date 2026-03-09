@@ -1,0 +1,131 @@
+---
+// Importaciones
+import Layout from "../layouts/Layout.astro";
+import { siteConfig } from "../data/siteConfig";
+
+const galleryImages = [
+  "/images/clinic-1.jpg",
+  "/images/clinic-2.jpg",
+  "/images/clinic-3.jpg",
+  "/images/clinic-4.jpg",
+];
+---
+
+<Layout
+  title="Galeria de nuestra clinica"
+  description="Conoce la historia, misión y visión de nuestra clínica pediátrica. Descubre cómo cuidamos de tus hijos con amor y profesionalismo."
+>
+  <main class="main-section">
+
+    <!-- Nubes decorativas -->
+    <span class="cloud cloud--1" aria-hidden="true"></span>
+    <span class="cloud cloud--2" aria-hidden="true"></span>
+    <span class="cloud cloud--3" aria-hidden="true"></span>
+    <span class="cloud cloud--4" aria-hidden="true"></span>
+    <span class="cloud cloud--5" aria-hidden="true"></span>
+
+    <!-- GALERÍA -->
+    <section class="py-24 px-4">
+      <div class="max-w-7xl mx-auto">
+
+        <!-- Título -->
+        <div class="text-center mb-16">
+          <h2 class="text-4xl md:text-6xl font-extrabold text-[#E8D5B7] italic mt-2">
+            Nuestra clínica
+          </h2>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-auto md:h-150">
+
+          {galleryImages.map((image, index) => (
+            <div
+              class={`group relative overflow-hidden rounded-3xl shadow-2xl cursor-pointer gallery-item
+              ${index === 0 ? "md:col-span-2 md:row-span-2" : ""}
+              ${index === 1 ? "md:col-span-2 md:row-span-1" : ""}`}
+            >
+
+              <img
+                src={image}
+                alt={`Instalación ${index + 1}`}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                loading="lazy"
+              />
+
+              <!-- Botón ver -->
+              <div class="absolute bottom-4 left-4 z-20 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                <span class="bg-white/10 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full border border-white/20 cursor-pointer view-btn">
+                  Ver ambiente
+                </span>
+              </div>
+
+            </div>
+          ))}
+
+        </div>
+      </div>
+    </section>
+
+    <!-- MODAL -->
+    <div
+      id="gallery-modal"
+      class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-6"
+    >
+
+      <div class="relative max-w-5xl w-full">
+        <!-- cerrar -->
+        <button
+          id="close-modal"
+          class="absolute -top-10 right-0 text-white text-3xl font-bold hover:scale-110 transition"
+        >
+          ✕
+        </button>
+        <!-- imagen -->
+        <img
+          id="modal-image"
+          src=""
+          class="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
+          alt="Imagen clínica"
+        />
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<!-- SCRIPT -->
+<script is:inline>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const buttons = document.querySelectorAll(".view-btn");
+  const modal = document.getElementById("gallery-modal");
+  const modalImage = document.getElementById("modal-image");
+  const closeModal = document.getElementById("close-modal");
+
+  buttons.forEach((btn) => {
+
+    btn.addEventListener("click", () => {
+      const card = btn.closest(".gallery-item");
+      const img = card.querySelector("img");
+      modalImage.src = img.src;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  closeModal.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+    document.body.style.overflow = "auto";
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.style.overflow = "auto";
+    }
+  });
+});
+</script>

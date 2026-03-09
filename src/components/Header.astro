@@ -1,265 +1,448 @@
 ---
-// Header.astro
+// Header.astro - Optimizado
 // Componente de header con barra superior, navegación y menú móvil
 import { siteConfig } from "../data/siteConfig";
 import { services } from "../data/services";
 import Search from "./Search.astro";
+
 const pathname = new URL(Astro.request.url).pathname;
-import ContactForm from '../components/ContactForm.jsx';
 const currentPath = pathname.slice(1);
 
+// Configuración de navegación
+const navItems = [
+  { name: "Inicio", href: "/", icon: "home", exact: true },
+  { name: "Nosotros", href: "/nosotros", icon: "users" },
+  {
+    name: "Servicios",
+    href: "/servicios",
+    icon: "stethoscope",
+    hasDropdown: true,
+  },
+  { name: "Equipo", href: "/equipo", icon: "user-round-check" },
+  { name: "Blogs", href: "/blogs", icon: "book-open" },
+  { name: "Contacto", href: "/contacto", icon: "mail" },
+];
+
+// Helpers
+const isActive = (href: string, exact = false) => {
+  if (exact) return pathname === href;
+  return currentPath.includes(href.slice(1));
+};
+
+const getNavClasses = (href: string, exact = false) => {
+  const active = isActive(href, exact);
+  return `nav-link transition-all duration-300 hover:text-[#F9A8D4] ${active ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`;
+};
 ---
 
-<!-- Skip Link para accesibilidad (oculto por defecto, visible al navegar con tab) -->
-<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg z-50">Saltar a contenido principal</a>
+<!-- Skip Link para accesibilidad -->
+<a
+  href="#main-content"
+  class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-blue-600 text-white px-4 py-2 rounded-lg z-50"
+>
+  Saltar a contenido principal
+</a>
 
-<div class="bg-[linear-gradient(to_right,#F9A8D4,#FEF08A,#BAE6FD)] text-gray-700 py-1.5 text-[10px] sm:text-[11px] md:text-sm font-bold uppercase tracking-wider relative z-50 border-b border-white/40 shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-    
-    <div class="flex gap-3 sm:gap-6">
-      <a href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`} class="flex items-center gap-1.5 hover:text-pink-600 transition-colors duration-300 group">
-        <i data-lucide="phone" class="w-3.5 h-3.5 group-hover:rotate-12 transition-transform"></i>
-        <span class="truncate">{siteConfig.contact.phone}</span>
-      </a>
-
-      <a href={siteConfig.location.googleMapsLink} target="_blank" rel="noopener noreferrer" class="hidden sm:flex items-center gap-1.5 hover:text-blue-600 transition-colors duration-300 group">
-        <i data-lucide="map-pin" class="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform"></i>
-        <span>{siteConfig.location.city}</span>
-      </a>
-    </div>
-
-    <div class="flex items-center gap-3 border-l border-gray-400/20 pl-4">
-      <a href={siteConfig.socials.facebook} target="_blank" class="hover:text-pink-600 transition-all hover:scale-120">
-        <i data-lucide="facebook" class="w-4 h-4"></i>
-      </a>
-      <a href={siteConfig.socials.instagram} target="_blank" class="hover:text-pink-600 transition-all hover:scale-120">
-        <i data-lucide="instagram" class="w-4 h-4"></i>
-      </a>
-      <a href={`mailto:${siteConfig.contact.email}`} class="hidden sm:block hover:text-blue-600 transition-all hover:scale-120">
-        <i data-lucide="mail" class="w-4 h-4"></i>
-      </a>
-    </div>
-
-  </div>
-</div>
-
-<!-- Header Principal -->
-<header class="bg-white/95 backdrop-blur-lg shadow-lg sticky top-0 z-50 border-b shadow-amber-440 border-gray-200">
-  <div class="max-w-8xl h-16 sm:h-20 mx-auto px-3 py-10 sm:px-4 lg:px-6 flex items-center justify-between">
-
-    
-    <div class="hidden lg:flex items-center flex-1 justify-start">
-      <!-- Botón para abrir modal de contacto -->
-      <button 
-        id="contact-modal-btn" 
-        class="group flex items-center gap-0 bg-linear-to-r from-[#F9A8D4] to-[#F472B6] text-white px-4 py-3 rounded-full shadow-md hover:shadow-pink-200/50 hover:scale-105 transition-all duration-300 focus:ring-4 focus:ring-[#F9A8D4]/50 overflow-hidden"
-        aria-label="Abrir formulario de contacto"
-      >
-        <i data-lucide="send" class="w-5 h-5 shrink-0 drop-shadow-sm"></i>
-        
-        <span class="text-sm font-bold tracking-wide max-w-0 overflow-hidden whitespace-nowrap group-hover:max-w-35.5 group-hover:ml-2 transition-all duration-500 ease-out">
-          Contáctanos
-        </span>
-      </button>
-    </div>
-
-    <div class="flex items-center justify-center lg:flex-none">
-        <a href="/" class="lg:hidden flex flex-col items-center justify-center mobile-logo-link" aria-label="Ir a inicio">
-          <img 
-            src="/images/logo-text.png" 
-            alt={`${siteConfig.name} logo`} 
-            class="h-7 sm:h-8 w-auto object-contain mobile-logo-img"
-          >
-          <span class="text-center text-[8px] font-bold tracking-[0.2em] text-gray-400 uppercase mt-1 leading-none mobile-logo-text">
-            {siteConfig.location.city} · {siteConfig.location.district}
-          </span>
+<!-- Header Principal - Nueva Estructura -->
+<header
+  id="main-header"
+  class="bg-white sticky top-0 z-50 transition-all duration-300 shadow-sm"
+>
+  <div class="max-w-8xl mx-auto ">
+    <!-- Layout Desktop: Logo Izquierda | Barra Superior + Nav Derecha -->
+    <div class="hidden lg:flex items-start px-3 sm:px-4 lg:px-6 gap-8 py-4">
+      <!-- Logo Grande Izquierda -->
+      <div class="shrink-0">
+        <a href="/" class="flex items-center" aria-label="Ir a inicio">
+          <img
+            id="main-logo"
+            src="/images/logo3.png"
+            class="h-24 w-auto object-contain transition-all duration-300"
+            alt={`${siteConfig.name} logo`}
+          />
         </a>
+      </div>
 
-        <nav class="hidden lg:flex items-center gap-12 text-[13px] font-bold uppercase tracking-widest text-gray-500" role="navigation">
-
-          <a href="/" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${pathname === "/" ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Inicio</a>
-          <a href="/nosotros" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${currentPath.includes("nosotros") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Nosotros</a>
-          
-          <!-- Dropdown de Servicios -->
-          <div class="relative group">
-            <a href="/servicios" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] flex items-center gap-1 ${currentPath.includes("servicios") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>
-              Servicios
-              <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
+      <!-- Lado Derecho: Barra Superior + Nav -->
+      <div class="flex-1 flex flex-col gap-3">
+        <!-- Barra Superior (se oculta al hacer scroll) -->
+        <div
+          id="top-bar"
+          class="flex bg-[linear-gradient(to_right,transparent_0%,#F9A8D4_40%,#FEF08A_75%,#BAE6FD_100%)]
+            rounded-r-full ml-10 mr-0 p-1.5 pr-8 text-gray-700 justify-end items-center
+            gap-6 text-[11px] font-bold uppercase tracking-wider
+            transition-all duration-300 overflow-hidden"
+        >
+          <div class="flex gap-4">
+            <a
+              href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}
+              class="flex items-center gap-1.5 hover:text-pink-600 transition-colors duration-300 group"
+            >
+              <i
+                data-lucide="phone"
+                class="w-3.5 h-3.5 group-hover:rotate-12 transition-transform"
+              ></i>
+              <span>{siteConfig.contact.phone}</span>
             </a>
-            <!-- Dropdown Menu -->
-            <div class="absolute top-full left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible transform -translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
-              <div class="py-2">
-                <a href="/servicios" class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-[#F9A8D4] hover:bg-pink-50 transition-colors border-b border-gray-50">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                  </svg>
-                  Ver Todos los Servicios
-                </a>
-                {services.map((service) => (
-                  <a 
-                    href={`/servicios/${service.slug}`}
-                    class="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:bg-pink-50 hover:text-[#F9A8D4] transition-colors"
+            <a
+              href={siteConfig.location.googleMapsLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-1.5 hover:text-blue-600 transition-colors duration-300 group"
+            >
+              <i
+                data-lucide="map-pin"
+                class="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform"
+              ></i>
+              <span
+                >{siteConfig.location.city}, {
+                  siteConfig.location.district
+                }</span
+              >
+            </a>
+          </div>
+
+          <div
+            class="flex items-center gap-3 border-l border-white/30 dark:border-white/20 pl-4"
+          >
+            <a
+              href={siteConfig.socials.facebook}
+              target="_blank"
+              class="hover:text-pink-600 transition-all hover:scale-110"
+            >
+              <i data-lucide="facebook" class="w-4 h-4"></i>
+            </a>
+            <a
+              href={siteConfig.socials.instagram}
+              target="_blank"
+              class="hover:text-pink-600 transition-all hover:scale-110"
+            >
+              <i data-lucide="instagram" class="w-4 h-4"></i>
+            </a>
+            <a
+              href={`mailto:${siteConfig.contact.email}`}
+              class="hover:text-blue-600 transition-all hover:scale-110"
+            >
+              <i data-lucide="mail" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Navegación Centrada + Search Derecha -->
+        <div class="flex justify-between items-center">
+          <!-- Espacio izquierdo para centrar el nav -->
+          <div class="w-16"></div>
+
+          <!-- Navegación Centrada -->
+          <nav
+            class="flex items-center gap-8 text-[13px] font-bold uppercase tracking-widest text-gray-500"
+            role="navigation"
+          >
+            <a href="/" class={getNavClasses("/", true)}>Inicio</a>
+            <a href="/nosotros" class={getNavClasses("/nosotros")}>Nosotros</a>
+
+            <!-- Dropdown Servicios -->
+            <div class="relative group">
+              <a href="/servicios" class="nav-link flex items-center gap-1">
+                Servicios
+                <svg
+                  class="w-4 h-4 transition-transform group-hover:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </a>
+
+              <!-- Mega Menu -->
+              <div
+                class="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-175 bg-white rounded-2xl shadow-2xl border border-gray-100 opacity-0 invisible translate-y-4 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50"
+              >
+                <div class="grid grid-cols-3 gap-6 p-6">
+                  <div>
+                    <h3 class="font-bold text-gray-900 mb-4">Pediatría</h3>
+                    <div class="space-y-3">
+                      {
+                        services
+                          .slice(0, 3)
+                          .map((service: { slug: string; title: string }) => (
+                            <a
+                              href={`/servicios/${service.slug}`}
+                              class="block text-gray-600 hover:text-[#F9A8D4] transition"
+                            >
+                              {service.title}
+                            </a>
+                          ))
+                      }
+                    </div>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-gray-900 mb-4">Tratamientos</h3>
+                    <div class="space-y-3">
+                      {
+                        services
+                          .slice(3, 6)
+                          .map((service: { slug: string; title: string }) => (
+                            <a
+                              href={`/servicios/${service.slug}`}
+                              class="block text-gray-600 hover:text-[#F9A8D4] transition"
+                            >
+                              {service.title}
+                            </a>
+                          ))
+                      }
+                    </div>
+                  </div>
+                  <div>
+                    <div class="bg-pink-50 rounded-xl p-5">
+                      <h4 class="font-bold text-gray-900 mb-2">
+                        Consulta médica
+                      </h4>
+                      <p class="text-sm text-gray-500 mb-4">
+                        Agenda tu cita con nuestros especialistas.
+                      </p>
+                      <a
+                        href="/contacto"
+                        class="inline-flex items-center gap-2 bg-[#F9A8D4] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:scale-105 transition"
+                      >
+                        Pedir cita
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="border-t border-gray-100 p-4 text-center">
+                  <a
+                    href="/servicios"
+                    class="text-sm font-semibold text-[#F9A8D4] hover:underline"
                   >
-                    <span class="w-2 h-2 rounded-full bg-[#F9A8D4]/30"></span>
-                    {service.title}
+                    Ver todos los servicios →
                   </a>
-                ))}
+                </div>
               </div>
             </div>
+
+            <a href="/equipo" class={getNavClasses("/equipo")}>Equipo</a>
+            <a href="/galeria" class={getNavClasses("/galeria")}>Galeria</a>
+            <a href="/blogs" class={getNavClasses("/blogs")}>Blogs</a>
+            <a href="/contacto" class={getNavClasses("/contacto")}>Contacto</a>
+          </nav>
+
+          <!-- Search Derecha -->
+          <div class="w-24 flex justify-end">
+            <Search />
           </div>
-                    
-          <a href="/" class="flex p-3 items-center px-4" aria-label="Ir a inicio">
-            <img src="/images/logo-text.png"  alt={`${siteConfig.name} logo`} class="h-10 w-full object-contain">
-          </a>
-
-          <a href="/equipo" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${currentPath.includes("equipo") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Equipo</a>
-          <a href="/blogs" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${currentPath.includes("blog") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Blogs</a>
-          <a href="/contacto" class={`nav-link transition-all duration-300 hover:text-[#F9A8D4] ${currentPath.includes("contacto") ? "text-[#F9A8D4] border-b-2 border-[#F9A8D4]" : ""}`}>Contacto</a>
-          
-        </nav>
-    </div>
-
-     <div class="flex items-center flex-1 justify-end gap-2">
-    <div class="lg:block">
-        <Search />
-    </div>
-
-    <button id="menu-btn" class="lg:hidden p-2 sm:p-3 text-[#BAE6FD] hover:bg-blue-50 rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-[#BAE6FD]" aria-label="Abrir menú móvil">
-      <div class="w-5 h-5 sm:w-6 sm:h-6 flex flex-col justify-around items-center">
-        <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
-        <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
-        <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
+        </div>
       </div>
-    </button>
-</div>
+    </div>
 
+    <!-- Layout Mobile -->
+    <div class="lg:hidden flex flex-col overflow-visible">
+      <!-- Barra Superior Mobile -->
+      <div
+        id="top-bar-mobile"
+        class="flex bg-[linear-gradient(to_right,#F9A8D4,#FEF08A,#BAE6FD)]
+          mx-0  px-4 py-1.5 text-gray-700 justify-between items-center
+          gap-4 text-[10px] font-bold uppercase tracking-wider
+          transition-all duration-300 overflow-hidden"
+      >
+        <a
+          href={`tel:${siteConfig.contact.phone.replace(/\s/g, "")}`}
+          class="flex items-center gap-1 hover:text-pink-600 transition-colors duration-300"
+        >
+          <i data-lucide="phone" class="w-3 h-3"></i>
+          <span class="truncate">{siteConfig.contact.phone}</span>
+        </a>
+        
+        <div class="flex items-center gap-2 border-l border-gray-400/30 ">
+          <a
+            href={siteConfig.socials.facebook}
+            target="_blank"
+            class="hover:text-pink-600 transition-all hover:scale-110"
+          >
+            <i data-lucide="facebook" class="w-3.5 h-3.5"></i>
+          </a>
+          <a
+            href={siteConfig.socials.instagram}
+            target="_blank"
+            class="hover:text-pink-600 transition-all hover:scale-110"
+          >
+            <i data-lucide="instagram" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Header Mobile Principal -->
+      <div class="flex items-center justify-between h-18 sm:h-18 pb-2 px-3 sm:px-4 lg:px-6">
+        <a
+          href="/"
+          class="flex flex-col items-center justify-center"
+          aria-label="Ir a inicio"
+        >
+          <img
+            src="/images/logo3.png"
+            alt={`${siteConfig.name} logo`}
+            class="h-16 sm:h-12 w-auto object-contain"
+          />
+        </a>
+
+        <div class="flex items-center gap-2 relative z-50">
+          <a href="/busqueda">
+            <Search />
+          </a>
+   
+          <button id="menu-btn" class="lg:hidden p-2 sm:p-3 text-[#BAE6FD] hover:bg-blue-50 rounded-xl transition-all focus:outline-none focus:ring-2 focus:ring-[#BAE6FD]" aria-label="Abrir menú móvil">
+            <div class="w-5 h-5 sm:w-6 sm:h-6 flex flex-col justify-around items-center">
+              <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
+              <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
+              <span class="w-5 sm:w-6 h-0.5 bg-current rounded-full"></span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
 <!-- Overlay Móvil -->
-<div id="mobile-overlay" class="fixed inset-0 bg-black/40 z-998 opacity-0 pointer-events-none transition-all duration-400 ease-in-out lg:hidden backdrop-blur-sm hidden" aria-hidden="true"></div>
-
-<!-- Panel de Contacto (deslizable desde la izquierda) -->
-<div id="contact-modal" class="fixed inset-0 z-999 hidden" role="dialog" aria-modal="true" aria-hidden="true">
-  <!-- Backdrop -->
-  <div id="contact-modal-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
-  
-  <!-- Panel Content (desliza desde la izquierda) -->
-  <div id="contact-modal-content" class="absolute left-0 top-0 h-full w-full max-w-md bg-white shadow-2xl overflow-y-auto -translate-x-full transition-transform duration-300 ease-out">
-
-    <!-- Header del Panel -->
-    <div class="sticky top-0 bg-white border-b border-gray-100 p-6 flex items-center justify-between z-10">
-      <div>
-        <h3 class="text-xl font-bold text-gray-900">Envíanos un mensaje</h3>
-        <p class="text-sm text-gray-500">Te responderemos lo antes posible</p>
-      </div>
-      <button 
-        id="close-contact-modal" 
-        class="p-2 bg-gray-100 text-gray-500 rounded-full hover:bg-red-50 hover:text-red-500 transition-all active:scale-90 focus:ring-2 focus:ring-red-300"
-        aria-label="Cerrar formulario"
-      >
-        <i data-lucide="x" class="w-5 h-5"></i>
-      </button>
-    </div>
-    
-    <!-- Formulario -->
-    <div class="p-6">
-      <ContactForm 
-        email={siteConfig.contact.email} 
-        whatsappNumber={siteConfig.contact.whatsapp}
-        client:load 
-      />
-    </div>
-  </div>
+<div
+  id="mobile-overlay"
+  class="fixed inset-0 bg-black/40 z-998 opacity-0 pointer-events-none transition-all duration-400 ease-in-out lg:hidden backdrop-blur-sm hidden"
+  aria-hidden="true"
+>
 </div>
 
-<div id="mobile-menu" class="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-[#FDFCFD] z-999 translate-x-full transition-transform duration-500 ease-in-out lg:hidden flex flex-col shadow-2xl overflow-hidden" role="dialog" aria-modal="true" aria-hidden="true">
-  
-  <div class="p-6 bg-white border-b border-gray-50 flex items-center justify-between">
+<!-- Menú Móvil -->
+<div
+  id="mobile-menu"
+  class="fixed top-0 right-0 w-[85%] max-w-sm h-screen bg-[#FDFCFD] z-999 translate-x-full transition-transform duration-500 ease-in-out lg:hidden flex flex-col shadow-2xl overflow-hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+>
+  <div
+    class="p-6 bg-white border-b border-gray-50 flex items-center justify-between"
+  >
     <div class="flex items-center gap-3">
       <div class="flex flex-col">
-        <img src="/images/logo-text.png" alt={`${siteConfig.name} logo`} class="h-10 w-auto object-contain">
-        <span class="text-center text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase mt-1 leading-none">
-          {siteConfig.location.city} · {siteConfig.location.district}
-        </span>
+        <img
+          src="/images/logo3.png"
+          alt={`${siteConfig.name} logo`}
+          class="h-16 w-auto object-contain"
+        />
+
       </div>
     </div>
-    <button id="close-menu" class="p-2 bg-gray-50 text-gray-400 rounded-full hover:bg-pink-50 hover:text-[#F9A8D4] transition-all active:scale-90" aria-label="Cerrar menú móvil">
+    <button
+      id="close-menu"
+      class="p-2 bg-gray-50 text-gray-400 rounded-full hover:bg-pink-50 hover:text-[#F9A8D4] transition-all active:scale-90"
+      aria-label="Cerrar menú móvil"
+    >
       <i data-lucide="x" class="w-6 h-6"></i>
     </button>
   </div>
 
-  <nav class="flex flex-col p-6 gap-3 overflow-y-auto bg-[#FDFCFD]" role="navigation" aria-label="Navegación móvil">
-  {[
-    { name: 'Inicio', href: '/', icon: 'home' },
-    { name: 'Nosotros', href: '/nosotros', icon: 'users' },
-    { name: 'Servicios', href: '/servicios', icon: 'stethoscope', isExpandable: true },
-    { name: 'Equipo', href: '/equipo', icon: 'user-round-check' },
-    { name: 'Blogs', href: '/blogs', icon: 'book-open' },
-    { name: 'Contacto', href: '/contacto', icon: 'mail' }
-  ].map((item, index) => (
-    item.isExpandable ? (
-      <div class="mobile-services-wrapper">
-        <button 
-          id="mobile-services-toggle"
-          class="mobile-link mobile-services-btn flex items-center justify-between gap-4 p-4 rounded-2xl border transition-all duration-300 group w-full bg-white text-gray-500 border-gray-100 hover:border-[#F9A8D4]/30 hover:bg-pink-50/50"
-          aria-expanded="false"
-          aria-controls="mobile-services-list"
-        >
-          <div class="flex items-center gap-4">
-            <div class="p-2 rounded-lg bg-gray-50 group-hover:bg-[#F9A8D4]/10 transition-colors">
-              <i data-lucide={item.icon} class="w-5 h-5"></i>
-            </div>
-            <span class="text-lg">{item.name}</span>
-          </div>
-          <i id="mobile-services-chevron" data-lucide="chevron-down" class="w-5 h-5 opacity-40 transition-transform duration-300"></i>
-        </button>
-        
-        <!-- Lista de servicios móvil -->
-        <div id="mobile-services-list" class="hidden flex-col gap-2 mt-2 pl-4 overflow-hidden transition-all duration-300">
-          <a 
-            href="/servicios" 
-            class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-[#F9A8D4] hover:bg-pink-50 transition-colors border-b border-gray-50 rounded-xl"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-            Ver Todos los Servicios
-          </a>
-          {services.map((service) => (
-            <a 
-              href={`/servicios/${service.slug}`}
-              class="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:bg-pink-50 hover:text-[#F9A8D4] transition-colors rounded-xl"
+  <nav
+    class="flex flex-col p-6 gap-3 overflow-y-auto bg-[#FDFCFD]"
+    role="navigation"
+    aria-label="Navegación móvil"
+  >
+    {
+      navItems.map((item, index) =>
+        item.hasDropdown ? (
+          <div class="mobile-services-wrapper">
+            <button
+              id="mobile-services-toggle"
+              class="mobile-link mobile-services-btn flex items-center justify-between gap-4 p-4 rounded-2xl border transition-all duration-300 group w-full bg-white text-gray-500 border-gray-100 hover:border-[#F9A8D4]/30 hover:bg-pink-50/50"
+              aria-expanded="false"
+              aria-controls="mobile-services-list"
             >
-              <span class="w-2 h-2 rounded-full bg-[#F9A8D4]/30"></span>
-              {service.title}
-            </a>
-          ))}
-        </div>
-      </div>
-    ) : (
-      <a 
-        href={item.href} 
-        class={`mobile-link flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 group
-          ${(pathname === item.href || (item.href !== '/' && currentPath.includes(item.href.slice(1)))) 
-            ? 'bg-[#F9A8D4] text-white border-[#F9A8D4] shadow-md shadow-pink-100 font-bold' 
-            : 'bg-white text-gray-500 border-gray-100 hover:border-[#F9A8D4]/30 hover:bg-pink-50/50'}`}
-        style={`transition-delay: ${index * 70}ms;`}
-      >
-        <div class={`p-2 rounded-lg ${(pathname === item.href) ? 'bg-white/20' : 'bg-gray-50 group-hover:bg-[#F9A8D4]/10 transition-colors'}`}>
-          <i data-lucide={item.icon} class="w-5 h-5"></i>
-        </div>
-        <span class="text-lg flex-1">{item.name}</span>
-        <i data-lucide="chevron-right" class="w-5 h-5 opacity-20 group-hover:opacity-100 group-hover:translate-x-1 transition-all"></i>
-      </a>
-    )
-  ))}
-</nav>
+              <div class="flex items-center gap-4">
+                <div class="p-2 rounded-lg bg-gray-50 group-hover:bg-[#F9A8D4]/10 transition-colors">
+                  <i data-lucide={item.icon} class="w-5 h-5" />
+                </div>
+                <span class="text-lg">{item.name}</span>
+              </div>
+              <i
+                id="mobile-services-chevron"
+                data-lucide="chevron-down"
+                class="w-5 h-5 opacity-40 transition-transform duration-300"
+              />
+            </button>
+
+            <div
+              id="mobile-services-list"
+              class="hidden flex-col gap-2 mt-2 pl-4 overflow-hidden transition-all duration-300"
+            >
+              <a
+                href="/servicios"
+                class="flex items-center gap-3 px-4 py-3 text-sm font-bold text-[#F9A8D4] hover:bg-pink-50 transition-colors border-b border-gray-50 rounded-xl"
+              >
+                <svg
+                  class="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+                Ver Todos los Servicios
+              </a>
+              {services.map((service: { slug: string; title: string }) => (
+                <a
+                  href={`/servicios/${service.slug}`}
+                  class="flex items-center gap-3 px-4 py-3 text-sm text-gray-600 hover:bg-pink-50 hover:text-[#F9A8D4] transition-colors rounded-xl"
+                >
+                  <span class="w-2 h-2 rounded-full bg-[#F9A8D4]/30" />
+                  {service.title}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <a
+            href={item.href}
+            class={`mobile-link flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 group
+            ${
+              isActive(item.href, item.exact)
+                ? "bg-[#F9A8D4] text-white border-[#F9A8D4] shadow-md shadow-pink-100 font-bold"
+                : "bg-white text-gray-500 border-gray-100 hover:border-[#F9A8D4]/30 hover:bg-pink-50/50"
+            }`}
+            style={`transition-delay: ${index * 70}ms;`}
+          >
+            <div
+              class={`p-2 rounded-lg ${isActive(item.href, item.exact) ? "bg-white/20" : "bg-gray-50 group-hover:bg-[#F9A8D4]/10 transition-colors"}`}
+            >
+              <i data-lucide={item.icon} class="w-5 h-5" />
+            </div>
+            <span class="text-lg flex-1">{item.name}</span>
+            <i
+              data-lucide="chevron-right"
+              class="w-5 h-5 opacity-20 group-hover:opacity-100 group-hover:translate-x-1 transition-all"
+            />
+          </a>
+        ),
+      )
+    }
+  </nav>
 
   <div class="mt-auto p-6 bg-white border-t border-gray-50">
-    <a href={siteConfig.contact.whatsappUrl} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-3 bg-[#F9A8D4] text-white py-4 rounded-2xl shadow-lg shadow-pink-100 font-bold text-lg active:scale-95 transition-all uppercase tracking-wider" aria-label="Pedir cita por WhatsApp">
+    <a
+      href={siteConfig.contact.whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex items-center justify-center gap-3 bg-[#F9A8D4] text-white py-4 rounded-2xl shadow-lg shadow-pink-100 font-bold text-lg active:scale-95 transition-all uppercase tracking-wider"
+      aria-label="Pedir cita por WhatsApp"
+    >
       <i data-lucide="calendar-check" class="w-6 h-6"></i>
       <span>Pedir Cita</span>
     </a>
@@ -269,107 +452,106 @@ const currentPath = pathname.slice(1);
 <style>
   @reference "../styles/global.css";
 
-  .nav-link { @apply hover:text-[#F9A8D4] transition-all duration-300 relative py-1 focus:outline-none; }
-  .nav-link::after { content: ""; @apply absolute bottom-0 left-0 w-0 h-0.5 bg-[#F9A8D4] transition-all duration-300; }
-  .nav-link:hover::after, .nav-link.active::after { @apply w-full; }
-  .nav-link.active { @apply text-[#F9A8D4] font-bold; }
-  
-
+  .nav-link {
+    @apply hover:text-[#F9A8D4] transition-all duration-300 relative py-1 focus:outline-none;
+  }
+  .nav-link::after {
+    content: "";
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-[#F9A8D4] transition-all duration-300;
+  }
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-full;
+  }
+  .nav-link.active {
+    @apply text-[#F9A8D4] font-bold;
+  }
 
   /* Skip Link */
-  .sr-only { @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0; }
-  .sr-only.focus:not-sr-only { @apply static w-auto h-auto p-0 m-0 overflow-visible; }
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+  }
+  .sr-only.focus:not-sr-only {
+    @apply static w-auto h-auto p-0 m-0 overflow-visible;
+  }
 
-  /* Bounce animation for nav and logo - shared with Search component */
+  /* Bounce animation */
   @keyframes bounce-effect {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    50% { transform: translateX(4px); }
-    75% { transform: translateX(-2px); }
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-8px);
+    }
+    50% {
+      transform: translateX(4px);
+    }
+    75% {
+      transform: translateX(-2px);
+    }
   }
 
   .bounce-animation {
     animation: bounce-effect 0.5s ease-in-out;
   }
 
-  /* Bounce animation for contact button text */
   @keyframes bounce-text {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-5px); }
-    40% { transform: translateX(3px); }
-    60% { transform: translateX(-2px); }
-    80% { transform: translateX(1px); }
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20% {
+      transform: translateX(-5px);
+    }
+    40% {
+      transform: translateX(3px);
+    }
+    60% {
+      transform: translateX(-2px);
+    }
+    80% {
+      transform: translateX(1px);
+    }
   }
 
   .group-hover\:animate-bounce-text:hover {
     animation: bounce-text 0.6s ease-in-out;
   }
 
+  .header-scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(12px);
+  }
 </style>
-
 
 <script is:inline>
   const initHeader = () => {
-    const menuBtn = document.getElementById("menu-btn");
-    const closeBtn = document.getElementById("close-menu");
-    const mobileMenu = document.getElementById("mobile-menu");
-    const mobileOverlay = document.getElementById("mobile-overlay");
-    
-    // Contact Modal Elements
-    const contactModalBtn = document.getElementById("contact-modal-btn");
-    const contactModal = document.getElementById("contact-modal");
-    const contactModalBackdrop = document.getElementById("contact-modal-backdrop");
-    const contactModalContent = document.getElementById("contact-modal-content");
-    const closeContactModal = document.getElementById("close-contact-modal");
+    // Cache DOM elements
+    const elements = {
+      menuBtn: document.getElementById("menu-btn"),
+      closeBtn: document.getElementById("close-menu"),
+      mobileMenu: document.getElementById("mobile-menu"),
+      mobileOverlay: document.getElementById("mobile-overlay"),
+      servicesToggle: document.getElementById("mobile-services-toggle"),
+      servicesList: document.getElementById("mobile-services-list"),
+      servicesChevron: document.getElementById("mobile-services-chevron"),
+      header: document.getElementById("main-header"),
+      logo: document.getElementById("main-logo"),
+      topBar: document.getElementById("top-bar"),
+      topBarMobile: document.getElementById("top-bar-mobile"),
+    };
 
-    // Verificar si Lucide está disponible
-    if (typeof lucide !== 'undefined') {
-      lucide.createIcons();
-    }
+    let isMenuOpen = false;
 
-    // Mobile Services Toggle
-    const mobileServicesToggle = document.getElementById("mobile-services-toggle");
-    const mobileServicesList = document.getElementById("mobile-services-list");
-    const mobileServicesChevron = document.getElementById("mobile-services-chevron");
-    
-    if (mobileServicesToggle && mobileServicesList) {
-      mobileServicesToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        const isExpanded = mobileServicesToggle.getAttribute('aria-expanded') === 'true';
-        
-        if (isExpanded) {
-          // Cerrar
-          mobileServicesList.classList.add('hidden');
-          mobileServicesToggle.setAttribute('aria-expanded', 'false');
-          if (mobileServicesChevron) {
-            mobileServicesChevron.classList.remove('rotate-180');
-          }
-        } else {
-          // Abrir
-          mobileServicesList.classList.remove('hidden');
-          mobileServicesList.classList.add('flex');
-          mobileServicesToggle.setAttribute('aria-expanded', 'true');
-          if (mobileServicesChevron) {
-            mobileServicesChevron.classList.add('rotate-180');
-          }
-        }
-      });
-      
-      // Cerrar cuando se hace click en un servicio
-      mobileServicesList.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => toggle(false));
-      });
-    }
+    // Toggle mobile menu
+    const toggleMenu = (open) => {
+      if (isMenuOpen === open) return;
+      isMenuOpen = open;
 
-    if (!menuBtn || !mobileMenu || !closeBtn || !mobileOverlay) return;
-
-    let isOpen = false; // Estado para evitar toggles múltiples
-
-    const toggle = (open) => {
-      if (isOpen === open) return; // Evitar repeticiones
-      isOpen = open;
+      const { mobileMenu, mobileOverlay, menuBtn } = elements;
+      if (!mobileMenu || !mobileOverlay || !menuBtn) return;
 
       if (open) {
         mobileMenu.classList.remove("translate-x-full");
@@ -378,7 +560,6 @@ const currentPath = pathname.slice(1);
         mobileMenu.setAttribute("aria-hidden", "false");
         setTimeout(() => mobileOverlay.classList.add("opacity-100"), 10);
         document.body.style.overflow = "hidden";
-        menuBtn.classList.add("open");
         menuBtn.setAttribute("aria-expanded", "true");
       } else {
         mobileMenu.classList.add("translate-x-full");
@@ -387,79 +568,97 @@ const currentPath = pathname.slice(1);
         mobileMenu.setAttribute("aria-hidden", "true");
         setTimeout(() => mobileOverlay.classList.add("hidden"), 500);
         document.body.style.overflow = "";
-        menuBtn.classList.remove("open");
         menuBtn.setAttribute("aria-expanded", "false");
       }
     };
 
-    menuBtn.addEventListener('click', () => toggle(true));
-    closeBtn.addEventListener('click', () => toggle(false));
-    mobileOverlay.addEventListener('click', () => toggle(false));
-    mobileMenu.querySelectorAll("a").forEach(link => link.addEventListener('click', () => toggle(false)));
-    
-    // Contact Modal Logic
-    if (contactModalBtn && contactModal && closeContactModal && contactModalBackdrop && contactModalContent) {
-      
-      function openContactModal() {
-        // Mostrar el modal primero (quitar hidden)
-        contactModal.classList.remove("hidden");
-        contactModal.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
-        
-        // Forzar reflow para que la transición funcione
-        void contactModalContent.offsetWidth;
-        
-        // Mostrar backdrop y deslizar panel
-        contactModalBackdrop.classList.remove("opacity-0");
-        contactModalContent.classList.remove("-translate-x-full");
-        contactModalContent.classList.add("translate-x-0");
+    // Toggle services dropdown
+    const toggleServices = () => {
+      const { servicesToggle, servicesList, servicesChevron } = elements;
+      if (!servicesToggle || !servicesList) return;
+
+      const isExpanded =
+        servicesToggle.getAttribute("aria-expanded") === "true";
+
+      if (isExpanded) {
+        servicesList.classList.add("hidden");
+        servicesList.classList.remove("flex");
+        servicesToggle.setAttribute("aria-expanded", "false");
+        servicesChevron?.classList.remove("rotate-180");
+      } else {
+        servicesList.classList.remove("hidden");
+        servicesList.classList.add("flex");
+        servicesToggle.setAttribute("aria-expanded", "true");
+        servicesChevron?.classList.add("rotate-180");
       }
-      
-      function closeContactModalFn() {
-        // Ocultar backdrop y deslizar panel fuera
-        contactModalBackdrop.classList.add("opacity-0");
-        contactModalContent.classList.remove("translate-x-0");
-        contactModalContent.classList.add("-translate-x-full");
-        
-        // Esperar a que termine la animación antes de ocultar el modal
-        setTimeout(() => {
-          contactModal.classList.add("hidden");
-          contactModal.setAttribute("aria-hidden", "true");
-          document.body.style.overflow = "";
-        }, 300);
+    };
+
+    // Event listeners
+    elements.menuBtn?.addEventListener("click", () => toggleMenu(true));
+    elements.closeBtn?.addEventListener("click", () => toggleMenu(false));
+    elements.mobileOverlay?.addEventListener("click", () => toggleMenu(false));
+    elements.servicesToggle?.addEventListener("click", toggleServices);
+
+    // Close menu when clicking links
+    elements.mobileMenu?.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => toggleMenu(false));
+    });
+
+    // Close services when clicking service links
+    elements.servicesList?.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        const { servicesToggle, servicesList, servicesChevron } = elements;
+        servicesList?.classList.add("hidden");
+        servicesList?.classList.remove("flex");
+        servicesToggle?.setAttribute("aria-expanded", "false");
+        servicesChevron?.classList.remove("rotate-180");
+      });
+    });
+
+    // Unified scroll handler
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const { header, logo, topBar, topBarMobile } = elements;
+          if (!header) return;
+
+          const scrolled = window.scrollY > 80;
+
+          header.classList.toggle("header-scrolled", scrolled);
+
+          // Ocultar barra superior desktop al hacer scroll
+          if (topBar) {
+            topBar.style.maxHeight = scrolled ? "0" : "40px";
+            topBar.style.opacity = scrolled ? "0" : "1";
+            topBar.style.padding = scrolled ? "0" : "0.25rem";
+            topBar.style.marginBottom = scrolled ? "0" : "";
+          }
+
+          // Ocultar barra superior mobile al hacer scroll
+          if (topBarMobile) {
+            topBarMobile.style.maxHeight = scrolled ? "0" : "30px";
+            topBarMobile.style.opacity = scrolled ? "0" : "1";
+            topBarMobile.style.padding = scrolled ? "0" : "";
+            topBarMobile.style.margin = scrolled ? "0" : "";
+          }
+
+          if (logo) {
+            logo.classList.toggle("h-24", !scrolled);
+            logo.classList.toggle("h-16", scrolled);
+          }
+
+          ticking = false;
+        });
+        ticking = true;
       }
+    };
 
-      // Event listeners
-      contactModalBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        openContactModal();
-      });
-      
-      closeContactModal.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        closeContactModalFn();
-      });
-      
-      contactModalBackdrop.addEventListener('click', function(e) {
-        if (e.target === contactModalBackdrop) {
-          closeContactModalFn();
-        }
-      });
-      
-      // Cerrar con tecla Escape
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && !contactModal.classList.contains('hidden')) {
-          closeContactModalFn();
-        }
-      });
-    }
-
-
-
+    window.addEventListener("scroll", handleScroll, { passive: true });
   };
 
+  // Initialize
   document.addEventListener("astro:page-load", initHeader);
   initHeader();
+
 </script>
