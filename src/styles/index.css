@@ -114,3 +114,49 @@
   letter-spacing: 1px;
   color: #e0f7f7;
 }
+
+/*---*/
+.dr-quote3 {
+  position: relative;
+  background: url("/images/service-newborn.jpg") no-repeat center center fixed;
+  background-size: cover;
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  overflow: hidden;
+}
+
+.dr-quote3::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.445),
+    rgba(0, 0, 0, 0.445)
+  );
+}
+
+
+.quote-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+.dr-quote3 .quote {
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.dr-quote3 .name {
+  font-size: 18px;
+  font-style: italic;
+  letter-spacing: 1px;
+  color: #e0f7f7;
+}
