@@ -1,0 +1,54 @@
+---
+import { company } from "../../data/company";
+---
+
+<section class="py-16 lg:py-28 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6">
+    
+    <div 
+      class="relative bg-slate-950 rounded-[4rem] lg:rounded-[5.5rem] p-10 md:p-20 overflow-hidden  border border-white/5"
+      data-aos="fade-up"
+    >
+      <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px]"> </div>
+      <div class="absolute bottom-1/2 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-[100px]"></div>
+
+      <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16">
+        
+        <div class="flex-1 text-center lg:text-left space-y-8">
+
+
+          <h2 class="text-5xl md:text-7xl font-black text-white leading-[0.95] tracking-tighter">
+            Reserva tu espacio <br/>
+            <span class="text-transparent bg-clip-text bg-linear-to-r from-pink-500 via-orange-400 to-blue-600 italic font-serif block  mt-3">
+                con un solo click.
+            </span>
+          </h2>
+
+          <p class="text-slate-400 text-lg md:text-xl font-medium max-w-xl mx-auto lg:mx-0">
+            Completa nuestro formulario de reserva y un coordinador médico te contactará por WhatsApp para confirmar tu horario en la sede de Huamanga.
+          </p>
+        </div>
+
+        <div class="relative group">
+          <div class="absolute -inset-1 bg-linear-to-r from-blue-500 to-emerald-500 rounded-[2.5rem] blur opacity-20 group-hover:opacity-50 transition duration-700"></div>
+          
+          <a 
+            href="/reserva"
+            class="relative inline-flex flex-col items-center justify-center gap-2 bg-white text-slate-900 px-14 py-8 rounded-[2.2rem] transition-all hover:scale-105 active:scale-95 shadow-2xl shadow-blue-500/10"
+          >
+            <div class="flex items-center gap-4">
+              <i class="fa-solid fa-calendar-check text-2xl text-blue-600"></i>
+              <span class="font-black text-sm uppercase tracking-[0.2em]">Ir al Formulario</span>
+            </div>
+            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Reserva rápida por WhatsApp</span>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="absolute -bottom-10 -right-10 text-white/3 pointer-events-none -rotate-12">
+        <i class="fa-solid fa-hospital-user text-[22rem]"></i>
+      </div>
+    </div>
+  </div>
+</section>

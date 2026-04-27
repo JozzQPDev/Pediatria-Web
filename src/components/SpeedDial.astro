@@ -1,0 +1,107 @@
+---
+import { company } from "../data/company";
+---
+
+<div id="speed-dial-wrapper" class="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-999 flex flex-col items-end">
+  
+  <div 
+    id="speed-dial-menu" 
+    class="flex flex-col gap-4 mb-5" 
+    style="display: none; opacity: 0; transform: translate3d(0, 20px, 0); pointer-events: none; position: relative; z-index: 1000;"
+  >
+    <a href={`tel:${company.contact.phone}`} class="flex items-center gap-4 bg-white p-2 pr-6 rounded-2xl shadow-xl border-b-4 border-[#2196F3] active:scale-95 transition-all cursor-pointer">
+      <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#2196F3] text-white">
+        <i class="fa-solid fa-phone-flip"></i>
+      </div>
+      <div class="flex flex-col text-left">
+        <span class="text-[9px] font-black text-[#2196F3] uppercase tracking-tighter">Urgencias</span>
+        <span class="text-xs font-extrabold text-slate-700">Llamar ahora</span>
+      </div>
+    </a>
+
+    <a href="/reserva" rel="noopener noreferrer" class="flex items-center gap-4 bg-white p-2 pr-6 rounded-2xl shadow-xl border-b-4 border-[#25D366] active:scale-95 transition-all cursor-pointer">
+      <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#25D366] text-white">
+        <i class="fa-brands fa-whatsapp text-xl"></i>
+      </div>
+      <div class="flex flex-col text-left">
+        <span class="text-[9px] font-black text-[#25D366] uppercase tracking-tighter">Citas</span>
+        <span class="text-xs font-extrabold text-slate-700">Agendar Cita Por Whatsapp</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="relative flex items-center justify-end h-16">
+    <button 
+      id="main-dial-btn" 
+      class="relative flex items-center bg-white h-16 w-16 rounded-[40px] shadow-2xl border border-slate-100 cursor-pointer outline-none z-50 touch-none overflow-hidden"
+      type="button"
+    >
+      <div class="absolute right-0 w-16 h-16 flex items-center justify-center z-30 pointer-events-none">
+        <div class="w-12 h-12 p-0.5 bg-linear-to-tr from-[#FF9800] via-[#E91E63] to-[#2196F3] rounded-full">
+          <img src="/icon.png" alt="Dharma" class="w-full h-full rounded-full bg-white p-0.5" />
+        </div>
+      </div>
+
+      <div id="dial-text" class="whitespace-nowrap opacity-0 invisible flex flex-col justify-center pr-16 pl-6 z-20">
+        <p class="text-[14px] font-black text-slate-800 leading-tight">
+          Hablar con <span class="text-[#E91E63] italic">Dharma</span>
+        </p>
+      </div>
+    </button>
+  </div>
+</div>
+
+<script>
+  import { gsap } from "gsap";
+
+  const initSpeedDial = () => {
+    const wrapper = document.getElementById('speed-dial-wrapper');
+    const btn = document.getElementById('main-dial-btn');
+    const text = document.getElementById('dial-text');
+    const menu = document.getElementById('speed-dial-menu');
+
+    if (!wrapper || !btn || !text || !menu) return;
+
+    gsap.set(btn, { transformOrigin: "right center" });
+
+    const tl = gsap.timeline({ 
+      paused: true, 
+      reversed: true,
+      defaults: { ease: "power4.inOut", duration: 0.3 } 
+    });
+
+    tl.to(btn, { width: 250, borderRadius: "20px" })
+      .to(text, { autoAlpha: 1, duration: 0.15 }, "-=0.2")
+      .to(menu, { 
+        display: "flex", 
+        autoAlpha: 1, 
+        y: 0, 
+        duration: 0.2,
+        pointerEvents: "auto", // IMPORTANTE: Habilita clics cuando se muestra
+        onReverseComplete: () => gsap.set(menu, { pointerEvents: "none" }) // Deshabilita al cerrar
+      }, "-=0.15");
+
+    const isTouch = window.matchMedia("(pointer: coarse)").matches;
+
+    if (isTouch) {
+      // Usamos click pero evitamos que se propague para no activar el listener del documento
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        tl.reversed() ? tl.play() : tl.reverse();
+      });
+
+      // Cerrar solo si tocamos fuera del wrapper
+      document.addEventListener('click', (e) => {
+        const target = e.target as Node;
+        if (!wrapper.contains(target)) tl.reverse();
+      });
+    } else {
+      wrapper.addEventListener('mouseenter', () => tl.play());
+      wrapper.addEventListener('mouseleave', () => tl.reverse());
+    }
+  };
+
+  initSpeedDial();
+  document.addEventListener("astro:after-swap", initSpeedDial);
+</script>

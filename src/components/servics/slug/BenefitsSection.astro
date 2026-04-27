@@ -1,0 +1,102 @@
+---
+interface Service {
+  icon: string;
+  benefits: string[];
+}
+
+interface Props {
+  service: Service;
+  colors: {
+    bgLight: string;
+    text: string;
+    gradient: string;
+    icon?: string;
+  };
+}
+
+const { service, colors }: Props = Astro.props;
+---
+
+<section class="py-10 md:py-24 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-5 md:px-6">
+    <div class="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
+      
+      <div class="order-1 lg:order-1">
+        <div class={`inline-flex items-center gap-3 ${colors.bgLight} ${colors.text} px-4 py-2 md:px-5 md:py-2.5 rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] mb-6 md:mb-8 animate-fade-in`}>
+          <span class="flex gap-1">
+            <span class={`w-1.5 h-1.5 rounded-full ${colors.icon || 'bg-current'}`}></span>
+            <span class={`w-1.5 h-1.5 rounded-full ${colors.icon || 'bg-current'}`}></span>
+            <span class={`w-1.5 h-1.5 rounded-full ${colors.icon || 'bg-current'}`}></span>
+          </span>
+          <i class={`${service.icon} text-sm md:text-base`}></i>
+          <span>Compromiso de calidad</span>
+        </div>
+        
+        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-8 md:mb-10 tracking-tight leading-[1.1] text-balance">
+          Beneficios de nuestro <br class="hidden md:block"/> <span class={colors.text}>enfoque pediátrico</span>
+        </h2>
+
+        <div class="grid gap-5 md:gap-6">
+          {service.benefits.map((benefit) => (
+            <div class="flex items-start gap-4 md:gap-5 group cursor-default">
+              <div class={`w-10 h-10 md:w-11 md:h-11 ${colors.bgLight} ${colors.text} rounded-xl md:rounded-2xl flex items-center justify-center shrink-0 mt-1 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
+                <i class="fa-solid fa-heart text-xs md:text-sm"></i>
+              </div>
+              <div class="flex-1">
+                <p class="text-base md:text-lg font-bold text-slate-700 leading-snug group-hover:text-slate-950 transition-colors">
+                  {benefit}
+                </p>
+                <div class={`w-8 h-0.5 mt-2 ${colors.text.replace('text', 'bg')} opacity-20 group-hover:w-full transition-all duration-700`}></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div class="order-2 lg:order-2 relative">
+       
+        
+        <div class={`relative bg-linear-to-br ${colors.gradient} rounded-[2.5rem] md:rounded-[4rem] p-8 md:p-14 text-white  overflow-hidden group`}>
+          
+          
+          <div class="relative z-10">
+            <div class="flex items-center gap-4 md:gap-6 mb-8 md:mb-12">
+              <div class="w-16 h-16 md:w-20 md:h-20 bg-white/20 backdrop-blur-xl rounded-3xl md:rounded-4xl flex items-center justify-center border border-white/30 shrink-0">
+                <i class="fa-solid fa-medal text-3xl md:text-4xl text-white"></i>
+              </div>
+              <div>
+                <h3 class="text-xl md:text-2xl font-black tracking-tight leading-tight mb-1">Excelencia Dharma</h3>
+                <p class="text-white/80 text-sm md:text-base font-medium">Atención médica en Ayacucho</p>
+              </div>
+            </div>
+            
+            <div class="grid gap-5 md:gap-7">
+              {[
+                { icon: 'fa-shield-heart', text: 'Protocolos de bioseguridad' },
+                { icon: 'fa-user-doctor', text: 'Especialistas certificados' },
+                { icon: 'fa-clock', text: 'Atención con puntualidad' },
+                { icon: 'fa-microscope', text: 'Equipamiento moderno' }
+              ].map(item => (
+                <div class="flex items-center gap-4 group/item">
+                  <div class="w-9 h-9 bg-white/10 rounded-lg flex items-center justify-center group-hover/item:bg-white/20 transition-all shrink-0">
+                    <i class={`fa-solid ${item.icon} text-sm text-white/90`}></i>
+                  </div>
+                  <span class="text-[15px] md:text-[17px] font-bold text-white tracking-wide">{item.text}</span>
+                </div>
+              ))}
+            </div>
+
+            <div class="mt-8 md:mt-12 pt-8 md:pt-10 border-t border-white/10 flex items-center justify-between">
+               <div class="flex flex-col">
+                 <span class="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-white/50">Pediatría</span>
+                 <span class="text-sm font-bold text-white/90">Dharma</span>
+               </div>
+               <i class="fa-solid fa-leaf text-white/20 text-2xl md:text-3xl"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

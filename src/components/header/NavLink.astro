@@ -1,0 +1,17 @@
+---
+interface Props {
+  href: string;
+  label: string;
+  exact?: boolean;
+}
+const { href, label, exact = false } = Astro.props;
+const pathname = new URL(Astro.request.url).pathname;
+const isActive = exact ? pathname === href : pathname.includes(href.slice(1));
+---
+
+<a href={href} class:list={[
+  "nav-link transition-all duration-300 hover:text-[#F9A8D4] relative py-1",
+  { "text-[#F9A8D4] border-b-2 border-[#F9A8D4]": isActive }
+]}>
+  {label}
+</a>

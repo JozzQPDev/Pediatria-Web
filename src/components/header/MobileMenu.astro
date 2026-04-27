@@ -1,0 +1,162 @@
+---
+import { siteConfig } from "../../data/siteConfig";
+import { services } from "../../data/services";
+import { company } from "../../data/company";
+
+const pathname = new URL(Astro.request.url).pathname;
+
+const navItems = [
+  { name: "Inicio", href: "/", exact: true, icon: "fa-house" },
+  { name: "Nosotros", href: "/nosotros", icon: "fa-heart-pulse" },
+  { name: "Servicios", href: "/servicios", hasDropdown: true, icon: "fa-stethoscope" },
+  { name: "Equipo", href: "/equipo", icon: "fa-user-doctor" },
+  { name: "Blogs", href: "/blogs", icon: "fa-book-open" },
+  { name: "Contacto", href: "/contacto", icon: "fa-comment" },
+  { name: "Reservar", href: "/reserva", icon: "fa-calendar",}
+];
+
+const isActive = (href: string, exact = false) =>
+  exact ? pathname === href : pathname.startsWith(href) && href !== "/";
+
+const socialLinks = [
+  { icon: "fa-facebook-f", url: company.social.facebook },
+  { icon: "fa-instagram", url: company.social.instagram },
+  { icon: "fa-tiktok", url: company.social.tiktok },
+  { icon: "fa-linkedin-in", url: company.social.linkedin },
+];
+---
+
+<div 
+  id="mobile-overlay"
+  class="fixed inset-0 bg-slate-900/20 backdrop-blur-md z-998 opacity-0 hidden transition-all duration-700 lg:hidden"
+  aria-hidden="true"
+></div>
+
+<div 
+  id="mobile-menu"
+  class="fixed top-0 right-0 w-[88%] max-w-sm h-screen bg-[#FDFDFF] z-999 translate-x-full transition-transform duration-700 cubic-bezier(0.16, 1, 0.3, 1) lg:hidden flex flex-col shadow-[-15px_0_40px_rgba(249,168,212,0.1)]"
+  role="dialog" 
+  aria-modal="true" 
+  aria-hidden="true"
+>
+  <div class="p-5 flex items-center justify-between border-b border-pink-50/50 bg-white/50">
+    <div class="flex flex-col gap-1">
+      <img src="/images/logo3.png" alt={`${siteConfig.name} logo`} class="h-11 w-auto object-contain" />
+    </div>
+    <button 
+      id="close-menu" 
+      class="w-10 h-10 flex items-center justify-center rounded-full bg-slate-50 text-slate-400 hover:bg-pink-50 hover:text-pink-400 transition-all duration-300"
+      aria-label="Cerrar menú"
+    >
+      <i class="fa-solid fa-xmark text-lg"></i>
+    </button>
+  </div>
+
+  <nav class="flex-1 overflow-y-auto px-8 py-10 flex flex-col gap-5" role="navigation">
+    {navItems.map((item) => (
+      <div class="flex flex-col">
+        {item.hasDropdown ? (
+          <div class="group">
+            <button 
+              id="mobile-services-toggle"
+              class="w-full flex items-center justify-between p-4 rounded-2xl bg-white border border-slate-50 shadow-sm text-[13px] uppercase tracking-[0.15em] font-bold text-slate-500 hover:text-pink-400 transition-all active:scale-95"
+              aria-expanded="false" 
+            >
+              <span class="flex items-center gap-3">
+                <i class={`fa-solid fa-hand-holding-heart text-pink-200`}></i>
+                {item.name}
+              </span>
+              <i 
+                id="mobile-services-chevron" 
+                class="fa-solid fa-chevron-down text-[10px] opacity-30 transition-transform duration-500" 
+              />
+            </button>
+            <div 
+              id="mobile-services-list" 
+              class="hidden flex-col gap-3 mt-3 pl-11 pr-4"
+            >
+              {services.map((s) => (
+                <a href={`/servicios/${s.slug}`} class="text-[12px] text-slate-400 hover:text-pink-400 transition-colors py-1 border-b border-dotted border-slate-100 last:border-0">
+                  {s.title}
+                </a>
+              ))}
+              <a href="/servicios" class="text-[10px] font-black text-pink-300 uppercase tracking-widest mt-2 flex items-center gap-2">
+                <span class="w-4 h-px bg-pink-100"></span> Ver catálogo completo
+              </a>
+            </div>
+          </div>
+        ) : (
+         <a 
+          href={item.href}
+          class:list={[
+            "p-4 rounded-2xl border transition-all flex items-center justify-between group active:scale-95",
+            isActive(item.href, item.exact) 
+              ? "bg-pink-400 text-white border-pink-400 shadow-lg shadow-pink-100 font-bold" 
+              : "bg-white text-slate-500 border-slate-50 shadow-sm hover:border-pink-100 hover:bg-pink-50/30"
+          ]}
+        >
+          <span class="flex items-center gap-3 text-[13px] uppercase tracking-[0.15em]">
+            <i class:list={["fa-solid w-5 text-center", item.icon, isActive(item.href, item.exact) ? "text-white" : "text-pink-200"]}></i>
+            {item.name}
+          </span>
+          <i class:list={["fa-solid fa-chevron-right text-[10px] transition-all", isActive(item.href, item.exact) ? "opacity-100" : "opacity-0 group-hover:opacity-40 group-hover:translate-x-1"]} />
+        </a>
+        )}
+      </div>
+    ))}
+
+    <div class="mt-8 pt-8 border-t border-pink-50/50 space-y-8">
+      <div class="space-y-5">
+        <div class="flex items-center justify-center gap-2 text-slate-400">
+           <i class="fa-solid fa-location-dot text-[10px] text-pink-200"></i>
+           <p class="text-[10px] tracking-[0.2em] uppercase font-bold">Ayacucho, Perú</p>
+        </div>
+        
+        <a 
+          href="/reserva"
+          class="flex items-center justify-center gap-3 w-full bg-slate-900 text-white text-[11px] tracking-[0.2em] font-bold py-5 rounded-[20px] hover:bg-pink-400 hover:shadow-xl hover:shadow-pink-100 transition-all duration-500 uppercase active:scale-[0.98]"
+        >
+          <i class="fa-solid fa-calendar-heart"></i>
+          Agendar Cita Médica
+        </a>
+      </div>
+
+      <div class="text-center space-y-4 pb-6">
+        <p class="text-slate-300 text-[9px] tracking-[0.2em] uppercase font-black">Conéctate con nosotros</p>
+        <div class="flex justify-center items-center gap-4">
+          {socialLinks.filter(social => social.url).map((social) => (
+            <a
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-11 h-11 bg-white border border-slate-100 rounded-full flex items-center justify-center text-slate-400 transition-all duration-500 hover:bg-pink-400 hover:border-pink-400 hover:text-white hover:-translate-y-1 hover:shadow-md"
+            >
+              <i class={`fa-brands ${social.icon} text-sm`} />
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>
+
+<style>
+  .cubic-bezier {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  
+  nav::-webkit-scrollbar { display: none; }
+  nav { -ms-overflow-style: none; scrollbar-width: none; }
+  
+  /* Efecto de entrada para los links */
+  #mobile-menu[aria-hidden="false"] a, 
+  #mobile-menu[aria-hidden="false"] button {
+    animation: slideIn 0.5s ease forwards;
+    opacity: 0;
+  }
+
+  @keyframes slideIn {
+    from { transform: translateX(20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+</style>

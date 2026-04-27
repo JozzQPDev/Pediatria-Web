@@ -1,0 +1,45 @@
+---
+// ContactEmergencyCard.astro - Card de emergencias 24h
+---
+
+<div class="relative overflow-hidden rounded-3xl shadow-2xl group focus-within:ring-2 focus-within:ring-rose-300 animate-slide-in-right animation-delay-200" role="article" aria-label="Emergencias 24h">
+  <img src="/images/contact-emergency.jpg" alt="Imagen representativa de servicios de emergencias pediátricas" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+  
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-t from-red-400/80 via-red-400/35 to-transparent opacity-100 md:opacity-90 md:group-hover:opacity-100 transition-opacity duration-500"></div>
+  
+  <div class="absolute inset-0 flex flex-col justify-end p-6 text-white">
+    <div class="flex items-center gap-3 mb-4">
+      <div class="bg-white/20 p-2 rounded-lg backdrop-blur-sm animate-pulse">
+        <i class="fa-solid fa-ambulance w-6 h-6" aria-hidden="true"></i>
+      </div>
+      <span class="font-bold tracking-tight text-xl italic">Emergencias 24h</span>
+    </div>
+    <p class="text-rose-100 text-sm mb-6 leading-relaxed">
+      Atención inmediata sin previa cita para casos críticos pediátricos en Huamanga.
+    </p>
+    <a href="tel:+51997307782" class="block w-full text-center bg-white text-rose-500 py-4 rounded-xl font-bold text-sm hover:bg-rose-50 hover:scale-105 transition-all active:scale-95 shadow-lg focus:ring-2 focus:ring-white" aria-label="Llamar a emergencias ahora">
+      LLAMAR AHORA
+    </a>
+  </div>
+  
+  <!-- Elemento decorativo corazón -->
+  <div class="absolute top-10 right-10 animate-bounce">
+    <i class="fa-solid fa-heart w-8 h-8 text-yellow-200" aria-hidden="true"></i>
+  </div>
+</div>
+
+<style>
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .animate-slide-in-right { animation: slide-in-right 0.8s ease-out; }
+  .animation-delay-200 { animation-delay: 0.2s; }
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+  }
+  .animate-bounce { animation: bounce 2s infinite; }
+</style>

@@ -1,0 +1,119 @@
+---
+interface Props {
+  relatedPosts: Array<{
+    slug: string;
+    image: string;
+    title: string;
+    category: string;
+    date: string;
+    readTime: string;
+  }>;
+}
+
+const { relatedPosts } = Astro.props;
+---
+
+{
+  relatedPosts.length > 0 && (
+    <section class="py-24 bg-white relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-1/3 h-full bg-slate-50/50 -skew-x-12 translate-x-20 pointer-events-none"></div>
+
+      <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+         <div class="max-w-xl">
+            <div data-aos="fade-right" class="mb-6"> <span class="inline-flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-white border border-slate-100 text-slate-500 font-black uppercase tracking-[0.25em] text-[9px] shadow-sm">
+                <span class="flex gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-pink-400"></span>
+                  <span class="w-2 h-2 rounded-full bg-orange-400"></span>
+                  <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+                </span>
+                Contenido Especializado
+              </span>
+            </div>
+
+            <h2 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter leading-[0.95]">
+              Explora nuestras <br />
+              <span class="text-transparent bg-clip-text bg-linear-to-r from-pink-500 via-orange-400 to-blue-500 italic font-serif block mt-2">Lecturas Médicas</span>
+            </h2>
+            
+            <div class="mt-6 w-20 h-1.5 bg-linear-to-r  from-pink-500 via-orange-400 to-transparent rounded-full"></div>
+          </div>
+          
+          <a href="/blogs" class="group flex items-center gap-4 text-slate-400 font-black uppercase text-[10px] tracking-[0.2em] hover:text-blue-600 transition-all">
+            Ver Biblioteca Completa
+            <span class="w-12 h-12 rounded-2xl border border-slate-100 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white group-hover:rotate-12 transition-all shadow-sm">
+              <i class="fa-solid fa-arrow-right-long"></i>
+            </span>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {relatedPosts.map((post) => (
+            <article class="group flex flex-col h-full">
+              <div class="relative mb-8 rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_-15px_rgba(0,0,0,0.1)] transition-transform duration-500 group-hover:-translate-y-2">
+                <div class="absolute top-5 left-5 z-20">
+                  <span class="bg-white/95 backdrop-blur-md text-slate-900 px-4 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-widest shadow-xl border border-white/20">
+                    {post.category}
+                  </span>
+                </div>
+
+                <a href={`/blog/${post.slug}`} class="block aspect-4/5 overflow-hidden bg-slate-100">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[3s] ease-out opacity-90 group-hover:opacity-100"
+                  />
+                </a>
+                
+                <div class="absolute bottom-0 left-0 w-full p-6 bg-linear-to-t from-slate-900/60 via-transparent to-transparent">
+                   <div class="flex items-center gap-4 text-white text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                      <span><i class="fa-solid fa-clock mr-2 text-blue-400"></i>{post.readTime}</span>
+                   </div>
+                </div>
+              </div>
+
+              <div class="flex-1 px-2">
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="w-8 h-0.5 bg-blue-500/30"></span>
+                  <time class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    {new Date(post.date).toLocaleDateString("es-ES", { month: "long", day: "numeric", year: "numeric" })}
+                  </time>
+                </div>
+
+                <h3 class="text-2xl font-black text-slate-900 leading-[1.2] mb-6 tracking-tight group-hover:text-blue-600 transition-colors">
+                  <a href={`/blog/${post.slug}`}>
+                    {post.title}
+                  </a>
+                </h3>
+
+                <a href={`/blog/${post.slug}`} class="inline-flex items-center gap-3 text-slate-900 font-black text-[10px] uppercase tracking-[0.2em] group/btn transition-all">
+                  <span class="relative">
+                    Seguir leyendo
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 group-hover/btn:w-full transition-all duration-300"></span>
+                  </span>
+                  <i class="fa-solid fa-circle-chevron-right text-blue-500 text-sm group-hover/btn:translate-x-1 transition-transform"></i>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  /* Efecto de entrada tipo "Cascade" */
+  article {
+    animation: reveal 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  article:nth-child(1) { animation-delay: 0.1s; }
+  article:nth-child(2) { animation-delay: 0.2s; }
+  article:nth-child(3) { animation-delay: 0.3s; }
+
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

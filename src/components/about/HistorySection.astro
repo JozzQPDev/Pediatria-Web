@@ -1,0 +1,121 @@
+---
+import { company } from "../../data/company";
+
+const galleryImages = [
+  "/images/clinic-4.jpg", 
+  "/images/clinic-5.jpg", 
+  "/images/clinic-6.jpg"
+];
+---
+
+<section class="py-24 lg:py-32 relative z-10 overflow-hidden">
+  <div class="absolute top-0 left-0 w-full h-full bg-dots opacity-30 -z-10"></div>
+  <div class="absolute top-1/2 -left-24 w-96 h-96 bg-blue-50/60 rounded-full blur-[120px] -z-10"></div>
+  <div class="absolute bottom-0 -right-24 w-96 h-96 bg-pink-50/60 rounded-full blur-[120px] -z-10"></div>
+
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid lg:grid-cols-12 gap-16 items-center">
+      
+      <div class="lg:col-span-5 space-y-10 order-1 lg:order-1">
+        <div data-aos="fade-right">
+          <span class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] shadow-sm">
+            <span class="flex gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+            </span>
+            Nuestro Propósito
+          </span>
+
+          <h2 class="text-5xl lg:text-7xl mt-8 font-black text-slate-900 leading-[1.05] tracking-tighter">
+            Diseñamos la clínica <br/> 
+            <span class="text-transparent bg-clip-text bg-linear-to-r from-pink-500 via-orange-400 to-blue-500 italic font-serif block mt-2">
+              que tus hijos merecen
+            </span>
+          </h2>
+        </div>
+
+        <div class="space-y-6 max-w-xl" data-aos="fade-up" data-aos-delay="400">
+          <p class="text-lg lg:text-xl text-slate-600 leading-relaxed font-medium">
+            La <strong class="text-slate-900">{company.name}</strong> nace con el objetivo de ser el centro de referencia en salud infantil en <span class="text-blue-600 font-bold">{company.address.city}</span>. 
+          </p>
+          
+          <div class="flex items-center gap-5 p-5 bg-slate-50 rounded-4xl border border-slate-100 shadow-inner">
+             <div class="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center text-orange-500 shrink-0">
+                <i class="fa-solid fa-heart-circle-check text-xl"></i>
+             </div>
+             <p class="text-sm text-slate-500 font-bold leading-snug">
+                Priorizamos la seguridad y el bienestar emocional en cada rincón de nuestras instalaciones.
+             </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7 order-2 lg:order-2">
+        <div class="relative h-112.5 md:h-128 lg:h-144 w-full">
+          
+          <div class="absolute left-0 top-0 w-[75%] h-[80%] z-10" data-aos="zoom-in">
+            <div class="w-full h-full rounded-[3rem] lg:rounded-[5rem] overflow-hidden border-4 md:border-8 border-white shadow-2xl group">
+              <img 
+                src="/images/clinic-prinspl.jpg" 
+                alt="Clínica Principal" 
+                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-[3s]"
+              />
+            </div>
+
+            <div class="absolute -bottom-6 -left-4 lg:-left-10 bg-white p-5 md:p-6 rounded-4xl md:rounded-[2.5rem] shadow-2xl border border-slate-50 z-30 animate-float min-w-37.5 md:min-w-45">
+               <div class="flex items-center gap-3 mb-1">
+                  <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                  </span>
+                  <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Estado</p>
+               </div>
+               <p class="text-lg md:text-xl font-black text-slate-900 tracking-tighter">¡Te Esperamos!</p>
+            </div>
+          </div>
+
+          <div class="absolute right-0 top-10 w-[38%] h-[35%] z-20" data-aos="fade-left" data-aos-delay="500">
+            <div class="w-full h-full rounded-4xl lg:rounded-[3.5rem] overflow-hidden border-4 border-white shadow-xl group hover:-translate-y-2 transition-all duration-500 bg-slate-100">
+              <img src={galleryImages[0]} alt="Instalaciones" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+            </div>
+          </div>
+
+          <div class="absolute right-6 bottom-0 w-[45%] h-[40%] z-0" data-aos="fade-up" data-aos-delay="700">
+            <div class="w-full h-full rounded-4xl lg:rounded-[3.5rem] overflow-hidden border-4 border-white shadow-xl group hover:scale-105 transition-all duration-500 bg-slate-100">
+              <img src={galleryImages[1]} alt="Consultorios" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100" />
+            </div>
+          </div>
+
+          <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-dots-pattern -z-10 opacity-40"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(1deg); }
+  }
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .font-serif {
+    font-style: italic;
+  }
+
+  /* Patrones de puntos corregidos */
+  .bg-dots {
+    background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+    background-size: 40px 40px;
+  }
+
+  .bg-dots-pattern {
+    background-image: radial-gradient(#cbd5e1 2px, transparent 2px);
+    background-size: 15px 15px;
+  }
+</style>

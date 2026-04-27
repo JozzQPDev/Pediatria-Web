@@ -1,0 +1,52 @@
+---
+// ContactServicesCard.astro - Card servicios al visitante
+---
+
+<article class="group relative overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-lg hover:shadow-2xl transition-all duration-500 focus-within:ring-2 focus-within:ring-teal-300 animate-slide-in-right animation-delay-400" aria-label="Servicios disponibles para visitantes">
+  <!-- Imagen de fondo -->
+  <img src="/images/contact-services.jpg" alt="Servicios e instalaciones disponibles para visitantes" class="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
+
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-t from-sky-400/80 via-sky-400/35 to-transparent opacity-100 md:opacity-90 md:group-hover:opacity-100 transition-opacity duration-500"></div>
+
+  <!-- Contenido -->
+  <div class="absolute inset-0 flex flex-col justify-end p-6">
+    <div class="flex items-center gap-4">
+      <div class="w-14 h-14 bg-white/95 backdrop-blur rounded-2xl flex items-center justify-center text-sky-500 shadow-sm">
+        <i class="fa-solid fa-circle-check w-7 h-7" aria-hidden="true"></i>
+      </div>
+      <div>
+        <h4 class="text-xl font-black text-white leading-tight">Servicios al Visitante</h4>
+        <p class="text-sky-50/90 text-sm">Comodidades pensadas para tu familia</p>
+      </div>
+    </div>
+
+    <ul class="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-sky-50">
+      <li class="flex items-center gap-2">
+        <span class="h-1.5 w-1.5 rounded-full bg-sky-200/90"></span>
+        Estacionamiento gratuito
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="h-1.5 w-1.5 rounded-full bg-sky-200/90"></span>
+        Acceso para coches y sillas
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="h-1.5 w-1.5 rounded-full bg-sky-200/90"></span>
+        Zona de lactancia
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="h-1.5 w-1.5 rounded-full bg-sky-200/90"></span>
+        Wi‑Fi alta velocidad
+      </li>
+    </ul>
+  </div>
+</article>
+
+<style>
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .animate-slide-in-right { animation: slide-in-right 0.8s ease-out; }
+  .animation-delay-400 { animation-delay: 0.4s; }
+</style>

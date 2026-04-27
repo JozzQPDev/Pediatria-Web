@@ -1,95 +1,93 @@
-// Services data for the pediatric clinic
+// Services data for the pediatric clinic - Updated with Modern Medical Style
 export const services = [
   {
     slug: "control-crecimiento",
-    title: "Control de Crecimiento",
-    category: "Crecimiento",
-    shortDesc: "Evaluación integral del desarrollo psicomotor para asegurar un crecimiento saludable desde el primer mes.",
-
-    fullDesc: "El control de crecimiento y desarrollo es fundamental para monitorear la salud integral de los niños. Nuestro servicio incluye evaluaciones periódicas que permiten detectar oportunamente cualquier alteración en el crecimiento físico, motor, cognitivo o emocional.",
+    title: "Crecimiento y Desarrollo (CRED)",
+    category: "Pediatría Preventiva",
+    shortDesc: "Monitoreo científico del potencial físico y neurocognitivo de tu hijo.",
+    fullDesc: "Más que un chequeo de rutina, es una evaluación integral basada en estándares internacionales. Supervisamos el carril de crecimiento, hitos motores y el desarrollo del lenguaje para asegurar que tu pequeño alcance su máximo potencial.",
     image: "/images/service-growth.jpg",
-    icon: "baby",
+    icon: "fa-solid fa-baby", // Font Awesome 6
     color: "green",
     features: [
-      "Evaluación antropométrica completa (peso, talla, perímetro cefálico)",
-      "Gráficas de crecimiento percentilares",
-      "Evaluación del desarrollo psicomotor",
-      "Detección temprana de trastornos del crecimiento",
-      "Asesoría nutricional personalizada",
-      "Seguimiento de hitos del desarrollo"
+      "Evaluación antropométrica con software de precisión",
+      "Seguimiento de hitos del desarrollo neurosensorial",
+      "Detección de anemia y deficiencias nutricionales",
+      "Evaluación del desarrollo psicomotor (EEDP/TEPSI)",
+      "Asesoría en crianza respetuosa y vínculos",
+      "Tamizaje de agudeza visual y auditiva"
     ],
     benefits: [
-      "Detección temprana de problemas de crecimiento",
-      "Prevención de complicaciones a largo plazo",
-      "Tranquilidad para los padres",
-      "Plan de cuidado personalizado",
-      "Seguimiento continuo del desarrollo"
+      "Intervención temprana en trastornos del desarrollo",
+      "Optimización del carril de crecimiento genético",
+      "Guía experta para cada etapa de la infancia",
+      "Prevención de enfermedades crónicas infantiles",
+      "Soporte emocional para los padres"
     ],
     process: [
       {
         step: 1,
-        title: "Evaluación Inicial",
-        desc: "Realizamos una evaluación completa del estado actual del niño, incluyendo medidas antropométricas y evaluación del desarrollo."
+        title: "Screening Inicial",
+        desc: "Medición exacta de peso, talla y perímetros con equipos calibrados."
       },
       {
         step: 2,
-        title: "Análisis de Resultados",
-        desc: "Analizamos los resultados comparándolos con las curvas de crecimiento estándar y evaluamos el progreso."
+        title: "Mapeo del Desarrollo",
+        desc: "Evaluación de habilidades motoras, sociales y del lenguaje según la edad."
       },
       {
         step: 3,
-        title: "Plan de Seguimiento",
-        desc: "Establecemos un plan de seguimiento personalizado con fechas de control y recomendaciones específicas."
+        title: "Consulta Médica",
+        desc: "Examen físico detallado y revisión de sistemas por la especialista."
       },
       {
         step: 4,
-        title: "Controles Periódicos",
-        desc: "Realizamos controles periódicos para monitorear el progreso y ajustar el plan según sea necesario."
+        title: "Hoja de Ruta",
+        desc: "Entrega de informe de progreso y recomendaciones nutricionales."
       }
     ],
     faq: [
       {
-        question: "¿Con qué frecuencia debe realizarse el control de crecimiento?",
-        answer: "Durante el primer año de vida, se recomienda realizar controles mensuales. Entre el año y los 2 años, cada 2-3 meses. Después de los 2 años, controles semestrales o anuales según la indicación médica."
+        question: "¿Por qué es importante el control si mi hijo se ve sano?",
+        answer: "Muchos desafíos del desarrollo no son visibles a simple vista. El CRED permite detectar sutiles desviaciones antes de que se conviertan en problemas mayores."
       },
       {
-        question: "¿Qué pasa si mi hijo no sigue la curva de crecimiento normal?",
-        answer: "Si detectamos desviaciones en la curva de crecimiento, realizamos evaluaciones adicionales para determinar la causa y establecer un plan de tratamiento oportuno."
+        question: "¿Qué debo llevar a la cita de CRED?",
+        answer: "Es fundamental traer el carné de vacunación, el historial de alimentación reciente y anotar cualquier duda sobre el sueño o comportamiento que hayas notado."
       },
       {
-        question: "¿El control incluye evaluación del desarrollo mental?",
-        answer: "Sí, nuestro control integral incluye evaluación del desarrollo cognitivo, motor, del lenguaje y socio-emocional."
+        question: "¿Con qué frecuencia debe acudir mi hijo?",
+        answer: "En el primer año es mensual. A partir del segundo año las citas se espacian según las recomendaciones de la Dra. Amalia para monitorear hitos específicos."
       }
     ],
-    price: "Desde S/ 80.00",
-    duration: "30-45 minutos",
-    schedule: "Lunes a Sábado",
-    doctor: "Dr. Ricardo Santos"
+    price: "S/ 80.00",
+    duration: "40 min",
+    schedule: "Lun - Sáb",
+    doctor: "Dra. Amalia Luque"
   },
   {
     slug: "vacunacion-integral",
-    title: "Vacunación Integral",
-    category: "Vacunación",
-    shortDesc: "Disponemos de todos los esquemas de vacunación nacionales e internacionales en un ambiente seguro.",
-
-    fullDesc: "La vacunación es la herramienta más efectiva para prevenir enfermedades infecciosas. Contamos con un completo esquema de vacunación que sigue estrictamente las recomendaciones del Ministerio de Salud y la OMS.",
+    title: "Inmunización Inteligente",
+    category: "Protección",
+    shortDesc: "Esquemas de vacunación de alta calidad con protocolos de mínimo dolor.",
+    fullDesc: "Protección avanzada con vacunas de última generación. Manejamos tanto el esquema nacional (MINSA) como vacunas complementarias internacionales, garantizando la cadena de frío y una aplicación humanizada.",
     image: "/images/service-vaccine.jpg",
-    icon: "syringe",
+    icon: "fa-solid fa-syringe",
     color: "blue",
     features: [
-      "Esquema completo de vacunación nacional",
-      "Vacunas internacionales disponibles",
-      "Control de carné de vacunación",
-      "Recordatorio de próximas dosis",
-      "Ambiente seguro y esterilizado",
-      "Personal capacitado en administración de vacunas"
+      "Vacunas acelulares (menor riesgo de fiebre)",
+      "Esquema nacional e internacional completo",
+      "Recordatorios automáticos de próximas dosis",
+      "Técnicas de distracción para reducir el estrés",
+      "Certificación digital de vacunas",
+      "Stock permanente de vacunas especiales"
     ],
     benefits: [
-      "Protección contra enfermedades prevenibles",
-      "Inmunidad colectiva para la comunidad",
-      "Prevención de complicaciones graves",
-      "Certificación internacional disponible",
-      "Tranquilidad para toda la familia"
+      "Máxima eficacia inmunológica",
+      "Protocolos de bioseguridad rigurosos",
+      "Ambiente diseñado para reducir el miedo",
+      "Prevención de enfermedades graves y brotes",
+      "Asesoría post-vacunal inmediata"
     ],
     process: [
       {
@@ -127,35 +125,34 @@ export const services = [
         answer: "Sí, contamos con vacunas internacionales y emitimos certificados de vacunación válidos para viajes al extranjero."
       }
     ],
-    price: "Desde S/ 40.00",
-    duration: "20-30 minutos",
-    schedule: "Lunes a Sábado",
-    doctor: "Dra. Elena Martínez"
+    price: "Variable",
+    duration: "20 min",
+    schedule: "Lun - Sáb",
+    doctor: "Lic. Especialista"
   },
   {
     slug: "nutricion-infantil",
-    title: "Nutrición Infantil",
-    category: "Nutrición",
-    shortDesc: "Asesoría especializada en lactancia y alimentación complementaria para un desarrollo óptimo.",
-
-    fullDesc: "La nutrición adecuada es fundamental para el crecimiento y desarrollo saludable de los niños. Nuestro servicio de nutrición infantil ofrece asesoría personalizada para cada etapa del desarrollo.",
+    title: "Nutrición e Inmunonutrición",
+    category: "Bienestar",
+    shortDesc: "Alimentación basada en ciencia para fortalecer el sistema inmune.",
+    fullDesc: "Transformamos la alimentación en medicina preventiva. Especialistas en Lactancia, Baby Led Weaning (BLW) y manejo de selectividad alimentaria, enfocándonos en la microbiota y salud digestiva.",
     image: "/images/service-nutrition.jpg",
-    icon: "apple",
+    icon: "fa-solid fa-apple-whole",
     color: "yellow",
     features: [
-      "Asesoría en lactancia materna",
-      "Introducción de alimentación complementaria",
-      "Plan nutricional personalizado",
-      "Manejo de alergias alimentarias",
-      "Control de peso y talla",
-      "Talleres de nutrición para padres"
+      "Asesoría certificada en lactancia materna",
+      "Talleres de alimentación complementaria (BLW/Papillas)",
+      "Tratamiento de anemia y desnutrición",
+      "Protocolos para alergias alimentarias (APLV)",
+      "Análisis de composición corporal",
+      "Suplementación nutricional personalizada"
     ],
     benefits: [
-      "Hábitos alimentarios saludables desde temprana edad",
-      "Prevención de obesidad infantil",
-      "Desarrollo óptimo del niño",
-      "Solución de problemas de alimentación",
-      "Tranquilidad para los padres"
+      "Fortalecimiento del sistema inmunológico",
+      "Relación saludable con la comida desde el inicio",
+      "Prevención de obesidad y diabetes futura",
+      "Mejora en el rendimiento escolar y energía",
+      "Menos enfermedades digestivas"
     ],
     process: [
       {
@@ -193,35 +190,34 @@ export const services = [
         answer: "Sí, tenemos experiencia en manejar niños selectivos con la comida y ofrecemos estrategias para ampliar su repertorio alimentario."
       }
     ],
-    price: "Desde S/ 100.00",
-    duration: "45-60 minutos",
-    schedule: "Lunes a Viernes",
-    doctor: "Dr. Ricardo Santos"
+    price: "S/ 100.00",
+    duration: "60 min",
+    schedule: "Lun - Vie",
+    doctor: "Nutricionista Pediátrica"
   },
   {
     slug: "atencion-recien-nacidos",
-    title: "Atención de Recién Nacidos",
+    title: "Neonatología Especializada",
     category: "Recién Nacidos",
-    shortDesc: "Cuidado experto y preventivo diseñado para los primeros y más importantes días de vida de tu bebé.",
-
-    fullDesc: "Los primeros días de vida son cruciales para la adaptación del bebé al mundo exterior. Ofrecemos atención especializada y cuidados preventivos para garantizar el mejor inicio de vida.",
+    shortDesc: "Cuidado experto para los momentos más frágiles y hermosos.",
+    fullDesc: "Acompañamos el aterrizaje de tu bebé al mundo. Expertos en los desafíos del primer mes: desde el cuidado del cordón hasta la detección temprana de patologías neonatales con enfoque en medicina regenerativa.",
     image: "/images/service-newborn.jpg",
-    icon: "heart-pulse",
+    icon: "fa-solid fa-heart-pulse",
     color: "pink",
     features: [
-      "Evaluación neonatal completa",
-      "Tamizaje neonatal",
-      "Control del cordón umbilical",
-      "Asesoría en lactancia",
-      "Control de ictericia",
-      "Seguimiento del peso y crecimiento"
+      "Tamizaje metabólico y cardiológico",
+      "Manejo avanzado de ictericia neonatal",
+      "Evaluación de frenillo lingual (lactancia)",
+      "Cuidado del cordón umbilical",
+      "Neurodesarrollo del prematuro",
+      "Soporte 24/7 para emergencias neonatales"
     ],
     benefits: [
-      "Detección temprana de problemas de salud",
-      "Apoyo en la adaptación a la paternidad",
-      "Prevención de complicaciones",
-      "Tranquilidad para los padres primerizos",
-      "Vínculo saludable padres-hijo"
+      "Detección precoz de cardiopatías",
+      "Éxito garantizado en la lactancia",
+      "Reducción de reingresos hospitalarios",
+      "Tranquilidad absoluta para padres primerizos",
+      "Crecimiento estable desde la semana 1"
     ],
     process: [
       {
@@ -259,37 +255,36 @@ export const services = [
         answer: "Sí, contamos con atención de urgencias especializada para recién nacidos las 24 horas."
       }
     ],
-    price: "Desde S/ 120.00",
-    duration: "45-60 minutos",
-    schedule: "Lunes a Domingo (24h)",
-    doctor: "Dra. Elena Martínez"
+    price: "S/ 120.00",
+    duration: "50 min",
+    schedule: "Lun - Dom",
+    doctor: "Dra. Amalia Luque"
   },
   {
     slug: "psicologia-infantil",
-    title: "Psicología Infantil",
-    category: "Psicología",
-    shortDesc: "Apoyo profesional enfocado en el bienestar emocional y el desarrollo conductual saludable.",
-
-    fullDesc: "La salud mental infantil es tan importante como la salud física. Nuestro servicio de psicología infantil ofrece evaluación y tratamiento de problemas emocionales, conductuales y del desarrollo.",
+    title: "Psicología y Neurodesarrollo",
+    category: "Salud Mental",
+    shortDesc: "Equilibrio emocional y cognitivo para niños felices y resilientes.",
+    fullDesc: "Abordamos el mundo emocional de los niños con terapias basadas en el juego y la evidencia. Especialistas en neurodiversidad, manejo de ansiedad infantil y pautas de crianza efectiva.",
     image: "/images/service-psychology.jpg",
-    icon: "brain",
+    icon: "fa-solid fa-brain",
     color: "purple",
     features: [
-      "Evaluación psicológica integral",
-      "Terapia individual infantil",
-      "Terapia familiar",
-      "Manejo de problemas de conducta",
-      "Apoyo en trastornos del desarrollo",
-      "Orientación a padres"
+      "Evaluación de Coeficiente Intelectual y Madurez",
+      "Detección de TDAH y espectro autista (TEA)",
+      "Terapia para ansiedad y miedos infantiles",
+      "Modificación de conducta con disciplina positiva",
+      "Orientación vocacional y apoyo escolar",
+      "Talleres de habilidades sociales"
     ],
     benefits: [
-      "Desarrollo emocional saludable",
-      "Mejora en las relaciones familiares",
-      "Herramientas para manejar emociones",
-      "Detección temprana de dificultades",
-      "Mejor calidad de vida para toda la familia"
+      "Mejora en la armonía familiar",
+      "Autoestima sólida en el niño",
+      "Mejor rendimiento y adaptación escolar",
+      "Herramientas de regulación emocional",
+      "Detección temprana de rezagos cognitivos"
     ],
-    process: [
+   process: [
       {
         step: 1,
         title: "Evaluación Inicial",
@@ -325,37 +320,36 @@ export const services = [
         answer: "Sí, la participación de los padres es fundamental. Dependiendo del caso, pueden participar en sesiones familiares o recibir orientación parental."
       }
     ],
-    price: "Desde S/ 100.00",
-    duration: "50-60 minutos",
-    schedule: "Lunes a Sábado",
-    doctor: "Dr. Carlos Ruiz"
+    price: "S/ 100.00",
+    duration: "50 min",
+    schedule: "Lun - Sáb",
+    doctor: "Psicólogo Pediátrico"
   },
   {
     slug: "nebulizaciones",
-    title: "Nebulizaciones",
-    category: "Respiratorio",
-    shortDesc: "Equipamiento de última generación para el tratamiento inmediato de cuadros respiratorios y asma.",
-
-    fullDesc: "Contamos con equipos modernos de nebulización para el tratamiento efectivo de problemas respiratorios en niños. Ofrecemos un ambiente cómodo y seguro para las sesiones de nebulización.",
+    title: "Terapia Respiratoria",
+    category: "Urgencias",
+    shortDesc: "Alivio inmediato para crisis respiratorias con tecnología ultrasónica.",
+    fullDesc: "Atención rápida para cuadros de asma, bronquitis y laringitis. Contamos con equipos de alta eficiencia que reducen el tiempo de tratamiento y mejoran la absorción del medicamento.",
     image: "/images/service-nebulization.jpg",
-    icon: "wind",
+    icon: "fa-solid fa-wind",
     color: "teal",
     features: [
-      "Equipos de nebulización modernos",
-      "Medicamentos de calidad",
-      "Ambiente cómodo y seguro",
-      "Monitoreo durante la sesión",
-      "Personal capacitado",
-      "Disponibilidad inmediata"
+      "Nebulizadores ultrasónicos y tipo mesh",
+      "Oxigenoterapia de flujo controlado",
+      "Aspiración de secreciones si es necesario",
+      "Monitoreo de saturación de oxígeno",
+      "Personal experto en manejo de crisis",
+      "Ambiente lúdico para evitar ansiedad"
     ],
     benefits: [
-      "Alivio rápido de síntomas respiratorios",
-      "Administración efectiva de medicamentos",
-      "Ambiente tranquilo para el niño",
-      "Atención sin cita previa para urgencias",
-      "Seguimiento del tratamiento"
+      "Resolución rápida de la dificultad respiratoria",
+      "Evita traslados innecesarios a emergencias",
+      "Instrucción clara en uso de inhaladores",
+      "Seguimiento médico post-crisis",
+      "Atención preferencial inmediata"
     ],
-    process: [
+   process: [
       {
         step: 1,
         title: "Evaluación",
@@ -391,10 +385,10 @@ export const services = [
         answer: "Cada sesión dura aproximadamente 10-15 minutos, dependiendo del medicamento y la condición del paciente."
       }
     ],
-    price: "Desde S/ 30.00",
-    duration: "15-20 minutos",
-    schedule: "Lunes a Domingo (24h)",
-    doctor: "Dr. Ricardo Santos"
+    price: "S/ 40.00",
+    duration: "20 min",
+    schedule: "24/7 Urgencias",
+    doctor: "Staff Médico"
   }
 ];
 

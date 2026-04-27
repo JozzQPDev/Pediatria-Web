@@ -1,28 +1,35 @@
 import { useState, useEffect, useRef } from 'react';
 
-// Icon component to prevent hydration mismatch
 const Icon = ({ name, className = "w-4 h-4", ariaHidden = true }) => {
-  const icons = {
-    layers: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>,
-    stethoscope: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg>,
-    'book-open': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
-    'file-text': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>,
-    'sliders-horizontal': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><path d="M10 5H3"/><path d="M12 19H3"/><path d="M14 3v4"/><path d="M16 17v4"/><path d="M21 12h-9"/><path d="M21 19h-5"/><path d="M21 5h-7"/><path d="M8 10v4"/><path d="M8 12H3"/></svg>,
-    'arrow-up-down': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><path d="m21 16-4 4-4-4"/><path d="M17 20V4"/><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/></svg>,
-    'chevron-down': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><path d="m6 9 6 6 6-6"/></svg>,
-    target: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
-    'arrow-up-a-z': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><path d="m3 8 4-4 4 4"/><path d="M7 4v16"/><path d="M11 12h4"/><path d="M11 16h7"/><path d="M11 20h10"/><path d="M15 4h5"/><path d="M19 4v8"/></svg>,
-    calendar: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>,
-    'trending-up': <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>,
-    x: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden={ariaHidden}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+  // Mapeo de nombres Lucide/Genéricos a clases de Font Awesome 6
+  const iconMap = {
+    'layers': 'fa-solid fa-layer-group',
+    'stethoscope': 'fa-solid fa-stethoscope',
+    'book-open': 'fa-solid fa-book-medical',
+    'file-text': 'fa-solid fa-file-lines',
+    'sliders-horizontal': 'fa-solid fa-sliders',
+    'arrow-up-down': 'fa-solid fa-sort',
+    'chevron-down': 'fa-solid fa-chevron-down',
+    'target': 'fa-solid fa-bullseye',
+    'arrow-up-a-z': 'fa-solid fa-sort-alpha-down',
+    'calendar': 'fa-solid fa-calendar-days',
+    'trending-up': 'fa-solid fa-arrow-trend-up',
+    'x': 'fa-solid fa-xmark',
+    'tag': 'fa-solid fa-tag',
+    'filter': 'fa-solid fa-filter-list'
   };
-  
-  return icons[name] || null;
+
+  const iconClass = iconMap[name] || 'fa-solid fa-question';
+
+  return (
+    <i 
+      className={`${iconClass} ${className}`} 
+      aria-hidden={ariaHidden ? "true" : "false"}
+    ></i>
+  );
 };
 
 // SearchFilters - React version with enhanced interactivity and advanced filters
-
-
 export default function SearchFilters({ 
   currentType = '', 
   currentCategory = '', 
@@ -191,30 +198,31 @@ export default function SearchFilters({
 
 
   return (
-    <div className="search-filters bg-white rounded-2xl p-4 shadow-sm border border-gray-100 mb-6 relative">
+    <div className="search-filters bg-white p-2 sm:p-4  mb-4 sm:mb-6 max-w-full max-h-screen overflow-y-auto">
       {/* Loading Overlay */}
       {showLoading && (
-        <div className="absolute inset-0 bg-white/80 backdrop-blur-sm rounded-2xl flex items-center justify-center z-20" role="status" aria-live="polite">
-          <div className="flex items-center gap-2 text-pink-600">
-            <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+        <div className="absolute inset-0 bg-white/90 backdrop-blur-sm rounded-2xl flex items-center justify-center z-20 p-2 sm:p-4" role="status" aria-live="polite">
+          <div className="flex items-center gap-2 text-pink-600 text-xs sm:text-sm">
+            <svg className="animate-spin h-4 w-4 sm:h-5 sm:w-5 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <span className="text-sm font-medium">Actualizando resultados...</span>
+            <span className="font-medium">Actualizando...</span>
           </div>
         </div>
       )}
 
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-        {/* Filter by Type */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0" role="group" aria-label="Filtrar por tipo">
-          <span className="text-sm text-gray-500 shrink-0 font-medium">Tipo:</span>
-          <div className="flex gap-2">
+      {/* Main Controls - Fully responsive */}
+      <div className="flex flex-col gap-3 mb-3 sm:mb-4">
+        {/* Type Filters - Horizontal scrollable with custom scrollbar */}
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1.5 sm:pb-2 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent [-webkit-scrollbar:height=4px]" role="group" aria-label="Filtrar por tipo">
+          <span className="text-xs sm:text-sm text-gray-500 shrink-0 font-medium whitespace-nowrap">Tipo:</span>
+          <div className="flex gap-1 p-2 sm:gap-2 min-w-max">
             {types.map(type => (
               <button
                 key={type.value}
                 onClick={() => handleTypeChange(type.value)}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${
+                className={`px-2 py-1.5 sm:px-3 sm:py-1.5 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1 sm:gap-1.5 shrink-0 h-9 sm:h-auto ${
                   activeFilters.type === type.value 
                     ? 'bg-pink-100 text-pink-700 ring-2 ring-pink-200' 
                     : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
@@ -223,7 +231,7 @@ export default function SearchFilters({
                 aria-label={`Filtrar por ${type.label}`}
               >
                 {getIconForType(type.icon)}
-                {type.label}
+                <span className="hidden xs:inline">{type.label}</span>
               </button>
             ))}
           </div>
@@ -238,6 +246,54 @@ export default function SearchFilters({
               {totalResults} resultado{totalResults !== 1 ? 's' : ''}
             </span>
           )}
+
+           {/* Sort dropdown */}
+          <div className="relative" ref={sortDropdownRef}>
+            <button 
+              type="button"
+              onClick={() => setIsSortOpen(!isSortOpen)}
+              className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 hover:bg-gray-100 rounded-lg text-sm text-gray-600 transition-colors cursor-pointer"
+              aria-haspopup="listbox"
+              aria-expanded={isSortOpen}
+              aria-label="Opciones de ordenamiento"
+            >
+              <Icon name="arrow-up-down" className="w-3.5 h-3.5" ariaHidden={true} />
+              <span>Ordenar</span>
+              <Icon 
+                name="chevron-down" 
+                className={`w-3.5 h-3.5 transition-transform ${isSortOpen ? 'rotate-180' : ''}`}
+                ariaHidden={true}
+              />
+
+            </button>
+            
+            {isSortOpen && (
+              <div 
+                className="absolute right-0 top-full mt-2 w-44 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden z-20"
+                style={{ animation: 'slideDown 0.2s ease-out' }}
+                role="listbox"
+                aria-label="Opciones de ordenamiento"
+              >
+                {sortOptions.map(option => (
+                  <button
+                    key={option.value}
+                    onClick={() => handleSortChange(option.value)}
+                    className={`w-full flex items-center gap-2 px-4 py-2.5 text-sm transition-colors text-left ${
+                      activeFilters.sort === option.value
+                        ? 'bg-pink-50 text-pink-700 font-medium'
+                        : 'text-gray-600 hover:bg-gray-50'
+                    }`}
+                    role="option"
+                    aria-selected={activeFilters.sort === option.value}
+                  >
+                    <Icon name={option.icon} className="w-4 h-4" ariaHidden={true} />
+
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           
           {/* Advanced Search Toggle */}
           <div className="relative" ref={advancedRef}>
@@ -305,53 +361,7 @@ export default function SearchFilters({
             )}
           </div>
           
-          {/* Sort dropdown */}
-          <div className="relative" ref={sortDropdownRef}>
-            <button 
-              type="button"
-              onClick={() => setIsSortOpen(!isSortOpen)}
-              className="flex items-center gap-2 px-3 py-1.5 bg-gray-50 hover:bg-gray-100 rounded-lg text-sm text-gray-600 transition-colors cursor-pointer"
-              aria-haspopup="listbox"
-              aria-expanded={isSortOpen}
-              aria-label="Opciones de ordenamiento"
-            >
-              <Icon name="arrow-up-down" className="w-3.5 h-3.5" ariaHidden={true} />
-              <span>Ordenar</span>
-              <Icon 
-                name="chevron-down" 
-                className={`w-3.5 h-3.5 transition-transform ${isSortOpen ? 'rotate-180' : ''}`}
-                ariaHidden={true}
-              />
-
-            </button>
-            
-            {isSortOpen && (
-              <div 
-                className="absolute right-0 top-full mt-2 w-44 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden z-20"
-                style={{ animation: 'slideDown 0.2s ease-out' }}
-                role="listbox"
-                aria-label="Opciones de ordenamiento"
-              >
-                {sortOptions.map(option => (
-                  <button
-                    key={option.value}
-                    onClick={() => handleSortChange(option.value)}
-                    className={`w-full flex items-center gap-2 px-4 py-2.5 text-sm transition-colors text-left ${
-                      activeFilters.sort === option.value
-                        ? 'bg-pink-50 text-pink-700 font-medium'
-                        : 'text-gray-600 hover:bg-gray-50'
-                    }`}
-                    role="option"
-                    aria-selected={activeFilters.sort === option.value}
-                  >
-                    <Icon name={option.icon} className="w-4 h-4" ariaHidden={true} />
-
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+         
         </div>
       </div>
 
@@ -361,7 +371,7 @@ export default function SearchFilters({
         <div className="mt-4 pt-4 border-t border-gray-100">
           <div className="flex items-center gap-2 overflow-x-auto pb-2" role="group" aria-label="Filtrar por categoría">
             <span className="text-sm text-gray-500 shrink-0 font-medium">Categoría:</span>
-            <div className="flex gap-2">
+            <div className="flex gap-2 p-2">
               <button
                 onClick={() => handleCategoryChange('')}
                 className={`px-3 py-1 rounded-lg text-xs font-medium transition-all whitespace-nowrap ${
@@ -394,48 +404,64 @@ export default function SearchFilters({
       )}
 
       {/* Date Range Filter */}
-      <div className="mt-4 pt-4 border-t border-gray-100">
-        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
-          <span className="text-sm text-gray-500 font-medium">Fecha:</span>
-          <div className="flex items-center gap-2 flex-wrap">
+      <div className="mt-6 pt-6 border-t border-slate-50">
+        <div className="flex flex-col gap-4">
+          
+          {/* Header con botón de limpiar */}
+          <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-2">
-              <label htmlFor="date-from" className="text-xs text-gray-500">Desde:</label>
-              <input
-                id="date-from"
-                type="date"
-                value={activeFilters.dateFrom}
-                onChange={(e) => handleDateChange('dateFrom', e.target.value)}
-                className="px-2 py-1 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                aria-label="Fecha desde"
-              />
+              <span className="text-sm text-gray-500 font-medium">Fecha:</span>
             </div>
-            <div className="flex items-center gap-2">
-              <label htmlFor="date-to" className="text-xs text-gray-500">Hasta:</label>
-              <input
-                id="date-to"
-                type="date"
-                value={activeFilters.dateTo}
-                onChange={(e) => handleDateChange('dateTo', e.target.value)}
-                className="px-2 py-1 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-                aria-label="Fecha hasta"
-              />
-            </div>
+            
             {(activeFilters.dateFrom || activeFilters.dateTo) && (
               <button
                 onClick={() => {
                   handleDateChange('dateFrom', '');
                   handleDateChange('dateTo', '');
                 }}
-                className="text-xs text-gray-400 hover:text-gray-600 underline"
-                aria-label="Limpiar filtros de fecha"
+                className="text-[10px] font-bold text-pink-500 hover:text-pink-600 transition-colors bg-pink-50 px-2 py-1 rounded-md"
+                aria-label="Limpiar fechas"
               >
-                Limpiar fechas
+                Limpiar
               </button>
             )}
           </div>
+
+          {/* Inputs de Fecha */}
+          <div className="grid grid-cols-1 gap-2">
+            <div className="relative group">
+              <label htmlFor="date-from" className="absolute left-4 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 uppercase tracking-tight pointer-events-none group-focus-within:text-pink-500 transition-colors">
+                Desde
+              </label>
+              <input
+                id="date-from"
+                type="date"
+                value={activeFilters.dateFrom}
+                onChange={(e) => handleDateChange('dateFrom', e.target.value)}
+                className="w-full pl-16 pr-4 py-3 text-xs font-medium bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500/10 focus:border-pink-500 transition-all text-slate-600"
+              />
+            </div>
+
+            <div className="relative group">
+              <label htmlFor="date-to" className="absolute left-4 top-1/2 -translate-y-1/2 text-[10px] font-bold text-slate-400 uppercase tracking-tight pointer-events-none group-focus-within:text-pink-500 transition-colors">
+                Hasta
+              </label>
+              <input
+                id="date-to"
+                type="date"
+                value={activeFilters.dateTo}
+                onChange={(e) => handleDateChange('dateTo', e.target.value)}
+                className="w-full pl-16 pr-4 py-3 text-xs font-medium bg-slate-50 border border-slate-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-pink-500/10 focus:border-pink-500 transition-all text-slate-600"
+              />
+            </div>
+          </div>
+
+          {/* Tip visual sutil */}
+          <p className="text-[9px] text-slate-400 px-1 italic">
+            * Filtra artículos o citas médicas por antigüedad.
+          </p>
         </div>
       </div>
-
 
       {/* Active filters display */}
       {hasActiveFilters && (

@@ -1,0 +1,113 @@
+---
+// Definimos el tipo para asegurar compatibilidad con TS
+type StatColor = 'sky' | 'pink' | 'violet' | 'emerald';
+
+interface ClinicStat {
+  label: string;
+  value: string;
+  suffix: string;
+  icon: string;
+  colorKey: StatColor;
+  delay: string;
+}
+
+export const clinicStats: ClinicStat[] = [
+  {
+    label: "Trayectoria Médica",
+    value: "20",
+    suffix: "Años",
+    icon: "fa-solid fa-medal",
+    colorKey: "sky",
+    delay: "0"
+  },
+  {
+    label: "Pacientes Felices",
+    value: "05",
+    suffix: "Mil+",
+    icon: "fa-solid fa-heart",
+    colorKey: "pink",
+    delay: "100"
+  },
+  {
+    label: "Especialidades",
+    value: "08",
+    suffix: "Áreas",
+    icon: "fa-solid fa-stethoscope",
+    colorKey: "violet",
+    delay: "200"
+  },
+  {
+    label: "Salud Integral",
+    value: "100",
+    suffix: "%",
+    icon: "fa-solid fa-star",
+    colorKey: "emerald",
+    delay: "300"
+  }
+];
+
+// Mapeo de estilos para Tailwind v4
+const colorMap: Record<StatColor, string> = {
+  sky: "text-sky-500 bg-sky-50 shadow-sky-100/50 group-hover:bg-sky-500",
+  pink: "text-pink-500 bg-pink-50 shadow-pink-100/50 group-hover:bg-pink-500",
+  violet: "text-violet-500 bg-violet-50 shadow-violet-100/50 group-hover:bg-violet-500",
+  emerald: "text-emerald-500 bg-emerald-50 shadow-emerald-100/50 group-hover:bg-emerald-500"
+};
+---
+
+<div class="relative z-40 max-w-6xl mx-auto px-6 -mt-16 lg:-mt-24">
+  <div 
+    class="bg-white/90 backdrop-blur-2xl border border-slate-100 rounded-4xl shadow-2xl shadow-slate-200/60 p-8 lg:p-12"
+    data-aos="zoom-in-up"
+    data-aos-duration="1200"
+  >
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-4">
+      {
+        clinicStats.map((stat, index) => (
+          <div 
+            class="group flex flex-col items-center text-center relative px-4"
+            data-aos="fade-up"
+            data-aos-delay={stat.delay}
+          >
+            {/* Contenedor de Icono con Glassmorphism suave */}
+            <div class={`
+              w-16 h-16 rounded-3xl flex items-center justify-center mb-5
+              transition-all duration-500 border border-white
+              shadow-lg group-hover:scale-110 group-hover:text-white group-hover:-translate-y-1
+              ${colorMap[stat.colorKey]}
+            `}>
+              <i class={`${stat.icon} text-2xl transition-transform duration-500 group-hover:rotate-12`}></i>
+            </div>
+            
+            {/* Cifras con tipografía de alto impacto */}
+            <div class="flex items-baseline gap-1.5">
+              <span class="text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter">
+                {stat.value}
+              </span>
+              <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">
+                {stat.suffix}
+              </span>
+            </div>
+            
+            {/* Descripción */}
+            <p class="text-[11px] font-extrabold text-slate-500 mt-2 uppercase tracking-[0.2em] leading-tight max-w-[120px]">
+              {stat.label}
+            </p>
+
+            {/* Separador vertical elegante (v4 inline-size) */}
+            {index !== clinicStats.length - 1 && (
+              <div class="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-12 bg-linear-to-b from-transparent via-slate-200 to-transparent"></div>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Integración con la fuente del proyecto o alternativa similar a Nunito */
+  .font-black {
+    font-weight: 900;
+  }
+</style>

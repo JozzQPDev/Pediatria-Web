@@ -1,284 +1,58 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
+import { doctors } from "../data/doctors";
+import TitleSection from "../components/equipo/TitleSection.astro";
+import LeadDoctorHero from "../components/equipo/LeadDoctorHero.astro";
+import SpecialistsGrid from "../components/equipo/SpecialistsGrid.astro";
+import TeamValues from "../components/equipo/TeamValues.astro";
 
-const doctores = [
-  {
-    name: "Dra. Elena Martínez",
-    role: "Pediatra Neonatóloga",
-    specialty: "Líder de Cuidado del Recién Nacido",
-    image: "/images/medic-1.jpg",
-    tags: ["Lactancia", "Prematuros"],
-    linkedin: "https://linkedin.com/in/elena-martinez",
-    email: "emartinez@clinica.com",
-    // Colores (versiones pasteles):
-    overlayFrom: "from-green-300/80",
-    accentText: "text-green-400",
-    accentRing: "focus-within:ring-green-300",
-    accentHoverBg: "hover:bg-green-50",
-    tagHoverText: "hover:text-green-400",
-    borderAccent: "border-green-300",
-    softBg: "bg-green-50/50",
-  },
-  {
-    name: "Dr. Ricardo Santos",
-    role: "Pediatra Especialista",
-    specialty: "Crecimiento y Desarrollo",
-    image: "/images/medic-2.jpg",
-    tags: ["Nutrición", "Adolescentes"],
-    linkedin: "https://linkedin.com/in/ricardo-santos",
-    email: "rsantos@clinica.com",
-    overlayFrom: "from-blue-300/80",
-    accentText: "text-blue-400",
-    accentRing: "focus-within:ring-blue-300",
-    accentHoverBg: "hover:bg-blue-50",
-    tagHoverText: "hover:text-blue-400",
-    borderAccent: "border-blue-300",
-    softBg: "bg-blue-50/50",
-  },
-  {
-    name: "Dra. Sofía Alva",
-    role: "Odontopediatra",
-    specialty: "Salud Bucal Infantil",
-    image: "/images/medic-3.jpg",
-    tags: ["Ortodoncia", "Prevención"],
-    linkedin: "https://linkedin.com/in/sofia-alva",
-    email: "salva@clinica.com",
-    overlayFrom: "from-yellow-300/80",
-    accentText: "text-yellow-500",
-    accentRing: "focus-within:ring-yellow-300",
-    accentHoverBg: "hover:bg-yellow-50",
-    tagHoverText: "hover:text-yellow-500",
-    borderAccent: "border-yellow-300",
-    softBg: "bg-yellow-50/50",
-  },
-  {
-    name: "Dr. Carlos Ruiz",
-    role: "Psicólogo Infantil",
-    specialty: "Desarrollo Emocional",
-    image: "/images/medic-4.jpg",
-    tags: ["Conducta", "Terapia"],
-    linkedin: "https://linkedin.com/in/carlos-ruiz",
-    email: "cruiz@clinica.com",
-    overlayFrom: "from-purple-300/80",
-    accentText: "text-purple-400",
-    accentRing: "focus-within:ring-purple-300",
-    accentHoverBg: "hover:bg-purple-50",
-    tagHoverText: "hover:text-purple-400",
-    borderAccent: "border-purple-300",
-    softBg: "bg-purple-50/50",
-  },
-];
+type DoctorColor = 'green' | 'blue' | 'yellow' | 'purple' | 'pink';
 
-const beneficios = [
-  {
-    title: "Staff Colegiado",
-    desc: "Especialistas certificados con años de experiencia...",
-    icon: "award",
-    image: "/images/benefit-certified.jpg",
-    overlayFrom: "from-green-300/90",
-    iconColor: "text-green-400",
-    ring: "focus-within:ring-green-300",
-    descText: "text-green-50",
-  },
-  {
-    title: "Atención Moderna",
-    desc: "Equipamiento tecnológico de última generación...",
-    icon: "sparkles",
-    image: "/images/benefit-modern.jpg",
-    overlayFrom: "from-blue-300/90",
-    iconColor: "text-blue-400",
-    ring: "focus-within:ring-blue-300",
-    descText: "text-blue-50",
-  },
-  {
-    title: "Enfoque Familiar",
-    desc: "Entendemos que la salud de un niño involucra...",
-    icon: "users",
-    image: "/images/benefit-family.jpg",
-    overlayFrom: "from-purple-300/90",
-    iconColor: "text-purple-400",
-    ring: "focus-within:ring-purple-300",
-    descText: "text-purple-50",
-  },
-];
+const colorStyles: Record<DoctorColor, { text: string; bg: string; fill: string; border: string; glow: string }> = {
+  pink: { text: "text-pink-500", bg: "bg-pink-50", fill: "bg-pink-500", border: "border-pink-100", glow: "shadow-pink-200/50" },
+  blue: { text: "text-blue-600", bg: "bg-blue-50", fill: "bg-blue-600", border: "border-blue-100", glow: "shadow-blue-200/50" },
+  yellow: { text: "text-orange-500", bg: "bg-orange-50", fill: "bg-orange-500", border: "border-orange-100", glow: "shadow-orange-200/50" },
+  purple: { text: "text-purple-600", bg: "bg-purple-50", fill: "bg-purple-600", border: "border-purple-100", glow: "shadow-purple-200/50" },
+  green: { text: "text-emerald-600", bg: "bg-emerald-50", fill: "bg-emerald-600", border: "border-emerald-100", glow: "shadow-emerald-200/50" },
+};
+
+const leadDoctor = doctors.find(d => d.name.includes("Amalia")) || doctors[0];
+const specialists = doctors.filter(d => d.id !== leadDoctor.id);
 ---
 
-<Layout title="Nuestro Equipo Médico" description="Conoce a los especialistas que conforman nuestro equipo médico, dedicados a brindar el mejor cuidado a tus hijos. Profesionales certificados en pediatría, odontología infantil y psicología infantil, comprometidos con la salud y bienestar de tu familia.">
-  <Hero
-    title="Especialistas de Corazón"
-    subtitle="Profesionales certificados con un solo objetivo: el bienestar y la salud integral de tus hijos."
-    backgroundImage="/img/hero-equipo.jpg"
-    sideImage="/img/hero-equipo.jpg"
-  />
- <main class="main-section">
+<Layout title="Equipo Médico Especializado | Clínica Dharma">
+  
+  <main class="main-section overflow-hidden bg-white">
     <span class="cloud cloud--1" aria-hidden="true"></span>
     <span class="cloud cloud--2" aria-hidden="true"></span>
     <span class="cloud cloud--3" aria-hidden="true"></span>
     <span class="cloud cloud--4" aria-hidden="true"></span>
     <span class="cloud cloud--5" aria-hidden="true"></span>
-  <!-- Sección de doctores -->
-  <section class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-4">
-      <div class="text-center mb-16">
-        <!-- (Esto queda verde porque es título general, no por doctor) -->
-        <span class="inline-block text-green-400 font-bold uppercase tracking-[0.3em] text-[11px] bg-green-50 px-4 py-2 rounded-lg mb-6">
-          Nuestro Equipo
-        </span>
+    <span class="cloud cloud--6" aria-hidden="true"></span>
+    <span class="cloud cloud--7" aria-hidden="true"></span>
+    <span class="cloud cloud--8" aria-hidden="true"></span>
+    <span class="cloud cloud--9" aria-hidden="true"></span>
+    <span class="cloud cloud--10" aria-hidden="true"></span>
+    <span class="cloud cloud--11" aria-hidden="true"></span>
+    <span class="cloud cloud--12" aria-hidden="true"></span>
 
-        <h2 class="text-4xl md:text-6xl font-bold text-gray-900 italic leading-tight">
-          Profesionales Dedicados <br />
-          <span class="text-green-400 not-italic">al Cuidado Infantil</span>
-        </h2>
-      </div>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
-        {
-          doctores.map((doc) => (
-            <div
-              class:list={[
-                "group focus-within:ring-2 rounded-3xl",
-                doc.accentRing,
-              ]}
-              role="article"
-              aria-label={`Perfil de ${doc.name}`}
-            >
-              <div class="relative overflow-hidden rounded-3xl mb-6 shadow-xl border border-gray-100 bg-gray-200 aspect-4/5">
-                <img
-                  src={doc.image}
-                  alt={`Foto de ${doc.name}`}
-                  class="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 grayscale-20 group-hover:grayscale-0"
-                  loading="lazy"
-                />
-
-                <div
-                  class:list={[
-                    "absolute inset-0 bg-linear-to-t via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-8",
-                    doc.overlayFrom,
-                  ]}
-                >
-
-
-                  <div class="flex gap-4 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <a
-                      href={doc.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class:list={[
-                        "w-11 h-11 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all focus:ring-2",
-                        doc.accentText,
-                        doc.accentHoverBg,
-                      ]}
-                      aria-label={`LinkedIn de ${doc.name}`}
-                    >
-                      <i data-lucide="linkedin" class="w-5 h-5" aria-hidden="true"></i>
-                    </a>
-
-                    <a
-                      href={`mailto:${doc.email}`}
-                      class:list={[
-                        "w-11 h-11 bg-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all focus:ring-2",
-                        doc.accentText,
-                        doc.accentHoverBg,
-                      ]}
-                      aria-label={`Email de ${doc.name}`}
-                    >
-                      <i data-lucide="mail" class="w-5 h-5" aria-hidden="true"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="text-center lg:text-left">
-                <h3 class="text-2xl font-bold text-gray-900 mb-1">{doc.name}</h3>
-
-                <p class:list={["font-bold text-sm mb-4 uppercase tracking-wide", doc.accentText]}>
-                  {doc.role}
-                </p>
-
-                <div class:list={["p-4 rounded-2xl mb-5", doc.softBg]}>
-                  <p class:list={["text-gray-600 text-sm leading-relaxed italic border-l-2 pl-3", doc.borderAccent]}>
-                    "{doc.specialty}"
-                  </p>
-                </div>
-
-                <div class="flex flex-wrap gap-2 justify-center lg:justify-start">
-                  {doc.tags.map((tag) => (
-                    <span
-                      class:list={[
-                        "px-3 py-1 bg-gray-100 text-gray-500 rounded-lg text-[10px] font-bold uppercase tracking-widest border border-gray-200 transition-colors",
-                        doc.accentHoverBg,
-                        doc.tagHoverText,
-                      ]}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))
-        }
-      </div>
-
-      <!-- Sección de beneficios -->
-      <div class="mt-32 grid md:grid-cols-3 gap-12 border-t border-gray-100 pt-20">
-        {
-          beneficios.map((ben) => (
-            <div
-              class:list={[
-                "group relative overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer focus-within:ring-2",
-                ben.ring,
-              ]}
-              role="article"
-              aria-label={`Beneficio: ${ben.title}`}
-            >
-              <img
-                src={ben.image}
-                alt={`Imagen de ${ben.title}`}
-                class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
-
-              <div
-                class:list={[
-                  "absolute inset-0 bg-linear-to-t to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6",
-                  ben.overlayFrom,
-                ]}
-              >
-
-
-                <div class:list={["w-16 h-16 bg-white rounded-2xl flex items-center justify-center mb-4 group-hover:animate-bounce", ben.iconColor]}>
-                  <i data-lucide={ben.icon} class="w-8 h-8" aria-hidden="true"></i>
-                </div>
-
-                <h4 class="text-xl font-bold text-white mb-2">{ben.title}</h4>
-                <p class:list={["text-sm leading-relaxed", ben.descText]}>{ben.desc}</p>
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
- </main>
+    <TitleSection />
+    <LeadDoctorHero leadDoctor={leadDoctor} colorStyles={colorStyles} />
+    <SpecialistsGrid specialists={specialists} colorStyles={colorStyles} />
+    <TeamValues />
+    
+  </main>
 </Layout>
-
+     
 <style>
-  @keyframes bounce-soft {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-5px); }
-    60% { transform: translateY(-2px); }
-  }
-  .animate-bounce-soft {
-    animation: bounce-soft 2s infinite;
+  .animate-float {
+    animation: float 5s ease-in-out infinite;
   }
 
-  @keyframes pulse-soft {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-10px, -15px); }
   }
-  .animate-pulse-soft {
-    animation: pulse-soft 3s infinite;
-  }
+
+  h1, h2, h3 { text-wrap: balance; }
 </style>

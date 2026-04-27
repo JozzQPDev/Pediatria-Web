@@ -1,288 +1,136 @@
 ---
-// Tu código de importaciones permanece igual
-import { siteConfig } from "../data/siteConfig";
+import { company } from "../data/company";
+
 const currentYear = new Date().getFullYear();
+
+// 1. Navegación
+const navLinks = [
+  { name: "Inicio", href: "/", icon: "fa-house" },
+  { name: "Nosotros", href: "/nosotros", icon: "fa-circle-info" },
+  { name: "Servicios", href: "/servicios", icon: "fa-hand-holding-medical" },
+  { name: "Equipo", href: "/equipo", icon: "fa-user-doctor" },
+  { name: "Blogs", href: "/blogs", icon: "fa-newspaper" },
+];
+
+// 2. Redes Sociales
+const socialLinks = [
+  { platform: "facebook", url: company.social.facebook, color: "hover:bg-blue-600" },
+  { platform: "instagram", url: company.social.instagram, color: "hover:bg-pink-500" },
+  { platform: "whatsapp", url: company.contact.linkWhatsapp, color: "hover:bg-green-500" },
+  { platform: "tiktok", url: company.social.tiktok, color: "hover:bg-blue-700" },
+];
+
+// 3. Horarios Modularizados
+const schedule = [
+  { days: "Lun — Vie", hours: "8:00 - 20:00", isClosed: false },
+  { days: "Sábados", hours: "9:00 - 14:00", isClosed: false },
+  { days: "Domingos", hours: "Cerrado", isClosed: true },
+];
 ---
 
-<footer class="bg-[#5086c1] text-white pt-16 pb-8">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-      <div class="flex flex-col gap-6">
-        <div
-  class="bg-white p-3 rounded-3xl inline-block w-fit shadow-lg transform -rotate-2 hover:rotate-0 transition-transform duration-300 mx-auto md:mx-0"
->
-  <img
-    src="/images/logo3.png"
-    alt="Logo Clínica"
-    class="h-28 object-contain"
-  />
-</div>
-        <p class="text-sm leading-relaxed">
-          Dedicados a brinda salud integral y bienestar a los más pequeños de la
-          casa, con la calidez y el profesionalismo que tu familia merece.
+<footer class="bg-[#5086c1] text-white pt-20 pb-10 relative overflow-hidden">
+  <div class="max-w-360 mx-auto px-6 relative z-10">
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+      
+      <div class="flex flex-col gap-8 items-center md:items-start text-center md:text-left">
+        <div class="bg-white p-4 rounded-[2.5rem] inline-block shadow-2xl transform -rotate-2 hover:rotate-0 transition-all duration-500 group">
+          <img src="/images/logo3.png" alt="Logo" class="h-24 object-contain group-hover:scale-105 transition-transform" />
+        </div>
+        <p class="text-sm leading-relaxed opacity-90 font-medium">
+          Dedicados a brindar salud integral y bienestar a los más pequeños, con la calidez que tu familia merece en {company.address.city || "Ayacucho"}.
         </p>
-        <div class="flex justify-center md:justify-start gap-4">
-          <a
-            href={siteConfig.socials.facebook}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="w-10 h-10 bg-purple-300 rounded-xl flex items-center justify-center hover:bg-blue-300 hover:text-white transition-all hover:-translate-y-1 hover:scale-110"
-            aria-label="Facebook"
-          >
-            <i data-lucide="facebook" class="w-5 h-5" aria-hidden="true"></i>
-          </a>
-          <a
-            href={siteConfig.socials.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="w-10 h-10 bg-pink-200 rounded-xl flex items-center justify-center hover:bg-pink-300 hover:text-white transition-all hover:-translate-y-1 hover:scale-110"
-            aria-label="Instagram"
-          >
-            <i data-lucide="instagram" class="w-5 h-5" aria-hidden="true"></i>
-          </a>
-          <a
-            href={siteConfig.contact.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="w-10 h-10 bg-green-200 rounded-xl flex items-center justify-center hover:bg-green-300 hover:text-white transition-all hover:-translate-y-1 hover:scale-110"
-            aria-label="WhatsApp"
-          >
-            <i class="bi bi-whatsapp text-lg" aria-hidden="true"></i>
-          </a>
-          <a
-            href={siteConfig.socials.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="w-10 h-10 bg-blue-200 rounded-xl flex items-center justify-center hover:bg-blue-300 hover:text-white transition-all hover:-translate-y-1 hover:scale-110"
-            aria-label="LinkedIn"
-          >
-            <i data-lucide="linkedin" class="w-5 h-5" aria-hidden="true"></i>
-          </a>
+        
+        <div class="flex gap-4">
+          {socialLinks.map(social => (
+            <a 
+              href={social.url} 
+              target="_blank" 
+              rel="noopener" 
+              class={`w-11 h-11 rounded-2xl flex items-center justify-center bg-white/10 text-white transition-all hover:-translate-y-2 shadow-lg ${social.color}`}
+            >
+              <i class={`fa-brands fa-${social.platform} text-xl`}></i>
+            </a>
+          ))}
         </div>
       </div>
 
       <div>
-        <h4 class="text-lg font-bold mb-6 border-l-4 border-[#98D8AA] pl-3">
-          Navegación
-        </h4>
-        <ul class="space-y-4 text-sm">
-          <li class="flex items-center gap-2">
-            <!-- Icono de casa -->
-            <svg
-              class="w-4 h-4 text-[#98D8AA]"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M3 9.75L12 3l9 6.75V21a.75.75 0 01-.75.75H3.75A.75.75 0 013 21V9.75z"
-              ></path>
-            </svg>
-            <a href="/" class="hover:text-gray-700 transition-colors">Inicio</a>
-          </li>
+        <h4 class="text-lg font-black mb-10 border-l-4 border-[#98D8AA] pl-5 uppercase tracking-[0.2em] text-[11px]">Explorar</h4>
+        <ul class="space-y-5">
+          {navLinks.map(link => (
+            <li>
+              <a href={link.href} class="group flex items-center gap-4 text-sm font-bold opacity-80 hover:opacity-100 transition-all">
+                <div class="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#98D8AA] group-hover:text-[#5086c1] transition-all">
+                  <i class={`fa-solid ${link.icon} text-xs`}></i>
+                </div>
+                {link.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-          <li class="flex items-center gap-2">
-            <!-- Icono de información -->
-            <svg
-              class="w-4 h-4 text-[#98D8AA]"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13 16h-1v-4h-1m1-4h.01M12 21c4.97 0 9-4.03 9-9s-4.03-9-9-9-9 4.03-9 9 4.03 9 9 9z"
-              ></path>
-            </svg>
-            <a href="/nosotros" class="hover:text-gray-700 transition-colors"
-              >Sobre Nosotros</a
-            >
+      <div>
+        <h4 class="text-lg font-black mb-10 border-l-4 border-[#A8D8EA] pl-5 uppercase tracking-[0.2em] text-[11px]">Contacto</h4>
+        <ul class="space-y-6 text-sm">
+          <li class="flex items-start gap-4 group">
+            <div class="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-[#A8D8EA] group-hover:text-[#5086c1] transition-all">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <span class="font-medium pt-1">
+              {company.address.street}<br/>
+              <span class="text-[10px] opacity-60 uppercase tracking-widest">{company.address.district}</span>
+            </span>
           </li>
-
-          <li class="flex items-center gap-2">
-            <!-- Icono de corazón/servicios -->
-            <svg
-              class="w-4 h-4 text-[#98D8AA]"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"
-              ></path>
-            </svg>
-            <a href="/servicios" class="hover:text-gray-700 transition-colors"
-              >Servicios Médicos</a
-            >
+          <li class="flex items-center gap-4 group">
+            <div class="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-[#A8D8EA] group-hover:text-[#5086c1] transition-all">
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <span class="font-bold">{company.contact.phone}</span>
           </li>
-
-          <li class="flex items-center gap-2">
-            <!-- Icono de usuarios/equipo -->
-            <svg
-              class="w-4 h-4 text-[#98D8AA]"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M17 20h5v-1a4 4 0 00-3-3.87M9 20h5v-1a4 4 0 00-3-3.87M12 12a4 4 0 100-8 4 4 0 000 8z"
-              ></path>
-            </svg>
-            <a href="/equipo" class="hover:text-gray-700 transition-colors"
-              >Nuestro Equipo</a
-            >
-          </li>
-
-          <!-- NUEVO: Blogs -->
-          <li class="flex items-center gap-2">
-            <!-- Icono de blog (documento) -->
-            <svg
-              class="w-4 h-4 text-[#98D8AA]"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M9 12h6M9 16h6M14 2H7a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2V8l-5-6z"
-              ></path>
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14 2v6h6"
-              ></path>
-            </svg>
-            <a href="/blogs" class="hover:text-gray-700 transition-colors"
-              >Blogs</a
-            >
+          <li class="flex items-center gap-4 group">
+            <div class="w-10 h-10 rounded-2xl bg-white/5 flex items-center justify-center shrink-0 group-hover:bg-[#A8D8EA] group-hover:text-[#5086c1] transition-all">
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <span class="font-medium break-all">{company.contact.email}</span>
           </li>
         </ul>
       </div>
 
       <div>
-        <h4 class="text-lg font-bold mb-6 border-l-4 border-[#A8D8EA] pl-3">
-          Contacto
-        </h4>
-        <ul class="space-y-4 text-sm">
-          <li class="flex items-start gap-3">
-            <i data-lucide="map-pin" class="w-5 h-5 text-[#A8D8EA] shrink-0"
-            ></i>
-            <span
-              >{siteConfig.location.address}, {
-                siteConfig.location.district
-              }</span
-            >
-          </li>
-          <li class="flex items-center gap-3">
-            <i data-lucide="phone" class="w-5 h-5 text-[#A8D8EA] shrink-0"></i>
-            <span>{siteConfig.contact.phone}</span>
-          </li>
-          <li class="flex items-center gap-3">
-            <i data-lucide="mail" class="w-5 h-5 text-[#A8D8EA] shrink-0"></i>
-            <span>{siteConfig.contact.email}</span>
-          </li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="text-lg font-bold mb-6 border-l-4 border-[#FFB7C5] pl-3">
-          Horario
-        </h4>
-        <div
-          class="bg-purple-300/30 p-4 rounded-2xl border border-purple-300/50"
-        >
-          <div class="flex justify-between text-sm mb-2">
-            <span>Lun - Vie:</span>
-            <span>8:00 - 20:00</span>
-          </div>
-          <div class="flex justify-between text-sm mb-2">
-            <span>Sábados:</span>
-            <span>9:00 - 14:00</span>
-          </div>
-          <div class="flex justify-between text-sm text-gray-700 font-bold">
-            <span>Domingos:</span>
-            <span>Cerrado</span>
-          </div>
+        <h4 class="text-lg font-black mb-10 border-l-4 border-[#FFB7C5] pl-5 uppercase tracking-[0.2em] text-[11px]">Horario</h4>
+        <div class="bg-slate-900/20 backdrop-blur-md p-7 rounded-[2.5rem] border border-white/10 space-y-4 shadow-inner">
+          {schedule.map((item, index) => (
+            <div class={`flex justify-between items-center text-sm ${index !== schedule.length - 1 ? 'border-b border-white/10 pb-3' : 'pt-1'}`}>
+              <span class={`font-bold italic font-serif ${item.isClosed ? 'text-pink-200 uppercase text-[10px] tracking-widest not-italic font-sans font-black' : 'opacity-70'}`}>
+                {item.days}
+              </span>
+              <span class={`${item.isClosed ? 'text-xs font-black text-pink-300 italic opacity-80' : 'bg-white/10 px-3 py-1 rounded-lg font-black text-[11px]'}`}>
+                {item.hours}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
+
     </div>
 
-    <div
-      class="border-t border-gray-300 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
-    >
-      <p class="text-xs">
-        © {new Date().getFullYear()}
-        {siteConfig.name}. Todos los derechos reservados. Propiedad de {
-          siteConfig.owner
-        }.
-      </p>
-      <div class="flex gap-6 text-xs">
-        <a
-          href="/legales/aviso-legal"
-          class="hover:text-gray-700 transition-colors">Aviso Legal</a
-        >
-        <a
-          href="/legales/privacidad"
-          class="hover:text-gray-700 transition-colors"
-          >Política de Privacidad</a
-        >
-        <a
-          href="/legales/terminos"
-          class="hover:text-gray-700 transition-colors">Términos de Servicio</a
-        >
-        <a href="/legales/cookies" class="hover:text-gray-700 transition-colors"
-          >Política de Cookies</a
-        >
+    <div class="border-t border-white/10 pt-10 flex flex-col lg:flex-row justify-between items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em]">
+      <div class="flex items-center gap-2 opacity-60">
+        <i class="fa-solid fa-shield-halved text-blue-300"></i>
+        <p>© {currentYear} {company.name} — Diseñado y Desarrollado por <spam class="font-bold">JHON QP</spam></p>
+      </div>
+      
+      <div class="flex flex-wrap justify-center gap-8">
+        <a href="/legales/legal" class="hover:text-pink-300 transition-colors">Aviso Legal</a>
+        <a href="/legales/privacidad" class="hover:text-yellow-300 transition-colors">Privacidad</a>
+        <a href="/legales/terminos" class="hover:text-blue-300 transition-colors">Términos</a>
       </div>
     </div>
   </div>
 
-  <div
+<div
     class="h-1.5 w-full bg-[linear-gradient(to_right,#FFB7C5,#FFEAA7,#A8D8EA)] mt-8"
   >
-  </div>
-</footer>
-
-<style>
-  @reference "../styles/global.css";
-
-  /* Animación bounce para íconos (opcional, añade diversión) */
-  @keyframes bounce {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-10px);
-    }
-    60% {
-      transform: translateY(-5px);
-    }
-  }
-  .animate-bounce {
-    animation: bounce 1s infinite;
-  }
-
-  /* Pulse para puntos en especialidades */
-  .animate-pulse {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-</style>
+  </div></footer>

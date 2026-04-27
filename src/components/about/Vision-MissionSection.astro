@@ -1,0 +1,112 @@
+---
+import { company } from "../../data/company";
+
+const nosotrosvm = {
+  vision: "Ser el hogar de salud donde cada niño crezca sano, pleno y feliz, transformando la experiencia médica en un momento de confianza y bienestar para toda la familia.",
+  mision: `En ${company.name}, brindamos atención pediátrica integral de excelencia, combinando calidez humana con tecnología avanzada. Nos dedicamos a proteger la salud infantil en un entorno seguro.`
+};
+---
+
+<section class="py-24 lg:py-32 relative overflow-hidden">
+  <div class="absolute top-0 left-0 w-full h-full bg-dots opacity-20 -z-10"></div>
+  
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+
+    <div class="max-w-4xl mb-20" data-aos="fade-right">
+      <span class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-slate-100 text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] shadow-sm mb-8">
+        <span class="flex gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+        </span>
+        Identidad Clínica
+      </span>
+
+      <h2 class="text-5xl lg:text-7xl font-black text-slate-900 leading-[1.05] tracking-tighter">
+        Inspirando confianza y <br/> 
+        <span class="text-transparent bg-clip-text bg-linear-to-r from-pink-500 via-orange-400 to-blue-500 italic font-serif block mt-2">
+          salud en cada etapa
+        </span>
+      </h2>
+    </div>
+
+    <div class="relative grid lg:grid-cols-12 gap-12 lg:gap-0 items-center">
+      
+      <div class="lg:col-span-5 space-y-8 order-2 lg:order-1" data-aos="fade-right">
+        <div class="relative p-8 lg:p-12 bg-white rounded-[3rem] shadow-2xl shadow-slate-200/50 border border-slate-50 group hover:-translate-y-2 transition-transform duration-500">
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-pink-50 rounded-full blur-3xl opacity-60"></div>
+          
+          <div class="absolute -top-6 -left-6 w-20 h-20 bg-pink-500 rounded-3xl flex items-center justify-center text-white shadow-xl rotate-12 group-hover:rotate-0 transition-transform duration-500">
+            <i class="fa-solid fa-lightbulb text-3xl"></i>
+          </div>
+          
+          <div class="pt-8 relative z-10">
+            <span class="text-pink-500 font-black uppercase tracking-[0.3em] text-[10px]">El Porvenir</span>
+            <h3 class="text-3xl lg:text-4xl font-black text-slate-900 mt-2 mb-6 tracking-tight leading-none">Nuestra Visión</h3>
+            <p class="text-xl text-slate-600 leading-relaxed font-medium italic font-serif">
+              "{nosotrosvm.vision}"
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 px-8 text-slate-300 opacity-60">
+           <div class="h-px flex-1 bg-slate-100"></div>
+           <i class="fa-solid fa-star text-[10px]"></i>
+           <div class="h-px flex-1 bg-slate-100"></div>
+        </div>
+      </div>
+
+      <div class="hidden lg:flex lg:col-span-2 justify-center order-2">
+        <div class="relative h-112.5 w-px bg-linear-to-b from-pink-200 via-purple-300 to-blue-200">
+           <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-pink-400 border-4 border-white shadow-lg animate-pulse"></div>
+           <div class="absolute top-3/4 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-blue-400 border-4 border-white shadow-lg animate-pulse [animation-delay:0.3s]"></div>
+           
+           <p class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rotate-90 text-[10px] font-black uppercase tracking-[0.5em] text-slate-300 whitespace-nowrap bg-white px-4">
+             Ciencia & Corazón
+           </p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 space-y-8 order-3" data-aos="fade-left">
+        <div class="relative p-8 lg:p-12 bg-white rounded-[3rem] shadow-2xl shadow-slate-200/50 border border-slate-50 group hover:-translate-y-2 transition-transform duration-500">
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-50 rounded-full blur-3xl opacity-60"></div>
+          
+          <div class="absolute -top-6 -right-6 w-20 h-20 bg-blue-500 rounded-3xl flex items-center justify-center text-white shadow-xl -rotate-12 group-hover:rotate-0 transition-transform duration-500">
+            <i class="fa-solid fa-rocket text-3xl"></i>
+          </div>
+          
+          <div class="pt-8 relative z-10">
+            <span class="text-blue-500 font-black uppercase tracking-[0.3em] text-[10px]">Nuestro Presente</span>
+            <h3 class="text-3xl lg:text-4xl font-black text-slate-900 mt-2 mb-6 tracking-tight leading-none">Nuestra Misión</h3>
+            <p class="text-lg text-slate-600 leading-relaxed font-medium">
+              {nosotrosvm.mision}
+            </p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2.5 px-2">
+           {['Seguridad', 'Empatía', 'Innovación'].map(tag => (
+             <span class="px-4 py-1.5 rounded-full bg-blue-50 text-blue-600 text-[9px] font-black uppercase tracking-widest border border-blue-100 backdrop-blur-sm">
+               {tag}
+             </span>
+           ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Aseguramos que la fuente Serif itálica se aplique correctamente */
+  .font-serif {
+    font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    font-style: italic;
+  }
+  
+  /* Reutilizando tu patrón de puntos para consistencia total */
+  .bg-dots {
+    background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+    background-size: 40px 40px;
+  }
+</style>

@@ -1,0 +1,21 @@
+---
+import NavLink from "./NavLink.astro";
+import NavDropdown from "./NavDropdown.astro";
+import Search from "../Search.astro";
+---
+
+<div class="flex justify-between items-center">
+  <div class="w-16"></div>
+  <nav class="flex items-center gap-8 text-[13px] font-bold uppercase tracking-widest text-gray-500" role="navigation">
+    <NavLink href="/" label="Inicio" exact />
+    <NavLink href="/nosotros" label="Nosotros" />
+    <NavDropdown />
+    <NavLink href="/equipo" label="Equipo" />
+    <NavLink href="/blogs" label="Blogs" />
+    <NavLink href="/contacto" label="Contacto" />
+    <NavLink href="/reserva" label="Reservar" />
+  </nav>
+  <div class="w-24 flex justify-end">
+    <Search />
+  </div>
+</div>

@@ -1,0 +1,73 @@
+---
+interface Service {
+  slug: string;
+  image: string;
+  title: string;
+  shortDesc: string;
+}
+
+interface Props {
+  relatedServices: Service[];
+}
+
+const { relatedServices }: Props = Astro.props;
+---
+
+<section class="py-16 md:py-24 border-t border-slate-100 relative">
+  <div class="max-w-7xl mx-auto px-5 md:px-6">
+    
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gap-6">
+      <div class="max-w-xl">
+        <div class="flex items-center gap-3 text-slate-400 font-black text-[10px] uppercase tracking-[0.3em] mb-4">
+          <span class="w-8 h-0.5 bg-slate-200"></span>
+          Explora más
+        </div>
+        <h2 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter">
+          Otras <span class="text-slate-400">especialidades</span>
+        </h2>
+      </div>
+      
+      <a href="/servicios" class="group inline-flex items-center gap-3 text-slate-900 font-black text-[11px] md:text-sm uppercase tracking-widest transition-all">
+        Ver catálogo completo 
+        <div class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center group-hover:bg-slate-900 group-hover:text-white transition-all shadow-sm">
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+      {relatedServices.map((related) => (
+        <a href={`/servicios/${related.slug}`} class="group block outline-none">
+          <div class="relative h-64 md:h-80 rounded-[2.5rem] md:rounded-[3.5rem] overflow-hidden mb-6 md:mb-8 shadow-xl shadow-slate-200/40">
+            <img 
+              src={related.image} 
+              alt={related.title}
+              class="w-full h-full object-cover md:group-hover:scale-110 transition-transform duration-1000 ease-out" 
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-linear-to-t from-slate-900/70 via-transparent to-transparent opacity-60"></div>
+            
+            <div class="absolute bottom-6 left-6 right-6 translate-y-0 md:translate-y-2 md:group-hover:translate-y-0 transition-transform duration-500">
+               <div class="bg-white/20 backdrop-blur-md border border-white/30 text-white text-[9px] font-black uppercase tracking-widest py-2 px-4 rounded-full inline-block">
+                 Pediatría Dharma
+               </div>
+            </div>
+          </div>
+
+          <div class="px-2">
+            <h3 class="text-xl md:text-2xl font-black text-slate-900 md:group-hover:text-slate-600 transition-colors tracking-tight mb-3">
+              {related.title}
+            </h3>
+            <p class="text-sm md:text-base text-slate-500 font-medium leading-relaxed line-clamp-2">
+              {related.shortDesc}
+            </p>
+            
+            <div class="mt-5 flex items-center gap-2 text-slate-900 font-black text-[11px] uppercase tracking-widest opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all md:-translate-x-4 md:group-hover:translate-x-0">
+               Saber más <i class="fa-solid fa-chevron-right text-[8px] mt-0.5"></i>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

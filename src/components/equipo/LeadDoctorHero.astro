@@ -1,0 +1,102 @@
+---  
+import type { Doctor } from '../../scripts/doctor';
+interface ColorStyles {  
+  text: string;  
+  bg: string;  
+  fill: string;  
+  border: string;  
+  glow: string;  
+}  
+
+type DoctorColor = 'green' | 'blue' | 'yellow' | 'purple' | 'pink';  
+
+interface Props {  
+  leadDoctor: Doctor;  
+  colorStyles: Record<DoctorColor, ColorStyles>;  
+}  
+
+const { leadDoctor, colorStyles } = Astro.props as Props;  
+---
+
+<section class="relative pt-24 md:pt-40 pb-20 md:pb-32 overflow-hidden">  
+
+  <div class="max-w-7xl mx-auto px-5 md:px-6">  
+    <div class="flex flex-col lg:flex-row items-center gap-16 md:gap-24">  
+      
+      <div class="relative w-full lg:w-1/2" data-aos="zoom-out">  
+        <div class="relative z-20 group">  
+          <div class="absolute -inset-4 bg-linear-to-tr from-pink-100 to-orange-100 rounded-[4rem] md:rounded-[6rem] -rotate-3 scale-95 opacity-50 group-hover:rotate-0 transition-transform duration-1000"></div>  
+          
+          <div class="relative rounded-[3.5rem] md:rounded-[5.5rem] overflow-hidden border-8 border-white shadow-2xl aspect-4/5">  
+            <img   
+              src={leadDoctor.image}   
+              alt={leadDoctor.name}   
+              class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-[3s]"  
+            />  
+            <div class="absolute inset-0 bg-linear-to-t from-slate-900/60 via-transparent to-transparent"></div>  
+          </div>  
+
+          <div class="absolute top-10 -right-4 md:-right-10 bg-white/90 backdrop-blur-xl p-5 md:p-7 rounded-4xl shadow-xl border border-white/50 z-30 animate-float">  
+             <div class="flex items-center gap-4">  
+               <div class="w-12 h-12 bg-pink-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-pink-200">  
+                  <i class="fa-solid fa-award text-xl"></i>  
+               </div>  
+               <div>  
+                  <p class="text-[10px] font-black uppercase tracking-tighter text-slate-400">Trayectoria</p>  
+                  <p class="text-xl font-black text-slate-900">+15 Años</p>  
+               </div>  
+             </div>  
+          </div>  
+        </div>  
+      </div>  
+
+      <div class="w-full lg:w-1/2 space-y-8">  
+        <div class="space-y-4">  
+        <div data-aos="fade-right">
+            <span class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] shadow-sm">
+              <span class="flex gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+              </span>
+              Directora Medica
+            </span>
+        </div>
+
+          <h1 class="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-none">  
+            {leadDoctor.name}  
+          </h1>  
+          <p class="text-xl md:text-2xl font-bold text-slate-500 italic max-w-xl">  
+            "Mi misión es transformar la salud pediátrica en Ayacucho mediante la ciencia y la empatía."  
+          </p>  
+        </div>  
+
+        <div class="grid grid-cols-2 gap-6 py-6 border-y border-slate-100">  
+           <div>  
+              <p class="text-slate-900 font-black text-lg">Especialidad</p>  
+              <p class="text-slate-500 text-sm font-medium">Pediatría e Inmunología</p>  
+           </div>  
+           <div>  
+              <p class="text-slate-900 font-black text-lg">Colegiatura</p>  
+              <p class="text-slate-500 text-sm font-medium">CMP: 12345 / RNE: 6789</p>  
+           </div>  
+        </div>  
+
+        <div class="flex flex-col sm:flex-row gap-5 pt-4">  
+           <a href="https://wa.me/tu-numero" class="bg-slate-900 text-white px-8 py-4 rounded-2xl font-black text-center hover:bg-pink-600 transition-all shadow-xl shadow-slate-200">  
+             Agendar con Dirección  
+           </a>  
+           <div class="flex items-center gap-4 justify-center sm:justify-start">  
+              <a href="#" class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-blue-600 hover:border-blue-200 transition-all">  
+                <i class="fa-brands fa-linkedin-in"></i>  
+              </a>  
+              <a href="#" class="w-12 h-12 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-pink-500 hover:border-pink-200 transition-all">  
+                <i class="fa-brands fa-instagram"></i>  
+              </a>  
+           </div>  
+        </div>  
+      </div>  
+    </div>  
+  </div>  
+</section>  
+

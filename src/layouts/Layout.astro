@@ -1,274 +1,278 @@
 ---
-// Tu código de importaciones permanece igual
+import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import CookiesBanner from "../components/CookiesBanner.astro";
-import { siteConfig } from "../data/siteConfig";
-import "../styles/global.css";
-import "../styles/index.css";
+import { ViewTransitions } from "astro:transitions";
+import { seo } from "../data/seo";
+import { company } from "../data/company";
+import SpeedDial from "../components/SpeedDial.astro";
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
+  image?: string;
 }
 
-const { title, description = siteConfig.seo.description } = Astro.props;
+const { 
+  title = seo.meta.title.default, 
+  description = seo.meta.description.default,
+  image = "/images/logo4.jpeg" // Asegúrate de tener este path
+} = Astro.props;
 
-const fullTitle = `${title} - ${siteConfig.name}`;
-const canonicalUrl = new URL(Astro.url.pathname, Astro.url.origin).href;
+const siteUrl = seo.site.url;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const defaultImage = image;
+
+const organizationSchema = seo.schema.organization;
+const medicalClinicSchema = seo.schema.medicalBusiness;
+
+// --- SCHEMA.ORG: AUTORIDAD MÉDICA ---
+const medicalBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  "name": "Pediátrica Dharma",
+  "alternateName": "Clínica Pediátrica Dra. Amalia Luque",
+  "description": description,
+  "url": siteUrl,
+  "logo": siteUrl + "/images/logo4.jpeg",
+  "image": siteUrl + image,
+  "telePresence": company.contact.linkWhatsapp,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": company.address.street,
+    "addressLocality": "Ayacucho",
+    "addressRegion": "Ayacucho",
+    "addressCountry": "PE"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "-13.1588",
+    "longitude": "-74.2239"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    }
+  ],
+  "medicalSpecialty": "Pediatrics"
+};
 ---
 
 <!doctype html>
 <html lang="es" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"
-    />
-    <meta name="generator" content={Astro.generator} />
-
-    <title>{fullTitle}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+       <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <link rel="icon" href="/icon.png" />
+    <link rel="shortcut icon" href="/icon.png" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="apple-touch-icon" href="/icon.png" />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="keywords" content={siteConfig.seo.keywords.join(", ")} />
-    <link rel="icon" type="image/svg+xml" href="/icon.png" />
-    <link rel="canonical" href={canonicalUrl} />
-    <meta name="robots" content="index, follow" />
+    <meta name="author" content={seo.meta.author} />
+    <meta name="publisher" content={seo.meta.publisher} />
+    <meta name="copyright" content={seo.meta.copyright} />
+    <meta name="language" content={seo.site.language} />
+    <meta
+      name="robots"
+      content={`index, follow${seo.meta.robots.noarchive ? ", noarchive" : ""}`}
+    />
+    <meta name="revisit-after" content="7 days" />
+    
+   <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={fullTitle} />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={seo.openGraph.type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={siteConfig.seo.ogImage} />
-    <meta property="og:url" content={canonicalUrl} />
-
-    <!-- Schema Markup para clínicas pediátricas -->
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "MedicalBusiness",
-        name: siteConfig.name,
-        description: siteConfig.tagline,
-        url: siteConfig.siteUrl,
-        telephone: siteConfig.contact.phone,
-        email: siteConfig.contact.email,
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: siteConfig.location.address,
-          addressLocality: siteConfig.location.city,
-          addressRegion: siteConfig.location.district,
-          postalCode: "00000", // Añade si tienes
-          addressCountry: siteConfig.location.country,
-        },
-        openingHours: ["Mo-Fr 08:00-20:00", "Sa 09:00-14:00"],
-        medicalSpecialty: "Pediatrics",
-        image: siteConfig.seo.ogImage,
-      })}
+    <meta property="og:image" content={siteUrl + defaultImage} />
+    <meta property="og:locale" content={seo.openGraph.locale} />
+    <meta
+      property="og:locale:alternate"
+      content={seo.openGraph.localeAlternate[0]}
     />
+    <meta property="og:site_name" content={seo.openGraph.siteName} />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
+    <!-- Keywords -->
+    <meta name="keywords" content={seo.meta.keywords.join(", ")} />
+
+    <!-- Generator -->
+    <meta name="generator" content={Astro.generator} />
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+
+     <!-- Google Fonts -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Font Awesome - Load asynchronously -->
+    <link
+      rel="preload"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      as="style"
+      onload="this.onload=null;this.rel='stylesheet'"
+    />
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"></noscript>
+
+    <!-- Material Icons -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- JSON-LD Structured Data -->
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema)}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(medicalClinicSchema)}
+    />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema)}
+    />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(medicalClinicSchema)}
+    />
+    <ViewTransitions />
   </head>
 
-  <!-- Quitamos bg-white y ponemos fondo-nubes -->
-  <body
-    class="text-gray-800 antialiased min-h-screen flex flex-col font-nunito overflow-x-hidden"
-  >
-    <!-- Skip link mejorado -->
-    <a
-      href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-green-500 text-white px-4 py-2 rounded-lg z-50 transition-all focus:ring-2 focus:ring-green-300"
-      aria-label="Saltar al contenido principal">Saltar al contenido</a
-    >
-
+  <body class="bg-[#FDFDFF] text-slate-900 antialiased font-jakarta selection:bg-brand-pink/20 selection:text-brand-pink overflow-x-hidden">
+    
     <Header />
 
-    <main id="main-content" class="grow" role="main">
+    <main>
       <slot />
     </main>
 
     <Footer />
 
-    <!-- Botón flotante de reserva -->
-    <a
-      href="/reserva"
-      class="fixed bottom-6 right-6 z-50 flex items-center bg-pink-500 text-white h-14 rounded-full font-bold shadow-lg shadow-pink-500/30 hover:bg-pink-600 active:scale-95 animate-button-pulse expandable-button group"
-      aria-label="Reservar Cita"
-    >
-      <div class="min-w-15 flex items-center justify-center">
-        <i
-          data-lucide="calendar-plus"
-          class="w-6 h-6 transition-transform group-hover:rotate-12"></i>
-      </div>
+    <SpeedDial />
 
-      <span
-        class="pr-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-      >
-        Reservar Cita
-      </span>
-    </a>
-    <!-- Banner de Cookies -->
-    <CookiesBanner />
+    <script>
+      import AOS from "aos";
+      import "aos/dist/aos.css";
 
-    <!-- Script para lazy loading global y micro-interacciones -->
-    <script is:inline src="https://unpkg.com/lucide@latest"></script>
-    <script is:inline>
-      function initIcons() {
-        if (window.lucide) {
-          window.lucide.createIcons();
-        }
-      }
-      initIcons();
-      document.addEventListener("astro:page-load", initIcons);
-      document.addEventListener("astro:after-swap", initIcons);
-
-      // Lazy loading de imágenes
-      const images = document.querySelectorAll("img[data-src]");
-      const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            img.classList.remove("lazy");
-            observer.unobserve(img);
-          }
+      const initAOS = () => {
+        AOS.init({
+          duration: 800, // Un poco más rápido mejora la sensación de fluidez
+          once: true,
+          easing: 'ease-out-quad',
+          offset: 80,
+          // Esta línea detecta si es móvil y puede desactivar AOS si lo prefieres
+          // disable: window.innerWidth < 768 
         });
-      });
-      images.forEach((img) => imageObserver.observe(img));
+      };
 
-      // Micro-interacciones: Tooltips en hover
-      document.querySelectorAll("[data-tooltip]").forEach((el) => {
-        el.addEventListener("mouseenter", (e) => {
-          const tooltip = document.createElement("div");
-          tooltip.textContent = e.target.dataset.tooltip;
-          tooltip.className =
-            "absolute bg-gray-800 text-white px-2 py-1 rounded text-sm z-50";
-          document.body.appendChild(tooltip);
-          tooltip.style.left = `${e.pageX + 10}px`;
-          tooltip.style.top = `${e.pageY + 10}px`;
-          e.target.addEventListener("mouseleave", () => tooltip.remove());
-        });
+      initAOS();
+
+      // Reinicializar tras la transición de página de Astro
+      document.addEventListener("astro:after-swap", () => {
+        initAOS();
+        // Forzar un refresh de las posiciones de los elementos
+        AOS.refresh();
       });
     </script>
   </body>
 </html>
-<style>
-  @keyframes subtle-pulse {
-    0% {
-      box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.4);
-    }
-    70% {
-      box-shadow: 0 0 0 15px rgba(236, 72, 153, 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(236, 72, 153, 0);
-    }
-  }
-
-  .animate-button-pulse {
-    animation: subtle-pulse 2s infinite;
-  }
-
-  /* Control de expansión suave */
-  .expandable-button {
-    max-width: 60px; /* Ancho inicial (solo icono) */
-    white-space: nowrap;
-    overflow: hidden;
-    transition:
-      max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-      background-color 0.3s;
-  }
-
-  .expandable-button:hover {
-    max-width: 250px; /* Ancho expandido (ajustable según el texto) */
-  }
-</style>
 
 <style is:global>
-  @reference "../styles/global.css"; /* Agregado para que Tailwind reconozca @apply */
-
   :root {
-    --font-nunito: "Nunito", sans-serif;
-    /* Colores temáticos avanzados */
-    --color-primary: #3b82f6;
-    --color-secondary: #10b981;
-    --color-accent: #fbbf24;
-    --color-bg: #ffffff;
-    --color-text: #374151;
+    --brand-pink: #E91E63;
+    --brand-orange: #FF9800;
+    --brand-yellow: #FFEB3B;
+    --brand-green: #8BC34A;
+    --brand-blue: #2196F3;
+    --font-main: 'Plus Jakarta Sans', sans-serif;
+  }
+  
+
+  body { font-family: var(--font-main); }
+
+  /* Utilidades Premium */
+  .glass-card {
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.4);
+    box-shadow: 0 8px 32px rgba(31,38,135,0.05);
   }
 
-  html,
-  body {
-    font-family: var(--font-nunito);
+  .text-gradient {
+    background: linear-gradient(to right, var(--brand-blue), var(--brand-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
-  body {
-    width: 100%;
-    overflow-x: hidden;
-    position: relative;
+
+  /* Animaciones */
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+  .animate-blob { animation: blob 15s infinite alternate ease-in-out; }
+  .animation-delay-2000 { animation-delay: 2s; }
+
+  @keyframes reveal-text {
+    from { letter-spacing: 1.2em; opacity: 0; }
+    to { letter-spacing: 0.6em; opacity: 1; }
+  }
+  .animate-reveal-text { animation: reveal-text 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+  /* Evita que los elementos se vean antes de animarse */
+  [data-aos] {
+    pointer-events: none;
+  }
+  .aos-animate {
+    pointer-events: auto;
   }
 
-  /* Animaciones avanzadas */
-  @keyframes bounce-soft {
-    0%,
-    20%,
-    50%,
-    80%,
-    100% {
-      transform: translateY(0);
+  /* Mobile AOS: Disabled globally, enabled + proper initial states for index */
+  @media (max-width: 768px) {
+    [data-aos] {
+      transition-property: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+      animation: none !important;
     }
-    40% {
-      transform: translateY(-5px);
+    
+    /* Full AOS restore for index mobile */
+    .aos-mobile-enabled [data-aos] {
+      transition-property: transform opacity !important;
+      opacity: 0 !important; /* AOS initial state */
     }
-    60% {
-      transform: translateY(-2px);
+    .aos-mobile-enabled [data-aos].aos-animate {
+      opacity: 1 !important;
+      transform: none !important;
     }
-  }
-  .animate-bounce-soft {
-    animation: bounce-soft 2s infinite;
-  }
-
-  @keyframes pulse-soft {
-    0%,
-    100% {
-      opacity: 1;
+    
+    /* Mobile optimizations: shorter/faster */
+    .aos-mobile-enabled [data-aos] {
+      transition-duration: 600ms !important;
     }
-    50% {
-      opacity: 0.8;
-    }
-  }
-  .animate-pulse-soft {
-    animation: pulse-soft 3s infinite;
-  }
-
-  /* Lazy loading placeholder */
-  .lazy {
-    background: #f0f0f0;
-    min-height: 200px;
-  }
-
-  /* Dark mode opcional */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-bg: #1f2937;
-      --color-text: #f9fafb;
-    }
-    body {
-      background: var(--color-bg);
-      color: var(--color-text);
-    }
-  }
-
-  :global(body.overflow-hidden) {
-    overflow: hidden !important;
-    touch-action: none;
   }
 </style>
+

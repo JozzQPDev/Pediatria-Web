@@ -1,97 +1,95 @@
 ---
-// Search.astro - Enhanced search component with voice search and predictive features
+// Search.astro - Versión Premium Dharma Bio
 import SearchSuggestions from './SearchSuggestions.jsx';
 ---
 
 <div class="search-container relative flex items-center" id="search-wrapper">
-
-<form 
-  id="search-form" 
-  class="search-form flex items-center overflow-hidden transition-all duration-300 ease-in-out relative z-50"
-  action="/busqueda"
-  method="GET"
->
-  <input 
-    type="text" 
-    id="search-input"
-    name="q"
-    class="search-input w-0 opacity-0 bg-transparent outline-none placeholder:text-gray-400 text-gray-800 text-sm transition-all duration-300 ease-in-out focus:ring-0"
-    placeholder="Buscar servicios, artículos..."
-    autocomplete="off"
-    aria-label="Buscar en el sitio"
+  <form 
+    id="search-form" 
+    class="search-form flex items-center overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] relative z-50 bg-white/80 backdrop-blur-md rounded-full border border-slate-100 shadow-sm focus-within:shadow-lg focus-within:shadow-pink-500/5 focus-within:border-pink-200"
+    action="/busqueda"
+    method="GET"
   >
+    <button 
+      type="button"
+      id="voice-search-btn"
+      class="voice-btn hidden opacity-0 p-2.5 text-slate-400 hover:text-pink-500 transition-all rounded-full"
+      aria-label="Buscar por voz"
+    >
+      <i class="fa-solid fa-microphone text-sm"></i>
+    </button>
+    
+    <input 
+      type="text" 
+      id="search-input"
+      name="q"
+      class="search-input w-0 opacity-0 bg-transparent outline-none placeholder:text-slate-400 text-slate-700 text-sm font-medium transition-all duration-500 focus:ring-0 border-none"
+      placeholder="Buscar en Dharma Bio..."
+      autocomplete="off"
+      aria-label="Buscar en el sitio"
+    >
+    
+    <button 
+      type="button"
+      id="clear-search-btn"
+      class="clear-btn hidden opacity-0 p-2 text-slate-300 hover:text-slate-600 transition-all"
+      aria-label="Limpiar búsqueda"
+    >
+      <i class="fa-solid fa-xmark text-xs"></i>
+    </button>
+    
+    <button 
+      type="button"
+      id="search-btn" 
+      class="search-btn relative z-20 p-3 text-slate-500 hover:text-white hover:bg-pink-500 rounded-full transition-all duration-300 shrink-0 cursor-pointer flex items-center justify-center"
+      aria-label="Expandir búsqueda"
+    >
+      <i class="fa-solid fa-magnifying-glass text-sm pointer-events-none"></i>
+    </button>
+  </form>
   
-  <button 
-    type="button"
-    id="voice-search-btn"
-    class="voice-btn hidden absolute left-2 z-20 p-1.5 text-gray-400 hover:text-[#BAE6FD] transition-colors rounded-full"
-    aria-label="Buscar por voz"
-  >
-    <i data-lucide="mic" class="w-4 h-4 pointer-events-none"></i>
-  </button>
-
-  <button 
-    type="button"
-    id="clear-search-btn"
-    class="clear-btn hidden absolute right-12 z-20 p-1.5 text-gray-400 hover:text-gray-600 transition-colors rounded-full"
-    aria-label="Limpiar búsqueda"
-  >
-    <i data-lucide="x" class="w-4 h-4 pointer-events-none"></i>
-  </button>
-  
-  <button 
-    type="button"
-    id="search-btn" 
-    class="search-btn relative z-20 p-2.5 text-gray-500 hover:text-[#BAE6FD] hover:bg-blue-50 lg:hover:bg-[#BAE6FD]/10 lg:bg-white lg:border lg:border-gray-100 lg:shadow-sm rounded-xl lg:rounded-full transition-all duration-300 shrink-0 cursor-pointer"
-    aria-label="Buscar"
-  >
-    <i data-lucide="search" class="w-5 h-5 pointer-events-none"></i>
-  </button>
-
-</form>
-  
-  <!-- Search Suggestions Dropdown -->
-  <div class="absolute top-full left-0 right-0 mt-2 z-30">
+  <div class="absolute top-full left-0 right-0 mt-3 z-30 drop-shadow-2xl">
     <SearchSuggestions client:load />
   </div>
 
-  
-  <!-- Keyboard shortcut hint -->
-  <div class="hidden lg:block absolute -bottom-6 left-1/2 transform -translate-x-1/2 opacity-0 transition-opacity duration-300" id="search-hint">
-    <span class="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded">Ctrl + K</span>
-  </div>
+  <div class="hidden lg:flex absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 transition-all duration-500 scale-90" id="search-hint">
+    <span class="text-[9px] font-black uppercase tracking-[0.2em] text-slate-400 bg-white border border-slate-100 px-2.5 py-1 rounded-md shadow-sm">
+     Ctrl + K
+    </span>
+  </div> 
 
-<div id="voice-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center">
-  <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl transform scale-95 opacity-0 transition-all duration-300" id="voice-modal-content">
-    <div class="text-center">
-      
-      <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 relative">
-        <div class="absolute inset-0 bg-[#BAE6FD] rounded-full animate-ping opacity-30"></div>
-        <i data-lucide="mic" class="w-10 h-10 text-[#BAE6FD]"></i>
+  <div id="voice-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-md z-100 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-[2.5rem] p-10 max-w-sm w-full shadow-2xl transform scale-95 opacity-0 transition-all duration-500 border border-white" id="voice-modal-content">
+      <div class="text-center">
+        
+        <div class="w-24 h-24 bg-pink-50 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+          <div class="absolute inset-0 bg-pink-200 rounded-full animate-ping opacity-20"></div>
+          <div class="absolute inset-0 bg-pink-100 rounded-full animate-pulse opacity-40"></div>
+          <i class="fa-solid fa-microphone text-3xl text-pink-500 relative z-10"></i>
+        </div>
+
+        <h3 class="text-xl font-black text-slate-800 mb-2 uppercase tracking-tight">Te escuchamos</h3>
+        <p class="text-slate-500 text-sm mb-8 font-medium" id="voice-status">Diga el nombre de un especialista o síntoma...</p>
+        
+        <div class="flex items-end justify-center gap-1.5 mb-10 h-10">
+          {[0, 0.1, 0.2, 0.3, 0.4, 0.2, 0.1].map((delay) => (
+            <div 
+              class="w-1.5 bg-pink-500 rounded-full animate-bounce" 
+              style={`animation-delay: ${delay}s; height: ${20 + Math.random() * 20}px`}
+            ></div>
+          ))}
+        </div>
+
+        <button 
+          id="close-voice-modal"
+          class="w-full py-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-2xl transition-all font-bold text-xs uppercase tracking-widest active:scale-95"
+        >
+          Cancelar
+        </button>
       </div>
-
-      <h3 class="text-xl font-semibold text-gray-900 mb-2">Búsqueda por voz</h3>
-      <p class="text-gray-500 mb-6" id="voice-status">Habla ahora...</p>
-      
-      <div class="flex items-center justify-center gap-2 mb-6">
-        <div class="voice-wave w-1 h-8 bg-[#BAE6FD] rounded-full animate-pulse" style="animation-delay: 0s"></div>
-        <div class="voice-wave w-1 h-8 bg-[#BAE6FD] rounded-full animate-pulse" style="animation-delay: 0.1s"></div>
-        <div class="voice-wave w-1 h-8 bg-[#BAE6FD] rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
-        <div class="voice-wave w-1 h-8 bg-[#BAE6FD] rounded-full animate-pulse" style="animation-delay: 0.3s"></div>
-        <div class="voice-wave w-1 h-8 bg-[#BAE6FD] rounded-full animate-pulse" style="animation-delay: 0.4s"></div>
-      </div>
-
-      <button 
-        id="close-voice-modal"
-        class="px-6 py-2 bg-gray-50 hover:bg-blue-50 hover:text-[#BAE6FD] text-gray-700 rounded-lg transition-colors font-medium"
-      >
-        Cancelar
-      </button>
     </div>
   </div>
 </div>
-</div>
-
 
 <style>
   .search-form {
@@ -112,20 +110,18 @@ import SearchSuggestions from './SearchSuggestions.jsx';
   .search-form.expanded .search-input {
     width: 200px;
     opacity: 1;
-    padding-right: 0.5rem;
   }
 
-  .search-form.expanded.has-content {
-    padding-left: 2.5rem;
-  }
-
-  .search-form.expanded.has-content .voice-btn {
+  .search-form.expanded .voice-btn {
     display: flex;
+    opacity: 1;
   }
 
   .search-form.expanded.has-content .clear-btn {
     display: flex;
+    opacity: 1;
   }
+
 
   @media (min-width: 1024px) {
     .search-form.expanded .search-input {
@@ -133,7 +129,7 @@ import SearchSuggestions from './SearchSuggestions.jsx';
     }
   }
 
-  @media (max-width: 1023px) {
+@media (max-width: 1023px) {
   .search-container {
       position: relative;
       z-index: 60;
@@ -142,8 +138,6 @@ import SearchSuggestions from './SearchSuggestions.jsx';
     
     .search-form.expanded {
       position: fixed;
-      right: 80px;
-      top: 60px;
       z-index: 9999;
       background: white;
       box-shadow: 0 4px 20px rgba(0,0,0,0.2);
@@ -160,24 +154,12 @@ import SearchSuggestions from './SearchSuggestions.jsx';
   }
 
   @media (max-width: 640px) {
-    .search-form.expanded {
-      right: 70px;
-      top: 55px;
-      padding: 0.5rem;
-      padding-left: 0.75rem;
-    }
-    
     .search-form.expanded .search-input {
       width: 160px;
     }
   }
 
   @media (max-width: 380px) {
-    .search-form.expanded {
-      right: 60px;
-      top: 50px;
-    }
-    
     .search-form.expanded .search-input {
       width: 140px;
     }
@@ -245,6 +227,7 @@ import SearchSuggestions from './SearchSuggestions.jsx';
     background-color: #BAE6FD;
     animation: pulse 1s ease-in-out infinite;
   }
+
 </style>
 
 <script is:inline>
@@ -309,10 +292,8 @@ import SearchSuggestions from './SearchSuggestions.jsx';
           voiceModal.classList.remove('active');
         }
       };
-    } else {
-      // Hide voice button if not supported
-      if (voiceBtn) voiceBtn.style.display = 'none';
     }
+
     
     // Toggle search expansion
     function toggleSearch() {
@@ -519,5 +500,6 @@ import SearchSuggestions from './SearchSuggestions.jsx';
       { title: "Prevención de Infecciones Respiratorias", type: "blog", url: "/blog/prevencion-respiratoria", category: "Respiratorio" },
       { title: "Guía Completa sobre Alergias en Niños", type: "blog", url: "/blog/alergias-infantiles", category: "Alergias" }
     ];
-  })();
+  })
+();
 </script>

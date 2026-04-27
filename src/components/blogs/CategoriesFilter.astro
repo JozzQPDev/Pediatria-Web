@@ -1,0 +1,62 @@
+---
+interface Props {
+  categories: string[];
+}
+const { categories } = Astro.props;
+---
+
+<section class="py-12 relative">
+
+  <div class="max-w-350 mx-auto px-6">
+
+    <div class="text-center mb-20">
+      <div data-aos="fade-down">
+        <span class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] border border-slate-100 shadow-sm mb-6">
+          <span class="flex gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+           </span>
+          Guía Profesional para Padres
+        </span>
+      </div>
+
+      <h2 class="text-5xl lg:text-7xl font-black text-slate-900 leading-[1.1] tracking-tight" data-aos="fade-up">
+         Biblioteca de <br/>
+        <span class="text-transparent bg-clip-text bg-linear-to-r from-pink-500 via-orange-400 to-blue-600 italic font-serif">Bienestar Infantil</span>
+      </h2>
+
+      <p class="mt-8 text-slate-500 max-w-2xl mx-auto text-lg font-medium leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+         Artículos especializados para acompañar cada etapa del crecimiento de tus hijos con seguridad y amor.
+      </p>
+    </div>
+
+    <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+      
+      <div class="flex items-center gap-3 text-slate-400 group">
+        <div class="w-8 h-8 rounded-xl bg-slate-50 flex items-center justify-center group-hover:bg-blue-50 group-hover:text-blue-500 transition-colors">
+          <i class="fa-solid fa-filter text-xs"></i>
+        </div>
+        <span class="text-[11px] font-black uppercase tracking-[0.2em]">Explorar temas</span>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <button 
+          class="filter-btn px-6 py-3 bg-slate-900 text-white rounded-2xl text-[11px] font-black uppercase tracking-widest shadow-xl shadow-slate-200 hover:bg-pink-600 transition-all active:scale-95 cursor-pointer"
+          data-category="all"
+        >
+          Todos
+        </button>
+
+        {categories.map(category => (
+          <button 
+            class="filter-btn px-6 py-3 bg-slate-50 text-slate-500 border border-transparent rounded-2xl text-[11px] font-black uppercase tracking-widest hover:bg-white hover:border-slate-200 hover:text-slate-900 hover:shadow-md transition-all active:scale-95 cursor-pointer"
+            data-category={category}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

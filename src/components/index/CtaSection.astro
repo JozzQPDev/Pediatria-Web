@@ -1,0 +1,88 @@
+<section class="relative py-24 px-4 overflow-hidden">
+  <div class="absolute top-0 left-0 w-full h-full -z-10">
+    <div class="absolute top-1/2 left-1/4 w-96 h-96 bg-pink-200 rounded-full blur-[120px] opacity-30 animate-pulse"></div>
+    <div class="absolute bottom-1/2 right-1/4 w-96 h-96 bg-blue-200 rounded-full blur-[120px] opacity-30 animate-pulse [animation-delay:2s]"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto">
+    <div 
+      class="relative bg-slate-900 rounded-[4rem] p-12 md:p-20 overflow-hidden"
+      data-aos="zoom-in"
+    >
+      <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] background-size-[20px_20px]"></div>
+      <div class="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+        
+        <div class="space-y-8 text-center lg:text-left">
+          <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white/80 font-bold uppercase tracking-[0.2em] text-[10px]">
+            <span class="flex gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+            </span>
+            Estamos agendando hoy
+          </div>
+
+          <h2 class="text-5xl md:text-7xl font-black text-white leading-[1.05] tracking-tight">
+            ¿Listo para darle lo <br/>
+            <span class="text-transparent bg-clip-text bg-linear-to-r from-pink-400 via-orange-300 to-blue-400 italic font-serif block mt-2">mejor a tu pequeño?</span>
+          </h2>
+
+          <p class="text-slate-400 text-lg font-medium leading-relaxed max-w-md mx-auto lg:mx-0">
+            Únete a las cientos de familias que ya confían en nuestra atención pediátrica especializada en Ayacucho.
+          </p>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 pt-4">
+            <a 
+              href="/reserva" 
+              class="group relative inline-flex items-center justify-center gap-3 bg-white text-slate-900 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest overflow-hidden transition-all hover:scale-105 active:scale-95"
+            >
+              <span class="relative z-10">Agendar Cita</span>
+              <i class="fa-brands fa-whatsapp relative z-10 text-lg group-hover:rotate-12 transition-transform"></i>
+              <div class="absolute inset-0 bg-linear-to-r from-pink-100 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            </a>
+
+            <a 
+              href="/servicios" 
+              class="group inline-flex items-center gap-3 text-white font-bold uppercase tracking-widest text-[11px] border-b-2 border-white/20 pb-1 hover:border-pink-500 transition-all"
+            >
+              Ver especialidades
+              <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="relative hidden lg:flex justify-center items-center">
+          <div class="relative w-80 h-80">
+            <div class="absolute inset-0 border-2 border-dashed border-white/10 rounded-full animate-spin-slow"></div>
+            
+            <div class="absolute inset-4 bg-white/5 backdrop-blur-2xl rounded-[3rem] border border-white/10 flex flex-col items-center justify-center text-center p-8 shadow-2xl">
+                <div class="w-20 h-20 rounded-3xl bg-linear-to-tr from-pink-500 to-orange-400 flex items-center justify-center text-white text-3xl mb-4 shadow-lg shadow-pink-500/20">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
+                <h4 class="text-white font-black text-2xl tracking-tighter uppercase leading-none">Atención <br/> Inmediata</h4>
+                <div class="mt-4 flex -space-x-3">
+                    {[1,2,3,4].map((i) => (
+                        <div class="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center text-[10px] text-white font-bold overflow-hidden">
+                            <img src={`https://i.pravatar.cc/100?img=${i+10}`} alt="avatar" />
+                        </div>
+                    ))}
+                    <div class="w-10 h-10 rounded-full border-2 border-slate-900 bg-pink-500 flex items-center justify-center text-[10px] text-white font-bold">
+                        +5k
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .animate-spin-slow {
+    animation: spin-slow 15s linear infinite;
+  }
+</style>

@@ -1,75 +1,3 @@
-/* === ESTILOS GENERALES === */
-.fade-in {
-  animation: fadeIn 0.5s ease forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#big-desc-container,
-#big-title,
-#big-image {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-/* === ESTILOS PARA SERVICIOS === */
-/* Eliminados: los estilos .group genéricos causaban efectos no deseados en toda la página */
-/* Los efectos de hover ya están manejados con clases de Tailwind en el HTML */
-
-/* === ESTILOS PARA TESTIMONIOS === */
-#testimonials-container:hover {
-  animation-play-state: paused;
-}
-
-/* === ANIMACIONES DE HERO === */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in-up 1s ease-out forwards;
-}
-
-/* === ESTILOS PARA PARALLAX Y MOUSE === */
-#hero-parallax {
-  perspective: 1000px;
-}
-
-.mouse-float {
-  transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
-  will-change: transform;
-  z-index: 5;
-}
-
-@keyframes bounce-soft {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
-}
-
-.animate-bounce-soft {
-  animation: bounce-soft 3s ease-in-out infinite;
-}
-
-
 .dr-quote2 {
   position: relative;
   background: url("/images/value-care.jpg") no-repeat center center fixed;
@@ -118,7 +46,7 @@
 /*---*/
 .dr-quote3 {
   position: relative;
-  background: url("/images/service-newborn.jpg") no-repeat center center fixed;
+  background: url("/images/service-nebulization.jpg") no-repeat center center fixed;
   background-size: cover;
   min-height: 600px;
   display: flex;

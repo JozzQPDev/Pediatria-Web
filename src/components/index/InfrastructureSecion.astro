@@ -1,0 +1,85 @@
+---
+import { infrastructureFeatures } from '../../data/infrastructureFeatures';
+---
+
+<section class="relative py-24 md:py-32 px-4 overflow-hidden">
+  <div class="absolute inset-0 bg-linear-to-b from-slate-50/50 via-white to-white -z-10"></div>
+  <div class="absolute top-0 left-0 w-full h-full bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] bg-size-[32px_32px] opacity-40 -z-10"></div>
+
+  <div class="max-w-7xl mx-auto relative z-10">
+    <div class="text-center mb-20">
+      <div data-aos="fade-down">
+        <span class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] border border-slate-100 shadow-sm mb-6">
+          <span class="flex gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+           </span>
+          Espacios Diseñados para Crecer
+        </span>
+      </div>
+
+      <h2 class="text-5xl lg:text-7xl font-black text-slate-900 leading-[1.1] tracking-tight" data-aos="fade-up">
+        Nuestra <br/>
+        <span class="text-transparent bg-clip-text bg-linear-to-r from-pink-500 via-orange-400 to-blue-600 italic font-serif">Infraestructura</span>
+      </h2>
+
+      <p class="mt-8 text-slate-500 max-w-2xl mx-auto text-lg font-medium leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+        Instalaciones de vanguardia que combinan seguridad clínica con un entorno cálido, asegurando que cada visita sea una experiencia positiva.
+      </p>
+    </div>
+
+   <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+      {infrastructureFeatures.map((feature, index) => (
+        <div 
+          class={`group relative h-137.5 overflow-hidden rounded-[3rem] shadow-2xl transition-all duration-700 md:hover:-translate-y-4 ${
+            index === 1 ? "md:translate-y-12" : ""
+          }`}
+          data-aos="fade-up"
+          data-aos-delay={index * 100}
+        >
+          <img 
+            src={feature.image} 
+            alt={feature.title}
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-[3s] md:group-hover:scale-110"
+          />
+          
+          <div class={`absolute inset-0 bg-linear-to-t ${
+            index === 0 ? "from-pink-400/90 via-pink-900/40" :
+            index === 1 ? "from-yellow-900/90 via-yellow-900/40" :
+            "from-blue-900/90 via-blue-900/40"
+          } to-transparent opacity-95 md:opacity-80 md:group-hover:opacity-95 transition-all duration-500`} />
+
+          <div class="absolute inset-0 p-8 lg:p-10 flex flex-col justify-end">
+            
+            <div class={`w-16 h-16 mb-6 rounded-2xl backdrop-blur-xl flex items-center justify-center border border-white/30 shadow-2xl transition-all duration-500 md:group-hover:rotate-360 text-white ${
+              index === 0 ? "bg-pink-500/50" :
+              index === 1 ? "bg-yellow-500/50" :
+              "bg-blue-500/50"
+            }`}>
+              <i class={`${feature.icon} text-2xl`}></i>
+            </div>
+
+            <h3 class="text-3xl font-black text-white mb-3 tracking-tight">
+              {feature.title}
+            </h3>
+
+            {/* CAMBIO AQUÍ: opacity-100 por defecto, opacity-0 solo en md: */}
+            <p class="text-white/80 text-sm leading-relaxed font-medium mb-6 opacity-100 translate-y-0 md:opacity-0 md:group-hover:opacity-100 md:translate-y-4 md:group-hover:translate-y-0 transition-all duration-500">
+              {feature.desc}
+            </p>
+
+           
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Suavizado de AOS */
+  [data-aos="fade-up"] {
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+</style>

@@ -1,0 +1,29 @@
+<section class="py-16 md:py-24  relative overflow-hidden">
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(#f1f5f9_1px,transparent_1px)] bg-[size:32px_32px] opacity-50 -z-10"></div>
+
+  <div class="max-w-7xl mx-auto px-5">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+      {[
+        { icon: 'fa-microscope', label: 'Ciencia Actualizada', color: 'group-hover:text-blue-500', bg: 'group-hover:bg-blue-50' },
+        { icon: 'fa-hand-holding-heart', label: 'Trato Humano', color: 'group-hover:text-pink-500', bg: 'group-hover:bg-pink-50' },
+        { icon: 'fa-shield-virus', label: 'Entorno Seguro', color: 'group-hover:text-emerald-500', bg: 'group-hover:bg-emerald-50' },
+        { icon: 'fa-baby', label: 'Enfoque Infantil', color: 'group-hover:text-orange-500', bg: 'group-hover:bg-orange-50' }
+      ].map(item => (
+        <div 
+          class="flex flex-col items-center text-center p-6 rounded-[2.5rem] bg-white border border-slate-50 shadow-sm shadow-slate-200/50 group transition-all duration-500 hover:shadow-xl hover:shadow-slate-200/60 hover:-translate-y-1 active:scale-95 md:active:scale-100"
+          data-aos="fade-up"
+        >
+          <div class={`w-14 h-14 md:w-16 md:h-16 mx-auto bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 transition-all duration-500 mb-5 ${item.bg} ${item.color}`}>
+            <i class={`fa-solid ${item.icon} text-xl md:text-2xl`}></i>
+          </div>
+          
+          <p class="text-[10px] md:text-xs font-black uppercase tracking-[0.15em] text-slate-800 group-hover:text-slate-900 transition-colors leading-tight">
+            {item.label}
+          </p>
+          
+          <div class={`w-0 h-0.5 mt-3 rounded-full transition-all duration-500 group-hover:w-8 ${item.bg.replace('bg-', 'bg-').replace('50', '500')}`}></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,102 @@
+---
+interface Service {
+  icon: string;
+  faq: Array<{
+    question: string;
+    answer: string;
+  }>;
+}
+
+interface Props {
+  service: Service;
+  colors: {
+    bgLight: string;
+    text: string;
+    icon?: string;
+  };
+}
+
+const { service, colors }: Props = Astro.props;
+---
+
+<section class="py-16 md:py-24 relative overflow-hidden">
+  <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-64 rounded-r-full hidden lg:block"></div>
+
+  <div class="max-w-4xl mx-auto px-5 md:px-6">
+    <div class="text-center mb-12 md:mb-16">
+      <div class={`inline-flex items-center gap-3 ${colors.bgLight} ${colors.text} px-4 py-2 md:px-5 md:py-2.5 rounded-2xl text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] mb-6 md:mb-8 animate-fade-in`}>
+        <span class="flex gap-1">
+          <span class={`w-1.5 h-1.5 rounded-full ${colors.icon || 'bg-current'}`}></span>
+          <span class={`w-1.5 h-1.5 rounded-full ${colors.icon || 'bg-current'}`}></span>
+          <span class={`w-1.5 h-1.5 rounded-full ${colors.icon || 'bg-current'}`}></span>
+        </span>
+        <i class={`${service.icon} text-sm md:text-base`}></i>
+        <span>Resolvemos tus dudas</span>
+      </div>
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-4 md:mb-6 tracking-tighter leading-tight">
+        Dudas <span class={colors.text}>frecuentes</span>
+      </h2>
+      <p class="text-base md:text-lg text-slate-500 font-medium max-w-xl mx-auto">
+        Todo lo que necesitas saber antes de la consulta de tu pequeño.
+      </p>
+    </div>
+
+    <div class="space-y-3 md:space-y-4">
+      {service.faq.map(({question, answer}) => (
+        <details class="group bg-slate-50/50 rounded-3xl md:rounded-[2.5rem] border border-slate-100 open:bg-white open:shadow-xl open:shadow-slate-200/40 open:border-slate-200 transition-all duration-300">
+          <summary class="flex cursor-pointer items-center justify-between p-5 md:p-7 list-none outline-none">
+            <div class="flex items-center gap-4 md:gap-5 pr-4">
+              <div class={`w-10 h-10 md:w-12 md:h-12 ${colors.bgLight} ${colors.text} rounded-xl md:rounded-2xl flex items-center justify-center shrink-0 group-open:scale-110 transition-transform duration-500 shadow-sm`}>
+                <i class="fa-solid fa-question text-sm md:text-lg group-open:hidden"></i>
+                <i class="fa-solid fa-comment-dots text-sm md:text-lg hidden group-open:block"></i>
+              </div>
+              <h3 class="text-base md:text-xl font-bold text-slate-800 tracking-tight group-hover:text-slate-950 transition-colors leading-tight">
+                {question}
+              </h3>
+            </div>
+            
+            <div class={`w-7 h-7 md:w-8 md:h-8 rounded-full border-2 border-slate-200 flex items-center justify-center text-slate-400 group-open:rotate-180 group-open:bg-slate-900 group-open:border-slate-900 group-open:text-white transition-all duration-500 shrink-0`}>
+              <i class="fa-solid fa-chevron-down text-[8px] md:text-[10px]"></i>
+            </div>
+          </summary>
+          
+          <div class="px-6 md:px-24 pb-6 md:pb-8">
+            <div class="h-px w-full bg-slate-100 mb-5 md:mb-6"></div>
+            <p class="text-base md:text-lg text-slate-600 leading-relaxed font-medium text-pretty">
+              {answer}
+            </p>
+            
+            <div class="mt-5 md:mt-6 flex items-center gap-2 md:gap-3">
+               <span class={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${colors.text.replace('text', 'bg')}`}></span>
+               <span class="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400">Verificado por Dharma</span>
+            </div>
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <div class="mt-12 md:mt-16 text-center">
+      <p class="text-sm md:text-base text-slate-400 font-medium px-4">
+        ¿Aún tienes dudas? 
+        <a href="https://wa.me/tu-numero" class={`block md:inline-block font-black ${colors.text} hover:underline mt-2 md:mt-0 md:ml-1`}>
+          Escríbenos por WhatsApp
+        </a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  details[open] summary ~ * {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

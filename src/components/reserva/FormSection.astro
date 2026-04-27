@@ -1,0 +1,29 @@
+---  
+import { company} from '../../data/company.js';  
+import ContactForm from '../../components/ContactForm.jsx';  
+---  
+
+<section class="lg:col-span-8">  
+  <div   
+    class="bg-white rounded-[3.5rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.03)] border border-slate-100 p-10 md:p-15"  
+    data-aos="fade-left"  
+  >  
+    <header class="mb-14">  
+      <h3 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter mb-4">  
+        Agendar Cita  
+      </h3>  
+      <div class="flex items-center gap-4">  
+        <span class="w-10 h-0.5 bg-pink-500"></span>  
+        <p class="text-slate-400 font-bold text-[10px] uppercase tracking-[0.4em]">Respuesta inmediata vía WhatsApp</p>  
+      </div>  
+    </header>  
+
+    <div class="contact-form-wrapper">  
+      <ContactForm  
+        client:load  
+        email={company.contact.email}  
+        whatsappNumber={company.contact.whatsapp}  
+      />  
+    </div>  
+  </div>  
+</section>

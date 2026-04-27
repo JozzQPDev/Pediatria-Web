@@ -1,0 +1,127 @@
+---
+import { company } from '../../data/company';
+---
+
+<section id="hero-parallax" class="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-slate-900 -mt-16 sm:-mt-20">
+  
+  <div class="absolute inset-0 z-0" id="carousel-bg">
+    <div class="carousel-slide absolute inset-0 opacity-100 transition-opacity duration-1000">
+      <div class="absolute inset-0 bg-cover bg-center animate-ken-burns" style="background-image: url('/images/hero-pediatric.jpg');"></div> 
+      <div class="absolute inset-0 bg-slate-900/20"></div> </div>
+    <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/benefit-modern.jpg');"></div>
+      <div class="absolute inset-0 bg-slate-900/20"></div>
+    </div>
+    <div class="carousel-slide absolute inset-0 opacity-0 transition-opacity duration-1000">
+      <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('/images/contact-emergency.jpg');"></div>
+      <div class="absolute inset-0 bg-slate-900/20"></div>
+    </div>
+  </div>
+
+  <div class="absolute inset-0 z-10 pointer-events-none select-none" id="parallax-icons">
+    <div class="absolute top-[15%] left-[10%] parallax-layer" data-speed="2">
+      <i class="fa-solid fa-baby text-6xl text-yellow-200/30 animate-float"></i>
+    </div>
+    <div class="absolute top-[20%] right-[15%] parallax-layer" data-speed="-3">
+      <i class="fa-solid fa-heart-pulse text-5xl text-pink-300/20 animate-float-delayed"></i>
+    </div>
+    <div class="absolute bottom-[20%] left-[15%] parallax-layer" data-speed="4">
+      <i class="fa-solid fa-stethoscope text-4xl text-white/10 animate-float-slow -rotate-12"></i>
+    </div>
+    <div class="absolute bottom-[25%] right-[10%] parallax-layer" data-speed="-2">
+      <i class="fa-solid fa-star text-3xl text-yellow-100/20 animate-float"></i>
+    </div>
+  </div>
+
+  <div class="relative z-20 text-center text-white px-6 max-w-350 mx-auto">
+    
+    <div data-aos="fade-down" data-aos-duration="1000">
+      <span class="inline-flex items-center gap-2 px-5 py-2 mb-8 text-[10px] font-bold tracking-[0.3em] uppercase bg-white/10 backdrop-blur-xl border border-white/20 rounded-full">
+        <i class="fa-solid fa-shield-cat text-yellow-200"></i> Especialistas en pediatría
+      </span>
+    </div>
+
+    <h1 
+      class="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-8"
+      data-aos="zoom-out-up" 
+      data-aos-duration="1200"
+    >
+      Atención pediátrica en <br />
+      <span class="bg-linear-to-r from-yellow-200 via-white to-yellow-200 bg-clip-text text-transparent italic font-serif py-2">
+        {company.address.city}
+      </span>
+    </h1>
+
+    <p 
+      class="text-xl md:text-2xl font-light mb-12 text-white/90 max-w-2xl mx-auto leading-relaxed"
+      data-aos="fade-up"
+      data-aos-delay="400"
+      data-aos-duration="1000"
+    >
+      Cuidamos lo que más amas con tecnología moderna y un trato <strong>dulce y humano.</strong>
+    </p>
+    
+    <div 
+      class="flex flex-col sm:flex-row gap-5 justify-center items-center"
+      data-aos="fade-up"
+      data-aos-delay="600"
+      data-aos-offset="0"
+    >
+      <a href="/reserva" class="group relative bg-white text-slate-900 px-12 py-5 rounded-2xl font-bold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-[0_20px_50px_rgba(255,255,255,0.2)]">
+        <span class="relative z-10 flex items-center gap-3">
+          <i class="fa-brands fa-whatsapp text-xl text-green-500"></i> Reservar Cita
+        </span>
+        <div class="absolute inset-0 bg-linear-to-r from-transparent via-slate-100 to-transparent -translate-x-full group-hover:animate-shimmer"></div>
+      </a>
+
+      <a href="/nosotros" class="group px-10 py-5 rounded-2xl font-bold text-lg text-white border-2 border-white/20 backdrop-blur-sm hover:bg-white/10 transition-all flex items-center gap-2">
+        <i class="fa-solid fa-circle-info transition-transform group-hover:rotate-12"></i> Conócenos
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Animación Shimmer para el botón */
+  @keyframes shimmer {
+    100% { transform: translateX(100%); }
+  }
+  .group-hover\:animate-shimmer {
+    animation: shimmer 1.5s infinite;
+  }
+
+  /* Animación Ken Burns para el fondo */
+  @keyframes kenburns {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+  }
+  .animate-ken-burns {
+    animation: kenburns 20s ease-out infinite alternate;
+  }
+
+  /* Flotación sutil para iconos */
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+  }
+  .animate-float { animation: float 6s ease-in-out infinite; }
+  .animate-float-delayed { animation: float 8s ease-in-out infinite 2s; }
+  .animate-float-slow { animation: float 10s ease-in-out infinite 1s; }
+</style>
+
+<script>
+  // Inicialización de AOS (Asegúrate de importar AOS en tu proyecto)
+  // import AOS from 'aos';
+  // import 'aos/dist/aos.css';
+  // AOS.init();
+
+  // Lógica simple para el carrusel de fondo
+  const slides = document.querySelectorAll('.carousel-slide');
+  let currentSlide = 0;
+
+  setInterval(() => {
+    slides[currentSlide].classList.replace('opacity-100', 'opacity-0');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.replace('opacity-0', 'opacity-100');
+  }, 5000);
+</script>

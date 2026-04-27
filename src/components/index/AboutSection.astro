@@ -1,0 +1,150 @@
+---
+import { company } from '../../data/company';
+
+type ColorKey = 'pink' | 'orange' | 'green' | 'blue';
+
+interface Feature {
+  title: string;
+  description: string;
+  icon: string;
+  color: ColorKey;
+}
+
+const aboutFeatures: Feature[] = [
+  {
+    title: "Pediatría Integral",
+    description: "Acompañamiento experto desde el nacimiento hasta la adolescencia.",
+    icon: "fa-solid fa-stethoscope",
+    color: "pink"
+  },
+  {
+    title: "Experiencia Kids",
+    description: "Ambientes diseñados para inspirar calma y reducir el estrés médico.",
+    icon: "fa-solid fa-face-smile",
+    color: "orange"
+  },
+  {
+    title: "Salud Proactiva",
+    description: "Programas preventivos avanzados con enfoque en bienestar futuro.",
+    icon: "fa-solid fa-shield-heart",
+    color: "green"
+  },
+  {
+    title: "Confianza Familiar",
+    description: "Comunicación transparente y cercana con cada padre de familia.",
+    icon: "fa-solid fa-hand-holding-heart",
+    color: "blue"
+  }
+];
+
+const colorClasses: Record<ColorKey, string> = {
+  pink: "text-pink-500 group-hover:bg-pink-500 shadow-pink-100/50",
+  orange: "text-orange-500 group-hover:bg-orange-500 shadow-orange-100/50",
+  green: "text-green-500 group-hover:bg-green-500 shadow-green-100/50",
+  blue: "text-blue-500 group-hover:bg-blue-500 shadow-blue-100/50"
+};
+---
+
+<section id="about-section" class="py-24 lg:py-36 relative overflow-x-hidden">
+  <div class="absolute top-0 right-0 w-150 h-150 bg-linear-to-br from-blue-50/40 to-transparent rounded-full blur-[140px] -z-10 translate-x-1/4 opacity-60"></div>
+  <div class="absolute bottom-0 left-0 w-125 h-125 bg-linear-to-tr from-pink-50/40 via-orange-50/20 to-transparent rounded-full blur-[120px] -z-10 -translate-x-1/4 opacity-60"></div>
+
+  <div class="max-w-340 mx-auto px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+      <div class="space-y-12">
+        <div class="space-y-6">
+          <div data-aos="fade-right">
+            <span class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-slate-50 border border-slate-100 text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] shadow-sm">
+              <span class="flex gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+              </span>
+              Sobre la Clínica
+            </span>
+          </div>
+
+          <h2 
+            class="text-5xl lg:text-7xl font-black text-slate-900 leading-[1.05] tracking-tighter" 
+            data-aos="fade-up" 
+            data-aos-delay="100"
+          >
+            Ciencia y corazón <br/>
+            <span class="text-transparent bg-clip-text bg-linear-to-r from-pink-500 via-orange-400 to-blue-500 italic font-serif block mt-2">liderados por expertos</span>
+          </h2>
+        </div>
+
+        <div class="space-y-6 max-w-xl" data-aos="fade-up" data-aos-delay="200">
+          <p class="text-lg lg:text-xl text-slate-600 leading-relaxed font-medium">
+            Bajo la dirección de la <strong class="text-slate-900"> Dra. Amalia Luque</strong>, pediatra especialista formada en la <span class="text-blue-600">Univ. Rusa de la Amistad de los Pueblos</span>, en <strong class="text-slate-900">{company.name}</strong> fusionamos la medicina convencional con terapias integrativas.
+          </p>
+          <p class="text-base text-slate-500 leading-relaxed border-l-4 border-slate-100 pl-8 italic">
+            Nuestra propuesta une la pediatría de alta complejidad con enfoques en medicina regenerativa y epigenética, asegurando un tratamiento único en Ayacucho.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {
+            aboutFeatures.map((feature, index) => (
+              <div 
+                class="group relative p-6 rounded-4xl bg-white border border-slate-100 hover:border-slate-200 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] transition-all duration-500"
+                data-aos="fade-up"
+                data-aos-delay={index * 100} 
+              >
+                <div class="flex flex-col gap-4">
+                  <div class={`w-12 h-12 shrink-0 rounded-2xl bg-slate-50 flex items-center justify-center transition-all duration-500 shadow-sm group-hover:text-white group-hover:scale-110 ${colorClasses[feature.color]}`}>
+                    <i class={`${feature.icon} text-xl`}></i>
+                  </div>
+
+                  <div class="space-y-2">
+                    <h4 class="text-slate-900 font-extrabold text-[13px] uppercase tracking-wider">
+                      {feature.title}
+                    </h4>
+                    <p class="text-[12px] text-slate-500 leading-relaxed font-medium opacity-80">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="relative order-first lg:order-last" data-aos="zoom-in" data-aos-duration="1200">
+        <div class="relative z-10 rounded-[80px] overflow-hidden bg-slate-100 aspect-4/5 shadow-3xl shadow-slate-200/60 border-12 border-white">
+          <img 
+            src="/images/clinic-4.jpg" 
+            alt="Dra. Amalia Luque" 
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-[3s]"
+          />
+          <div class="absolute inset-0 bg-linear-to-t from-slate-900/60 via-transparent to-transparent"></div>
+          
+          <div class="absolute bottom-12 left-12 text-white">
+            <div class="flex gap-2 mb-3">
+               <span class="w-8 h-1 bg-pink-500 rounded-full"></span>
+               <span class="w-4 h-1 bg-orange-400 rounded-full"></span>
+            </div>
+            <p class="text-[11px] font-black uppercase tracking-[0.4em] opacity-90 mb-1">Bienvenidos a</p>
+            <p class="text-4xl font-serif italic drop-shadow-lg">{company.name}</p>
+          </div>
+        </div>
+
+        <div class="absolute -top-10 -right-6 lg:-right-10 z-20 bg-white p-8 rounded-[40px] shadow-2xl border border-slate-50 flex items-center justify-center animate-float-slow" data-aos="fade-left" data-aos-delay="600">
+          <div class="text-center">
+            <div class="relative inline-block mb-2">
+                <i class="fa-solid fa-medal text-orange-500 text-3xl"></i>
+                <i class="fa-solid fa-heart text-pink-500 text-[10px] absolute -top-1 -right-1"></i>
+            </div>
+            <p class="text-[10px] font-black uppercase tracking-widest text-slate-900 leading-tight">
+              Especialista <br/> <span class="text-blue-500">Internacional</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-[radial-gradient(#e2e8f0_2px,transparent_2px)] bg-size-[20px_20px] -z-10 opacity-60"></div>
+      </div>
+    </div>
+  </div>
+</section>

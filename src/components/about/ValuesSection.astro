@@ -1,0 +1,120 @@
+---
+import { company } from "../../data/company";
+
+const valores = [
+  {
+    title: "Innovación Médica",
+    desc: "Equipamiento de última generación para diagnósticos precisos desde el primer día.",
+    icon: "fa-microscope",
+    color: "from-blue-400 to-cyan-400",
+    bg: "bg-blue-50"
+  },
+  {
+    title: "Trato Humano",
+    desc: "Un entorno diseñado para que los niños se sientan en confianza, como en casa.",
+    icon: "fa-heart",
+    color: "from-pink-400 to-rose-400",
+    bg: "bg-pink-50"
+  },
+  {
+    title: "Seguridad Infantil",
+    desc: "Instalaciones bajo estándares internacionales de seguridad pediátrica.",
+    icon: "fa-shield-heart",
+    color: "from-orange-400 to-amber-400",
+    bg: "bg-orange-50"
+  },
+  {
+    title: "Compromiso Familiar",
+    desc: "Acompañamos a los padres en cada etapa del desarrollo de sus hijos.",
+    icon: "fa-people-group",
+    color: "from-indigo-400 to-purple-400",
+    bg: "bg-indigo-50"
+  }
+];
+---
+
+<section class="py-24 lg:py-32 relative overflow-hidden">
+  <div class="absolute top-0 left-0 w-full h-full bg-dots opacity-20 -z-10"></div>
+
+  <div class="max-w-7xl mx-auto px-6">
+    
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8" data-aos="fade-up">
+      <div class="max-w-2xl">
+         <span class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white border border-slate-100 text-slate-500 font-bold uppercase tracking-[0.2em] text-[10px] shadow-sm mb-8">
+            <span class="flex gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-pink-400"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-orange-400"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+            </span>
+            Valores Fundamentales
+          </span>
+         <h2 class="text-5xl lg:text-7xl font-black text-slate-900 leading-[1.05] tracking-tighter">
+          ¿Por qué confiar <br/>
+          <span class="text-transparent bg-clip-text bg-linear-to-r from-pink-500 via-orange-400 to-blue-500 italic font-serif">en nosotros?</span>
+        </h2>
+      </div>
+      <p class="text-lg text-slate-500 font-medium max-w-xs border-l-4 border-pink-100 pl-6 py-2">
+        Combinamos la ciencia médica con la calidez que tu familia necesita.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+      {valores.map((v, index) => (
+        <div 
+          class="group relative p-8 rounded-[2.5rem] bg-white border border-slate-100 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/50 transition-all duration-500 hover:translate-y-1.5 overflow-hidden"
+          data-aos="fade-up"
+          data-aos-delay={index * 100}
+        >
+          <div class={`absolute -bottom-12 -right-12 w-32 h-32 rounded-full opacity-10 group-hover:scale-[3] transition-transform duration-700 bg-linear-to-br ${v.color}`}></div>
+          
+          <div class="relative z-10">
+            <div class={`w-16 h-16 rounded-2xl ${v.bg} flex items-center justify-center mb-8 shadow-inner group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500`}>
+              <i class={`fa-solid ${v.icon} text-2xl text-slate-700 group-hover:text-slate-900 transition-colors`}></i>
+            </div>
+
+            <h3 class="text-xl font-black text-slate-900 mb-4 tracking-tight">
+              {v.title}
+            </h3>
+            
+            <p class="text-slate-500 text-sm leading-relaxed font-medium">
+              {v.desc}
+            </p>
+          </div>
+
+          <div class="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 text-slate-300">
+            <i class="fa-solid fa-arrow-right-long text-xl"></i>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-24 relative p-10 rounded-[3rem] bg-slate-900 overflow-hidden" data-aos="zoom-in">
+      
+      <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] background-size-[20px_20px]"></div>
+
+       <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+          <div>
+            <p class="text-blue-300 font-black uppercase tracking-[0.3em] text-[10px] mb-2">Compromiso Total</p>
+            <h4 class="text-2xl md:text-3xl font-bold text-white tracking-tight">Conoce cómo podemos cuidar de tus hijos</h4>
+          </div>
+          <a href="/servicios" class="group flex items-center gap-4 bg-white text-slate-900 px-8 py-4 rounded-2xl font-black hover:bg-pink-500 hover:text-white transition-all duration-300 shadow-xl">
+             Explorar especialidades
+             <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform"></i>
+          </a>
+       </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .font-serif {
+    font-style: italic;
+  }
+  
+  /* Reutilizando tu patrón de puntos */
+  .bg-dots {
+    background-image: radial-gradient(#e2e8f0 1.5px, transparent 1.5px);
+    background-size: 40px 40px;
+  }
+</style>
